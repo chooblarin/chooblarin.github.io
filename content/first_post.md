@@ -1,12 +1,11 @@
-Title: chooblarinブログ
-Date: 2015-02-15 1:00
-Category: Pelican
+Title: Output
+Date: 2015-02-21 21:01
+Category: Blog
 Tags: pelican, python
-Slug: hello-my-blog
+Slug: start-output
 Author: chooblarin
-Summary: サマリなんて無いよ
 
-# ハロニチワ
+## Fooo
 
  ```python
  print "Hello, and... Hello. "

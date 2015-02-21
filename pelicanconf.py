@@ -2,15 +2,25 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
-THEME = 'theme/dev-random2'
+THEME = 'theme/crowsfoot'
 
 AUTHOR = u'chooblarin'
-SITENAME = u'chooblarin Blog'
+SITENAME = u'ハロニチワールド'
 SITEURL = ''
 
 PATH = 'content'
 
-TIMEZONE = 'Europe/Paris'
+TIMEZONE = 'Asia/Tokyo'
+
+DATE_FORMATS = {
+    'en': '%a, %d %b %Y',
+    'jp': '%Y-%m-%d(%a)',
+}
+
+LOCALE = (
+    'usa', 'jpn',  # On Windows
+    'en_US', 'ja_JP'     # On Unix/Linux
+    )
 
 DEFAULT_LANG = u'ja'
 
@@ -38,4 +48,15 @@ DEFAULT_PAGINATION = 10
 
 STATIC_PATHS = [
     'CNAME',
+    'images'
     ]
+
+# Others config
+
+EMAIL_ADDRESSS = 'choo.bla.rin@gmail.com'
+GITHUB_ADDRESS = 'https://github.com/chooblarin'
+TWITTER_ADDRESS = 'https://twitter.com/chooblarin'
+FB_ADDRESS = 'https://www.facebook.com/sou.hatake'
+
+PROFILE_IMAGE_URL = 'images/kao.png'
+SHOW_ARTICLE_AUTHOR = False
