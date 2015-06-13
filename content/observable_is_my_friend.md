@@ -2,7 +2,7 @@ Title: Observableは友達
 Date: 2015-03-17 22:57
 Category: Blog
 Tags: pelican, python
-Slug: observable_is_my_friend01
+Slug: observable_is_my_friend
 Author: chooblarin
 
 この文章はRxJavaとRxAndroidについて書かれています．
