@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 THEME = 'theme/crowsfoot'
 
 AUTHOR = u'chooblarin'
-SITENAME = u'ハロニチワールド'
+SITENAME = u'chooblarin\'s blog'
 SITEURL = ''
 
 PATH = 'content'
