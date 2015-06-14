@@ -57,6 +57,7 @@ EMAIL_ADDRESSS = 'choo.bla.rin@gmail.com'
 GITHUB_ADDRESS = 'https://github.com/chooblarin'
 TWITTER_ADDRESS = 'https://twitter.com/chooblarin'
 FB_ADDRESS = 'https://www.facebook.com/sou.hatake'
+GOOGLE_ANALYTICS = "UA-62520326-2"
 
 PROFILE_IMAGE_URL = 'images/kao.png'
 SHOW_ARTICLE_AUTHOR = False
