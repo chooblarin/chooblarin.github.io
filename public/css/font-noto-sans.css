@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'Noto Sans Regular';
+  src: url('../fonts/NotoSansCJKjp-Regular.ttf');
+}
+@font-face {
+  font-family: 'Noto Sans Medium';
+  src: url('../fonts/NotoSansCJKjp-Medium.ttf');
+}
+@font-face {
+  font-family: 'Noto Sans Bold';
+  src: url('../fonts/NotoSansCJKjp-Bold.ttf');
+}

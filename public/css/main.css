@@ -1,6 +1,7 @@
 main {
     max-width: 750px;
     word-wrap: break-word;
+    font-family: "Noto Sans Regular", "Helvetica", Meiryo, sans-serif !important;
 }
 
 /* Header */
@@ -278,7 +279,7 @@ blockquote {
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-    font-family: "Source Sans Pro", "Kozuka Gothic Pr6N", Meiryo, sans-serif !important;
+    font-family: "Noto Sans Medium", "Kozuka Gothic Pr6N", Meiryo, sans-serif !important;
 }
 
 article section img {
@@ -286,4 +287,3 @@ article section img {
     height: auto;
     margin: 13px auto;
 }
-
