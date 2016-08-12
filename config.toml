@@ -10,5 +10,7 @@ hasCJKLanguage = true
   linkedin = "sota-hatakeyama-35bb07120"
 
   disqus = "chooblarin"
+  ga_api_key = "UA-62520326-2"
+  avatar = "/images/kao.png"
 
   author = "chooblarin"
