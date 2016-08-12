@@ -6,16 +6,523 @@
     <description>Recent content on chooblarin&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Aug 2016 20:12:32 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 29 May 2016 22:18:00 +0900</lastBuildDate>
     <atom:link href="http://chooblarin.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>hello</title>
-      <link>http://chooblarin.github.io/post/hello/</link>
-      <pubDate>Fri, 12 Aug 2016 20:12:32 +0900</pubDate>
+      <title>RxJavaのconcatMapEager</title>
+      <link>http://chooblarin.github.io/post/20160529/</link>
+      <pubDate>Sun, 29 May 2016 22:18:00 +0900</pubDate>
       
-      <guid>http://chooblarin.github.io/post/hello/</guid>
-      <description>&lt;p&gt;hello&lt;/p&gt;
+      <guid>http://chooblarin.github.io/post/20160529/</guid>
+      <description>
+
+&lt;p&gt;少し前の出来事なので忘れかけています．完全に忘れる前にブログに残しておきます．&lt;/p&gt;
+
+&lt;h2 id=&#34;problem&#34;&gt;Problem&lt;/h2&gt;
+
+&lt;p&gt;あるとき，Androidアプリの開発でこんなコードを書いていました．&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Item&lt;/code&gt;というModelがある．&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Item&lt;/code&gt;はID文字列&lt;code&gt;id&lt;/code&gt;をプロパティとしてもっている．&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Item&lt;/code&gt;のランキングデータを取得するWeb APIが用意されていて&lt;code&gt;Item&lt;/code&gt;の&lt;code&gt;id&lt;/code&gt;の一覧が取得出来る．&lt;/li&gt;
+&lt;li&gt;但し，取得出来るのは&lt;code&gt;id&lt;/code&gt;のみなのでViewに表示するデータ(Itemの詳細)は別のAPIで取得する必要がある．&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;flatmap&#34;&gt;flatMap()&lt;/h2&gt;
+
+&lt;p&gt;最初，私は&lt;code&gt;Observable#flatMap()&lt;/code&gt;を使って以下のようにしました．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;requestRankingItems()
+    .flatMap(itemId -&amp;gt; requestItem(itemId))
+    .subscribe(item -&amp;gt; { /* bind item to view */ })
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;しかしこのコードには問題があります．私はランキング情報をViewに表示させたかったに，これではランキングの順番がバラバラになってしまいます．
+&lt;a href=&#34;http://reactivex.io/documentation/operators/flatmap.html&#34;&gt;flatMap&lt;/a&gt;というオペレータは，
+順番を保存しないからです．
+上の例では&lt;code&gt;requestItem(itemId)&lt;/code&gt;でサーバにリクエストして，レスポンスが返ってきた順番に値がemitされます．
+&lt;a href=&#34;http://fernandocejas.com/2015/01/11/rxjava-observable-tranformation-concatmap-vs-flatmap/&#34;&gt;こちらの記事&lt;/a&gt;がとても参考になります．&lt;/p&gt;
+
+&lt;h2 id=&#34;concatmap&#34;&gt;concatMap()&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;Observable#concatMap()&lt;/code&gt;は&lt;code&gt;Observable#flatMap()&lt;/code&gt;と違って順番を保存してくれます．
+そこで，コードをこのように変更してみました．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;requestRankingItems()
+    .concatMap(itemId -&amp;gt; requestItem(itemId))
+    .subscribe(item -&amp;gt; { /* bind item to view */ })
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;ところが，ここで別の問題があります．&lt;code&gt;concatMap()&lt;/code&gt;は，ソースObservableの値を1つずつ処理します．
+現在の値の処理が完了するまで次の処理を行わないのです．つまり，上の例の場合，&lt;code&gt;requestItem(itemId)&lt;/code&gt;でサーバにリクエストは，レスポンスが返ってくるまで次のリクエストを行わないのです．
+これでは，1リクエスト1秒掛かるとすると，20件のItemを取得するのに20秒も待たなければなりません．&lt;/p&gt;
+
+&lt;p&gt;リクエストは並列で実行して，結果は順番通りに取得したいんですよ．
+Javascriptの&lt;code&gt;Promise.all()&lt;/code&gt;のように．
+&lt;a href=&#34;http://stackoverflow.com/questions/35339190/is-there-a-way-like-promise-all-in-rxjava&#34;&gt;StackOverflow&lt;/a&gt;でも質問をしてみましたが期待した答えはもらえませんでした．&lt;/p&gt;
+
+&lt;h2 id=&#34;concatmapeager&#34;&gt;concatMapEager()&lt;/h2&gt;
+
+&lt;p&gt;RxJavaのObservableに&lt;code&gt;concatMapEager&lt;/code&gt;というオペレーターがあります．
+&lt;a href=&#34;http://reactivex.io/RxJava/javadoc/rx/Observable.html#concatMapEager(rx.functions.Func1)&#34;&gt;ドキュメント&lt;/a&gt;にはこう記されています．
+&amp;gt; Maps a sequence of values into Observables and concatenates these Observables eagerly into a single Observable.&lt;/p&gt;
+
+&lt;p&gt;どうやらeagerlyにconcatしてくれるらしいです．
+更に&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Eager concatenation means that once a subscriber subscribes, this operator subscribes to all of the source Observables. The operator buffers the values emitted by these Observables and then drains them in order, each one after the previous one completes.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;concatMapEagerではソースObservable（上の例ではitemIdのObservable）をすべてsubscribeしてくれます．
+つまり，すべてのidに対して一気にリクエストしてくれます．しかも結果はバッファリングされて，順番通りにemitされます．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;requestRankingItems()
+    .concatMapEager(itemId -&amp;gt; requestItem(itemId))
+    .subscribe(item -&amp;gt; { /* bind item to view */ })
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;これでOKです．ただし&lt;code&gt;concatMapEager&lt;/code&gt;はExperimentalですので今後も注目です．&lt;/p&gt;
+
+&lt;h2 id=&#34;余談&#34;&gt;余談&lt;/h2&gt;
+
+&lt;p&gt;「ブログに書く」という行為をすっかり忘れて暮らしていました．アウトプットはきちんと習慣化したいものですね．&lt;/p&gt;
+
+&lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://reactivex.io/RxJava/javadoc/rx/Observable.html#flatMap(rx.functions.Func1)&#34;&gt;flatMap&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://reactivex.io/RxJava/javadoc/rx/Observable.html#concatMap(rx.functions.Func1)&#34;&gt;concatMap&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://reactivex.io/RxJava/javadoc/rx/Observable.html#concatMapEager(rx.functions.Func1)&#34;&gt;concatMapEager&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://fernandocejas.com/2015/01/11/rxjava-observable-tranformation-concatmap-vs-flatmap/&#34;&gt;RxJava Observable tranformation: concatMap() vs flatMap()&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ReactiveX/reactivex.github.io/issues/165&#34;&gt;Document new concatEager() operator #165&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Hello PhoenixをHerokuで</title>
+      <link>http://chooblarin.github.io/post/20150828/</link>
+      <pubDate>Fri, 28 Aug 2015 07:15:00 +0900</pubDate>
+      
+      <guid>http://chooblarin.github.io/post/20150828/</guid>
+      <description>
+
+&lt;p&gt;つい先日弊社ではElixirの&lt;a href=&#34;https://gist.github.com/chooblarin/2432345f7b11629bafd9&#34;&gt;社内勉強会&lt;/a&gt;を行いました．&lt;/p&gt;
+
+&lt;p&gt;今回は&lt;a href=&#34;http://www.phoenixframework.org&#34;&gt;Phoenix&lt;/a&gt;をHerokuで動かしてみます．&lt;/p&gt;
+
+&lt;p&gt;以下のサイトを参考にさせてもらいました．&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://wsmoak.net/2015/07/05/phoenix-on-heroku.html&#34;&gt;Deploying a Phoenix app to Heroku&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;phoenixをインストール&#34;&gt;Phoenixをインストール&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.phoenixframework.org/docs/installation&#34;&gt;公式サイト&lt;/a&gt;に記載の通りです．&lt;/p&gt;
+
+&lt;p&gt;Hexをインストール&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ mix local.hex
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Phoenixアーカイブをインストール&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ mix archive.install https://github.com/phoenixframework/phoenix/releases/download/v0.17.1/phoenix_new-0.17.1.ez
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;hello-phoenix&#34;&gt;Hello Phoenix&lt;/h2&gt;
+
+&lt;p&gt;これも&lt;a href=&#34;http://www.phoenixframework.org/docs/up-and-running&#34;&gt;公式サイト&lt;/a&gt;通り．&lt;/p&gt;
+
+&lt;p&gt;Phoenixプロジェクトを作成&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ mix phoenix.new hello_phoenix
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;起動&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ cd hello_phoenix
+$ mix phoenix.server
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;確認 =&amp;gt; &lt;a href=&#34;http://localhost:4000&#34;&gt;http://localhost:4000&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;herokuにデプロイ&#34;&gt;Herokuにデプロイ&lt;/h2&gt;
+
+&lt;p&gt;Buildpackに&lt;a href=&#34;https://github.com/HashNuke/heroku-buildpack-elixir&#34;&gt;Heroku Buildpack for Elixir&lt;/a&gt;と&lt;a href=&#34;https://github.com/gjaldon/heroku-buildpack-phoenix-static&#34;&gt;Phoenix Static Buildpack&lt;/a&gt;の2つを使用します．&lt;/p&gt;
+
+&lt;h3 id=&#34;gitignoreファイルを編集&#34;&gt;.gitignoreファイルを編集&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;.gitignore&lt;/code&gt;の&lt;code&gt;config/prod.secret.exs&lt;/code&gt;をコメントアウトします．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;...
+
+# The config/prod.secret.exs file by default contains sensitive
+# data and you should not commit it into version control.
+#
+# Alternatively, you may comment the line below and commit the
+# secrets file as long as you replace its contents by environment
+# variables.
+#/config/prod.secret.exs
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;herokuの環境編集を設定&#34;&gt;Herokuの環境編集を設定&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;config/prod.secret.exs&lt;/code&gt;を&lt;code&gt;.gitignore&lt;/code&gt;の対象から外したので，重要な情報をherokuの環境変数に置き換えます．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;use Mix.Config
+
+# In this file, we keep production configuration that
+# you likely want to automate and keep it away from
+# your version control system.
+config :hello_phoenix_heroku, HelloPhoenixHeroku.Endpoint,
+  secret_key_base: System.get_env(&amp;quot;SECRET_KEY_BASE&amp;quot;)
+
+# Configure your database
+config :hello_phoenix_heroku, HelloPhoenixHeroku.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  username: System.get_env(&amp;quot;DATABASE_USERNAME&amp;quot;),
+  password: System.get_env(&amp;quot;DATABASE_PASSWORD&amp;quot;),
+  database: &amp;quot;hello_phoenix_heroku_prod&amp;quot;,
+  size: 20 # The amount of database connections in the pool
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;$ heroku config:set SECRET_KEY_BASE=&amp;lt;YOUR_SECRET_KEY_BASE&amp;gt;
+$ heroku config:set SECRET_KEY_BASE=&amp;lt;YOUR_DATABASE_USERNAME&amp;gt;
+$ heroku config:set SECRET_KEY_BASE=&amp;lt;YOUR_DATABASE_PASSWORD&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;必要な設定ファイルを作成&#34;&gt;必要な設定ファイルを作成&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;elixir_buildpack.config&lt;/code&gt;ファイルと&lt;code&gt;Procfile&lt;/code&gt;をプロジェクトのルートに作成します．&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;elixir_buildpack.config&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;# Erlang version
+erlang_version=17.5
+
+# Elixir version
+elixir_version=1.0.4
+
+# Always rebuild from scratch on every deploy?
+always_rebuild=false
+
+# Export heroku config vars
+config_vars_to_export=(DATABASE_URL SECRET_KEY_BASE)
+
+# A command to run right after compiling the app
+post_compile=&amp;quot;pwd&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Procfile&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;web: mix phoenix.server
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;そしたらgitコミットします．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ git init
+$ git add .
+$ git commit -m &amp;quot;Hello, Phoenix&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;デプロイ&#34;&gt;デプロイ&lt;/h3&gt;
+
+&lt;p&gt;Herokuアプリを作成&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ heroku create --buildpack &amp;quot;https://github.com/HashNuke/heroku-buildpack-elixir.git&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;以下の2つのBuildpackを設定&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/HashNuke/heroku-buildpack-elixir&#34;&gt;Heroku Buildpack for Elixir&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/gjaldon/heroku-buildpack-phoenix-static&#34;&gt;Phoenix Static Buildpack&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;$ heroku buildpacks:set https://github.com/gjaldon/phoenix-static-buildpack
+$ heroku buildpacks:add --index 1 https://github.com/HashNuke/heroku-buildpack-elixir
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;ぷっしゅ&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ git push heroku master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://chooblaphoenix.herokuapp.com&#34;&gt;出来た！&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>今年はElixir</title>
+      <link>http://chooblarin.github.io/post/20150703/</link>
+      <pubDate>Fri, 03 Jul 2015 03:15:00 +0900</pubDate>
+      
+      <guid>http://chooblarin.github.io/post/20150703/</guid>
+      <description>&lt;p&gt;毎年新しいプログラミング言語を勉強しろと誰かが言っていました．
+今年は流行に乗って&lt;a href=&#34;http://elixir-lang.org/&#34;&gt;Elixir&lt;/a&gt;をコツコツ勉強しようと思います．
+&lt;a href=&#34;http://www.phoenixframework.org/v0.10.0&#34;&gt;Phoenix Framework&lt;/a&gt;で何かしらのアプリを作ることを目標にします．&lt;/p&gt;
+
+&lt;p&gt;千里の道も&lt;a href=&#34;http://chooblarin.com/slides/?elixir_intro_01.md&#34;&gt;一歩&lt;/a&gt;から&lt;/p&gt;
+
+&lt;p&gt;Peace out!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>宮崎マンゴー</title>
+      <link>http://chooblarin.github.io/post/20150620/</link>
+      <pubDate>Sat, 20 Jun 2015 16:12:00 +0900</pubDate>
+      
+      <guid>http://chooblarin.github.io/post/20150620/</guid>
+      <description>
+
+&lt;p&gt;マンゴーを初めて食べた記録です&lt;/p&gt;
+
+&lt;h2 id=&#34;太陽のタマゴを知った&#34;&gt;太陽のタマゴを知った&lt;/h2&gt;
+
+&lt;p&gt;先日Twitterを眺めていると，タイムラインにおいしそうな*宮崎県産完熟マンゴー太陽のタマゴ*が流れてきた．&lt;/p&gt;
+
+&lt;p&gt;宮崎県産完熟マンゴー太陽のタマゴとは
+&amp;gt; 完全に熟して自然に枝から落ちたところを、かぶせていたネットで収穫する。糖度15度以上、重さ350グラム以上で色づきも良いものが「太陽のタマゴ」と呼ばれる。県内では完熟マンゴーは約600トン生産されており(2009年)、そのうち「太陽のタマゴ」は15%ほど。
+（出典: &lt;a href=&#34;https://kotobank.jp/word/%E5%AE%AE%E5%B4%8E%E7%9C%8C%E7%94%A3%E5%AE%8C%E7%86%9F%E3%83%9E%E3%83%B3%E3%82%B4%E3%83%BC%E5%A4%AA%E9%99%BD%E3%81%AE%E3%82%BF%E3%83%9E%E3%82%B4-889711&#34;&gt;コトバンク - 朝日新聞掲載「キーワード」&lt;/a&gt;）&lt;/p&gt;
+
+&lt;p&gt;世の中の人間は，これを「食べた人」と「食べていない人」に分類されるらしい．食べてみたい．食べてみたい&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;社員と食事をしているときにこの話をしたところ，昨日の朝会社のデスクを見ると&amp;hellip;なんと太陽のタマゴが&amp;hellip;！
+会社の方が誕生日プレゼントで買ってきてくれた．感謝感激雨霰嵐．生きててよかった〜&lt;/p&gt;
+
+&lt;p&gt;というわけでさっそく&lt;/p&gt;
+
+&lt;p&gt;&lt;blockquote class=&#34;twitter-tweet&#34; lang=&#34;ja&#34;&gt;&lt;p lang=&#34;ja&#34; dir=&#34;ltr&#34;&gt;マンゴー食す&lt;/p&gt;&amp;mdash; はたけやまそうた (@chooblarin) &lt;a href=&#34;https://twitter.com/chooblarin/status/612142992275582976&#34;&gt;2015, 6月 20&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;開封の儀&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://i.imgur.com/ecw2csk.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;オープン！&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://i.imgur.com/wVHt5um.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;なんと美しい果実．
+この真っ赤な色に傷一つ付いていない表面．滑らかな湾曲美．一体何回微分可能なんだ．&lt;/p&gt;
+
+&lt;p&gt;入刀の儀&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://i.imgur.com/7Hj3t1O.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://i.imgur.com/R3Gy2Ug.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;はあ&amp;hellip;うまそう&lt;/p&gt;
+
+&lt;p&gt;いざ，実食&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://i.imgur.com/Hd0Elgq.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://i.imgur.com/WkMDiht.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;！！&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://i.imgur.com/xIeJTQH.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://i.imgur.com/UG33htO.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;まとめ&#34;&gt;まとめ&lt;/h2&gt;
+
+&lt;p&gt;太陽のタマゴはむちゃくちゃうまい&lt;/p&gt;
+
+&lt;p&gt;ありがとうございました．&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Milestone</title>
+      <link>http://chooblarin.github.io/post/to_be_an_android_developer/</link>
+      <pubDate>Sat, 13 Jun 2015 14:38:00 +0900</pubDate>
+      
+      <guid>http://chooblarin.github.io/post/to_be_an_android_developer/</guid>
+      <description>
+
+&lt;p&gt;プログラマになってからおよそ2年が経った節目にブログを書きました．&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://i.imgur.com/kC5Qqj5.jpg&#34; alt=&#34;&#34; title=&#34;sf&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;これまで&#34;&gt;これまで&lt;/h1&gt;
+
+&lt;p&gt;つい最近，GoogleIOやWWDCが終わりましたが，モバイルアプリの発展はとどまることを知らない状況に感じます．
+初めて僕がAndroidのHelloWorldを動かした日から考えるとびっくりするほどの変化です．
+ふと思い返すと，かれこれAndroid歴が1年を超えていました．
+関わった全てのプロジェクト（前職では4つ，現職で2つ）でAndroidアプリを担当しました．
+そろそろブログなどのアウトプットもしていこうかなあと考えています．&lt;/p&gt;
+
+&lt;h1 id=&#34;近況&#34;&gt;近況&lt;/h1&gt;
+
+&lt;p&gt;2015年の1月，新卒で入社した会社を辞めました．入社前にアルバイトをしていた期間を含めるとおよそ20ヶ月お世話になりました．
+退職の理由は，先輩の経営している会社に転職して働くことに決めたからです．
+転職からおよそ5ヶ月が経ちました．毎日充実しています．それなりに楽しくやっています．
+業務内容は前職と同じで，Androidのアプリ開発をしています．
+前職と大きく違う点は，ちょっとしたバックエンドの実装やリリース前の作業なども自分がコミットする点です．
+会社も開発も規模があまり大きくないので，出来るところは自分でやることになっています．LPの制作なんかも初めてやりました．
+アプリのリリース後もアップデート内容を考えて実装しています．本当に楽しい．&lt;/p&gt;
+
+&lt;p&gt;今日もがんばろ&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Observableは友達</title>
+      <link>http://chooblarin.github.io/post/observable_is_my_friend/</link>
+      <pubDate>Tue, 17 Mar 2015 22:57:00 +0900</pubDate>
+      
+      <guid>http://chooblarin.github.io/post/observable_is_my_friend/</guid>
+      <description>
+
+&lt;p&gt;この文章はRxJavaとRxAndroidについて書かれています．
+開発中のAndroidアプリに導入してみて得られた知見をまったりざっくりまとめてみます．&lt;/p&gt;
+
+&lt;h3 id=&#34;rxとリアクティブプログラミング&#34;&gt;Rxとリアクティブプログラミング&lt;/h3&gt;
+
+&lt;p&gt;これについて解説している記事は既にたくさん（ここ最近では特に）あるので割愛します．
+せっかくなので分かりやすかった記事をいくつかリンクします．&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://blog.danlew.net/2014/09/15/grokking-rxjava-part-1/&#34;&gt;Grokking RxJava&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://futurice.com/blog/top-7-tips-for-rxjava-on-android&#34;&gt;Top 7 Tips for RxJava on Android — Futurice&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://steps.dodgson.org/b/2014/12/07/reactive-porn/&#34;&gt;Reactive Porn - steps to phantasien&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://okapies.hateblo.jp/entry/2015/03/04/031148&#34;&gt;関数型プログラマのための Rx 入門（前編） - Okapies&amp;rsquo; Archive&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;observableの生成&#34;&gt;Observableの生成&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/ReactiveX/RxJava/wiki/Creating-Observables&#34;&gt;Observableの生成&lt;/a&gt;は複数の方法があります．
+&lt;code&gt;create()&lt;/code&gt;を使うとあらゆるデータを&lt;code&gt;Observable&lt;/code&gt;にラップ出来ます．
+ファイル読み書き，ローカルDBアクセス，ネットワーク通信に関連するデータはほとんど全て&lt;code&gt;create()&lt;/code&gt;を使ってObservableに出来ます．&lt;/p&gt;
+
+&lt;p&gt;例えば，assetsフォルダの中の&amp;rdquo;hoge.json&amp;rdquo;からテキストを読み込んでくるときはこんなカンジ．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;Observable&amp;lt;JSONObject&amp;gt; load(final Context context) {
+ return Observable
+   .create((OnSubscribe&amp;lt;AppItem&amp;gt;) subscriber -&amp;gt; {
+     InputStream inputStream = null;
+     BufferedReader reader = null;
+     StringBuilder buf = new StringBuilder();
+
+     try {
+       inputStream = context.getAssets().open(&amp;quot;hoge.json&amp;quot;);
+       reader = new BufferedReader(new InputStreamReader(inputStream));
+       String str;
+
+       while ((str = inputStream.readLine()) != null) {
+         buf.append(str);
+       }
+       subscriber.onNext(new JSONObject(buf.toString()));
+       subscriber.onComplete();
+
+     } catch (JSONException | IOException e) {
+       subscriber.onError(e);
+
+     } finally {
+       try {
+         if (inputStream != null) {
+           inputStream.close();
+         }
+         if (reader != null) {
+           reader.close();
+         }
+       } catch (IOException ignored) {}
+     }
+   });
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;呼び出し側ではこんなカンジ．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;dataService.load(context)
+  .subscribeOn(Schedulers.io())
+  .observeOn(AndroidSchedulers.mainThread())
+  .subscribe(
+    _jsonObject -&amp;gt; {
+      bindData(_jsonObject);
+    },
+    error -&amp;gt; {
+      // error handling
+    }
+  );
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;ローカルDBへのアクセスも．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;  Observable
+    .create(subscriber -&amp;gt; {
+      try {
+        /* データを取得して */
+        onNext(data); /* データをemit */
+
+      } catch (Exception e) {
+        /* エラー処理があればやっておく．トランザクションのキャンセル処理など */
+        subscriber.onError(e);
+      } finally {
+        /* 後始末 */
+      }
+
+      subscriber.onCompleted();
+    })
+    .subscribeOn(Schedulers.io())
+    .observeOn(AndroidSchedulers.mainThread())
+    .subscribe(observer);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;hotとcold&#34;&gt;HotとCold&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Hot   ･･･ subscribeされていなくても値をemitする．&lt;/li&gt;
+&lt;li&gt;Cold  ･･･ &lt;code&gt;subscribe()&lt;/code&gt;が呼ばれるまで値をemitしない．&lt;code&gt;subscribe()&lt;/code&gt;毎に新しく値をemitする．&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;subscriberが値をemitしはじめるのは，そのObservableがsubscribeされてからです．つまり，&lt;code&gt;subscribe()&lt;/code&gt;が呼ばれるまでは何も起こりません．
+更に，Observableはsubscribeが呼ばれる度に値を&lt;code&gt;create&lt;/code&gt;のオペレーターが実行されます．&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://qiita.com/toRisouP/items/f6088963037bfda658d3&#34;&gt;この記事&lt;/a&gt;がわかりやすいです．&lt;/p&gt;
+
+&lt;p&gt;例えば以下のようにファイルから読み込んだデータを複数のObserverがsubscribeしたいとします．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;Observable&amp;lt;JSONObject&amp;gt; jsonObject
+  = dataService
+      .load()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread());
+
+jsonObject.subscribe(observer1);
+
+jsonObject.subscribe(observer2); // 無駄にファイルを読み直している
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;この例では，同じデータなのに2回もファイルを読みにいってしまいます．
+Subjectを使うとHotなObservableでこの問題を解決出来ます．先ほどの例をこんなカンジに変えてみます．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;PublishSubject&amp;lt;JsonObject&amp;gt; subject = PublishSubject.create();
+
+subject.asObservable().subscribe(observer1);
+subject.asObservable().subscribe(observer2);
+
+Observable&amp;lt;JSONObject&amp;gt; jsonObject
+  = dataService
+      .load()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(subject);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;以上でした．&lt;/p&gt;
 </description>
     </item>
     

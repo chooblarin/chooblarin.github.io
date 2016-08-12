@@ -1,6 +1,7 @@
 baseurl = "http://chooblarin.github.io/"
 languageCode = "en-us"
 title = "chooblarin's blog"
+hasCJKLanguage = true
 
 [Params]
 
