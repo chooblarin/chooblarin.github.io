@@ -1,12 +1,3 @@
-## Pelican
-cache/
-theme/
-output/
-*.pid
-
-## Python
-*.py[cod]
-
 ## Mac OS X
 .DS_Store
 .*~
