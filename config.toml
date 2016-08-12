@@ -7,10 +7,17 @@ hasCJKLanguage = true
 
   twitter = "chooblarin"
   github = "chooblarin"
+  facebook = "sou.hatake"
   linkedin = "sota-hatakeyama-35bb07120"
+  instagram = "sou_hatake"
 
   disqus = "chooblarin"
   ga_api_key = "UA-62520326-2"
-  avatar = "/images/kao.png"
 
   author = "chooblarin"
+  avatar = "/images/kao.png"
+  contact = "mailto:choo.bla.rin@gmail.com"
+  bio = "iOS/Android Application Developer"
+
+  subtitle = "I am an engineer."
+  themecolor = "#8B3381"
