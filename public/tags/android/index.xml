@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Android on chooblarin&#39;s blog</title>
+    <link>http://chooblarin.github.io/tags/android/</link>
+    <description>Recent content in Android on chooblarin&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 29 May 2016 22:18:00 +0900</lastBuildDate>
+    <atom:link href="http://chooblarin.github.io/tags/android/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>RxJavaのconcatMapEager</title>
+      <link>http://chooblarin.github.io/post/20160529/</link>
+      <pubDate>Sun, 29 May 2016 22:18:00 +0900</pubDate>
+      
+      <guid>http://chooblarin.github.io/post/20160529/</guid>
+      <description>
+
+&lt;p&gt;少し前の出来事なので忘れかけています．完全に忘れる前にブログに残しておきます．&lt;/p&gt;
+
+&lt;h2 id=&#34;problem&#34;&gt;Problem&lt;/h2&gt;
+
+&lt;p&gt;あるとき，Androidアプリの開発でこんなコードを書いていました．&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Item&lt;/code&gt;というModelがある．&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Item&lt;/code&gt;はID文字列&lt;code&gt;id&lt;/code&gt;をプロパティとしてもっている．&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Item&lt;/code&gt;のランキングデータを取得するWeb APIが用意されていて&lt;code&gt;Item&lt;/code&gt;の&lt;code&gt;id&lt;/code&gt;の一覧が取得出来る．&lt;/li&gt;
+&lt;li&gt;但し，取得出来るのは&lt;code&gt;id&lt;/code&gt;のみなのでViewに表示するデータ(Itemの詳細)は別のAPIで取得する必要がある．&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;flatmap&#34;&gt;flatMap()&lt;/h2&gt;
+
+&lt;p&gt;最初，私は&lt;code&gt;Observable#flatMap()&lt;/code&gt;を使って以下のようにしました．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;requestRankingItems()
+    .flatMap(itemId -&amp;gt; requestItem(itemId))
+    .subscribe(item -&amp;gt; { /* bind item to view */ })
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;しかしこのコードには問題があります．私はランキング情報をViewに表示させたかったに，これではランキングの順番がバラバラになってしまいます．
+&lt;a href=&#34;http://reactivex.io/documentation/operators/flatmap.html&#34;&gt;flatMap&lt;/a&gt;というオペレータは，
+順番を保存しないからです．
+上の例では&lt;code&gt;requestItem(itemId)&lt;/code&gt;でサーバにリクエストして，レスポンスが返ってきた順番に値がemitされます．
+&lt;a href=&#34;http://fernandocejas.com/2015/01/11/rxjava-observable-tranformation-concatmap-vs-flatmap/&#34;&gt;こちらの記事&lt;/a&gt;がとても参考になります．&lt;/p&gt;
+
+&lt;h2 id=&#34;concatmap&#34;&gt;concatMap()&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;Observable#concatMap()&lt;/code&gt;は&lt;code&gt;Observable#flatMap()&lt;/code&gt;と違って順番を保存してくれます．
+そこで，コードをこのように変更してみました．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;requestRankingItems()
+    .concatMap(itemId -&amp;gt; requestItem(itemId))
+    .subscribe(item -&amp;gt; { /* bind item to view */ })
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;ところが，ここで別の問題があります．&lt;code&gt;concatMap()&lt;/code&gt;は，ソースObservableの値を1つずつ処理します．
+現在の値の処理が完了するまで次の処理を行わないのです．つまり，上の例の場合，&lt;code&gt;requestItem(itemId)&lt;/code&gt;でサーバにリクエストは，レスポンスが返ってくるまで次のリクエストを行わないのです．
+これでは，1リクエスト1秒掛かるとすると，20件のItemを取得するのに20秒も待たなければなりません．&lt;/p&gt;
+
+&lt;p&gt;リクエストは並列で実行して，結果は順番通りに取得したいんですよ．
+Javascriptの&lt;code&gt;Promise.all()&lt;/code&gt;のように．
+&lt;a href=&#34;http://stackoverflow.com/questions/35339190/is-there-a-way-like-promise-all-in-rxjava&#34;&gt;StackOverflow&lt;/a&gt;でも質問をしてみましたが期待した答えはもらえませんでした．&lt;/p&gt;
+
+&lt;h2 id=&#34;concatmapeager&#34;&gt;concatMapEager()&lt;/h2&gt;
+
+&lt;p&gt;RxJavaのObservableに&lt;code&gt;concatMapEager&lt;/code&gt;というオペレーターがあります．
+&lt;a href=&#34;http://reactivex.io/RxJava/javadoc/rx/Observable.html#concatMapEager(rx.functions.Func1)&#34;&gt;ドキュメント&lt;/a&gt;にはこう記されています．
+&amp;gt; Maps a sequence of values into Observables and concatenates these Observables eagerly into a single Observable.&lt;/p&gt;
+
+&lt;p&gt;どうやらeagerlyにconcatしてくれるらしいです．
+更に&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Eager concatenation means that once a subscriber subscribes, this operator subscribes to all of the source Observables. The operator buffers the values emitted by these Observables and then drains them in order, each one after the previous one completes.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;concatMapEagerではソースObservable（上の例ではitemIdのObservable）をすべてsubscribeしてくれます．
+つまり，すべてのidに対して一気にリクエストしてくれます．しかも結果はバッファリングされて，順番通りにemitされます．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;requestRankingItems()
+    .concatMapEager(itemId -&amp;gt; requestItem(itemId))
+    .subscribe(item -&amp;gt; { /* bind item to view */ })
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;これでOKです．ただし&lt;code&gt;concatMapEager&lt;/code&gt;はExperimentalですので今後も注目です．&lt;/p&gt;
+
+&lt;h2 id=&#34;余談&#34;&gt;余談&lt;/h2&gt;
+
+&lt;p&gt;「ブログに書く」という行為をすっかり忘れて暮らしていました．アウトプットはきちんと習慣化したいものですね．&lt;/p&gt;
+
+&lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://reactivex.io/RxJava/javadoc/rx/Observable.html#flatMap(rx.functions.Func1)&#34;&gt;flatMap&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://reactivex.io/RxJava/javadoc/rx/Observable.html#concatMap(rx.functions.Func1)&#34;&gt;concatMap&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://reactivex.io/RxJava/javadoc/rx/Observable.html#concatMapEager(rx.functions.Func1)&#34;&gt;concatMapEager&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://fernandocejas.com/2015/01/11/rxjava-observable-tranformation-concatmap-vs-flatmap/&#34;&gt;RxJava Observable tranformation: concatMap() vs flatMap()&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ReactiveX/reactivex.github.io/issues/165&#34;&gt;Document new concatEager() operator #165&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

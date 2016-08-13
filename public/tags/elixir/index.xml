@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Elixir on chooblarin&#39;s blog</title>
+    <link>http://chooblarin.github.io/tags/elixir/</link>
+    <description>Recent content in Elixir on chooblarin&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 28 Aug 2015 07:15:00 +0900</lastBuildDate>
+    <atom:link href="http://chooblarin.github.io/tags/elixir/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Hello PhoenixをHerokuで</title>
+      <link>http://chooblarin.github.io/post/20150828/</link>
+      <pubDate>Fri, 28 Aug 2015 07:15:00 +0900</pubDate>
+      
+      <guid>http://chooblarin.github.io/post/20150828/</guid>
+      <description>
+
+&lt;p&gt;つい先日弊社ではElixirの&lt;a href=&#34;https://gist.github.com/chooblarin/2432345f7b11629bafd9&#34;&gt;社内勉強会&lt;/a&gt;を行いました．&lt;/p&gt;
+
+&lt;p&gt;今回は&lt;a href=&#34;http://www.phoenixframework.org&#34;&gt;Phoenix&lt;/a&gt;をHerokuで動かしてみます．&lt;/p&gt;
+
+&lt;p&gt;以下のサイトを参考にさせてもらいました．&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://wsmoak.net/2015/07/05/phoenix-on-heroku.html&#34;&gt;Deploying a Phoenix app to Heroku&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;phoenixをインストール&#34;&gt;Phoenixをインストール&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.phoenixframework.org/docs/installation&#34;&gt;公式サイト&lt;/a&gt;に記載の通りです．&lt;/p&gt;
+
+&lt;p&gt;Hexをインストール&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ mix local.hex
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Phoenixアーカイブをインストール&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ mix archive.install https://github.com/phoenixframework/phoenix/releases/download/v0.17.1/phoenix_new-0.17.1.ez
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;hello-phoenix&#34;&gt;Hello Phoenix&lt;/h2&gt;
+
+&lt;p&gt;これも&lt;a href=&#34;http://www.phoenixframework.org/docs/up-and-running&#34;&gt;公式サイト&lt;/a&gt;通り．&lt;/p&gt;
+
+&lt;p&gt;Phoenixプロジェクトを作成&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ mix phoenix.new hello_phoenix
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;起動&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ cd hello_phoenix
+$ mix phoenix.server
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;確認 =&amp;gt; &lt;a href=&#34;http://localhost:4000&#34;&gt;http://localhost:4000&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;herokuにデプロイ&#34;&gt;Herokuにデプロイ&lt;/h2&gt;
+
+&lt;p&gt;Buildpackに&lt;a href=&#34;https://github.com/HashNuke/heroku-buildpack-elixir&#34;&gt;Heroku Buildpack for Elixir&lt;/a&gt;と&lt;a href=&#34;https://github.com/gjaldon/heroku-buildpack-phoenix-static&#34;&gt;Phoenix Static Buildpack&lt;/a&gt;の2つを使用します．&lt;/p&gt;
+
+&lt;h3 id=&#34;gitignoreファイルを編集&#34;&gt;.gitignoreファイルを編集&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;.gitignore&lt;/code&gt;の&lt;code&gt;config/prod.secret.exs&lt;/code&gt;をコメントアウトします．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;...
+
+# The config/prod.secret.exs file by default contains sensitive
+# data and you should not commit it into version control.
+#
+# Alternatively, you may comment the line below and commit the
+# secrets file as long as you replace its contents by environment
+# variables.
+#/config/prod.secret.exs
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;herokuの環境編集を設定&#34;&gt;Herokuの環境編集を設定&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;config/prod.secret.exs&lt;/code&gt;を&lt;code&gt;.gitignore&lt;/code&gt;の対象から外したので，重要な情報をherokuの環境変数に置き換えます．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;use Mix.Config
+
+# In this file, we keep production configuration that
+# you likely want to automate and keep it away from
+# your version control system.
+config :hello_phoenix_heroku, HelloPhoenixHeroku.Endpoint,
+  secret_key_base: System.get_env(&amp;quot;SECRET_KEY_BASE&amp;quot;)
+
+# Configure your database
+config :hello_phoenix_heroku, HelloPhoenixHeroku.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  username: System.get_env(&amp;quot;DATABASE_USERNAME&amp;quot;),
+  password: System.get_env(&amp;quot;DATABASE_PASSWORD&amp;quot;),
+  database: &amp;quot;hello_phoenix_heroku_prod&amp;quot;,
+  size: 20 # The amount of database connections in the pool
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;$ heroku config:set SECRET_KEY_BASE=&amp;lt;YOUR_SECRET_KEY_BASE&amp;gt;
+$ heroku config:set SECRET_KEY_BASE=&amp;lt;YOUR_DATABASE_USERNAME&amp;gt;
+$ heroku config:set SECRET_KEY_BASE=&amp;lt;YOUR_DATABASE_PASSWORD&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;必要な設定ファイルを作成&#34;&gt;必要な設定ファイルを作成&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;elixir_buildpack.config&lt;/code&gt;ファイルと&lt;code&gt;Procfile&lt;/code&gt;をプロジェクトのルートに作成します．&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;elixir_buildpack.config&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;# Erlang version
+erlang_version=17.5
+
+# Elixir version
+elixir_version=1.0.4
+
+# Always rebuild from scratch on every deploy?
+always_rebuild=false
+
+# Export heroku config vars
+config_vars_to_export=(DATABASE_URL SECRET_KEY_BASE)
+
+# A command to run right after compiling the app
+post_compile=&amp;quot;pwd&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Procfile&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;web: mix phoenix.server
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;そしたらgitコミットします．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ git init
+$ git add .
+$ git commit -m &amp;quot;Hello, Phoenix&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;デプロイ&#34;&gt;デプロイ&lt;/h3&gt;
+
+&lt;p&gt;Herokuアプリを作成&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ heroku create --buildpack &amp;quot;https://github.com/HashNuke/heroku-buildpack-elixir.git&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;以下の2つのBuildpackを設定&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/HashNuke/heroku-buildpack-elixir&#34;&gt;Heroku Buildpack for Elixir&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/gjaldon/heroku-buildpack-phoenix-static&#34;&gt;Phoenix Static Buildpack&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;$ heroku buildpacks:set https://github.com/gjaldon/phoenix-static-buildpack
+$ heroku buildpacks:add --index 1 https://github.com/HashNuke/heroku-buildpack-elixir
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;ぷっしゅ&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ git push heroku master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://chooblaphoenix.herokuapp.com&#34;&gt;出来た！&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>今年はElixir</title>
+      <link>http://chooblarin.github.io/post/20150703/</link>
+      <pubDate>Fri, 03 Jul 2015 03:15:00 +0900</pubDate>
+      
+      <guid>http://chooblarin.github.io/post/20150703/</guid>
+      <description>&lt;p&gt;毎年新しいプログラミング言語を勉強しろと誰かが言っていました．
+今年は流行に乗って&lt;a href=&#34;http://elixir-lang.org/&#34;&gt;Elixir&lt;/a&gt;をコツコツ勉強しようと思います．
+&lt;a href=&#34;http://www.phoenixframework.org/v0.10.0&#34;&gt;Phoenix Framework&lt;/a&gt;で何かしらのアプリを作ることを目標にします．&lt;/p&gt;
+
+&lt;p&gt;千里の道も&lt;a href=&#34;http://chooblarin.com/slides/?elixir_intro_01.md&#34;&gt;一歩&lt;/a&gt;から&lt;/p&gt;
+
+&lt;p&gt;Peace out!&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
