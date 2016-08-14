@@ -6,8 +6,180 @@
     <description>Recent content on chooblarin&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 May 2016 22:18:00 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 14 Aug 2016 21:34:14 +0900</lastBuildDate>
     <atom:link href="http://chooblarin.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>NSLinguistic​Taggerで遊ぶ</title>
+      <link>http://chooblarin.github.io/post/natural-lang-with-swift/</link>
+      <pubDate>Sun, 14 Aug 2016 21:34:14 +0900</pubDate>
+      
+      <guid>http://chooblarin.github.io/post/natural-lang-with-swift/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;https://realm.io/news/natural-language-processing-with-swift/&#34;&gt;&amp;ldquo;Natural Language Processing with Swift&amp;rdquo;&lt;/a&gt;という素晴らしいトークを拝見しました．トークの中では，ナイーブベイズ分類器を用いた簡易のスパムフィルタの実装が説明されています．
+その中で&lt;a href=&#34;https://developer.apple.com/library/mac/documentation/Cocoa/Reference/NSLinguisticTagger_Class/&#34;&gt;&lt;code&gt;NSLinguistic​Tagger&lt;/code&gt;&lt;/a&gt;という便利なクラスを知り，気になったので触ってみました．(環境はXcode 7.3.1, Swift 2.2です．)&lt;/p&gt;
+
+&lt;h2 id=&#34;初期化する&#34;&gt;初期化する&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;NSLinguistic​Tagger&lt;/code&gt;の初期には&lt;code&gt;tagSchemes&lt;/code&gt;と&lt;code&gt;options&lt;/code&gt;を渡します．
+型はそれぞれ&lt;code&gt;[String]&lt;/code&gt;と&lt;code&gt;Int&lt;/code&gt;です．&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;NSLinguistic​Tagger&lt;/code&gt;はなかなか多機能なやつで，&lt;code&gt;tagSchemes&lt;/code&gt;には用途に応じたパラメータを渡すことになります．これは後ほど調べるとして，今はとにかくテキトーに初期化してみます．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-Swift&#34;&gt;let tagger = NSLinguisticTagger(tagSchemes: [NSLinguisticTagSchemeLexicalClass], options: 0)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;tagSchemes&lt;/code&gt;はLexicalClass，&lt;code&gt;options&lt;/code&gt;は特に指定せずにインスタンスを取得出来ました．&lt;/p&gt;
+
+&lt;h2 id=&#34;試す&#34;&gt;試す&lt;/h2&gt;
+
+&lt;p&gt;先ほど初期化した&lt;code&gt;NSLinguistic​Tagger&lt;/code&gt;の簡単な使用例を見ていきます．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-Swift&#34;&gt;let sentence = &amp;quot;I&#39;m Spider-man.&amp;quot;
+let range = NSRange(location: 0, length: sentence.characters.count)
+
+tagger.string = sentence
+
+tagger.enumerateTagsInRange(
+    range,
+    scheme: NSLinguisticTagSchemeLexicalClass,
+    options: .OmitWhitespace) { tag, tokenRange, _, _ in
+        let start = sentence.startIndex.advancedBy(tokenRange.location)
+        let end = sentence.startIndex.advancedBy(tokenRange.location + tokenRange.length)
+
+        let token = sentence.substringWithRange(start ..&amp;lt; end)
+        print(&amp;quot;\(token) (\(tag))&amp;quot;)
+    }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;出力結果は以下の通り．&lt;code&gt;()&lt;/code&gt;の中身が&lt;code&gt;tagger&lt;/code&gt;によって付加されたtagです．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;I (Pronoun)
+&#39;m (Verb)
+Spider (Noun)
+- (Dash)
+man (Noun)
+. (SentenceTerminator)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;このように文章の品詞分解が出来ました．&lt;/p&gt;
+
+&lt;h2 id=&#34;tagging-schemes&#34;&gt;Tagging Schemes&lt;/h2&gt;
+
+&lt;p&gt;Schemeの指定を変更することで様々な結果を得ることが出来ます．(上記の例ではLexicalClassを指定しました．)&lt;/p&gt;
+
+&lt;p&gt;英語のテキストに対して指定可能なSchemeの一覧は以下のように取得出来ます．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-Swift&#34;&gt;let availableSchemes = NSLinguisticTagger.availableTagSchemesForLanguage(&amp;quot;en&amp;quot;)
+// =&amp;gt; [&amp;quot;TokenType&amp;quot;, &amp;quot;Language&amp;quot;, &amp;quot;Script&amp;quot;, &amp;quot;Lemma&amp;quot;, &amp;quot;LexicalClass&amp;quot;, &amp;quot;NameType&amp;quot;, &amp;quot;NameTypeOrLexicalClass&amp;quot;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;試しに別なSchemeを指定して，先ほどのコードを実行してみます．（結果のみ）&lt;/p&gt;
+
+&lt;h3 id=&#34;tokentype&#34;&gt;TokenType&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;I (Word)
+&#39;m (Word)
+Spider (Word)
+- (Punctuation)
+man (Word)
+. (Punctuation)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;nametype&#34;&gt;NameType&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;I (OtherWord)
+&#39;m (OtherWord)
+Spider (OtherWord)
+- (Dash)
+man (OtherWord)
+. (SentenceTerminator)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;language&#34;&gt;Language&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;I (en)
+&#39;m (en)
+Spider (en)
+- ()
+man (en)
+. ()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;と，このように異なるtaggingがされていることが分かります．&lt;/p&gt;
+
+&lt;p&gt;Tag Schemesの一覧は&lt;a href=&#34;https://developer.apple.com/library/mac/documentation/Cocoa/Reference/NSLinguisticTagger_Class/#//apple_ref/doc/constant_group/Linguistic_Tag_Schemes&#34;&gt;公式ドキュメント&lt;/a&gt;を確認して下さい．&lt;/p&gt;
+
+&lt;h2 id=&#34;options&#34;&gt;Options&lt;/h2&gt;
+
+&lt;p&gt;上記の例ではOmitWhitespaceを指定していたので空白の除去が行われていました．&lt;/p&gt;
+
+&lt;p&gt;Optionsの一覧は&lt;a href=&#34;https://developer.apple.com/library/mac/documentation/Cocoa/Reference/NSLinguisticTagger_Class/#//apple_ref/c/tdef/NSLinguisticTaggerOptions&#34;&gt;公式ドキュメント&lt;/a&gt;を確認して下さい．&lt;/p&gt;
+
+&lt;p&gt;句読点の除去を行うOmitPunctuationや&amp;rdquo;New York&amp;rdquo;などを一単語として扱うJoinNamesなどがあります．&lt;/p&gt;
+
+&lt;p&gt;複数のoptionを指定したい場合はor演算&lt;code&gt;|&lt;/code&gt;を行います．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;let optionsRawValue: UInt =
+NSLinguisticTaggerOptions.OmitWhitespace.rawValue | NSLinguisticTaggerOptions.JoinNames.rawValue
+
+let optionsInt = Int(optionsRawValue)
+let options = NSLinguisticTaggerOptions(rawValue: optionsRawValue)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;遊ぶ&#34;&gt;遊ぶ&lt;/h2&gt;
+
+&lt;p&gt;では最後にサンプルコードを掲載します．Playgroundでそのまま実行出来るはずです．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-Swift&#34;&gt;import Foundation
+
+extension NSRange {
+    func rangeForString(string: String) -&amp;gt; Range&amp;lt;String.Index&amp;gt;? {
+        guard location != NSNotFound else { return nil }
+        let start = string.startIndex.advancedBy(location)
+        let end = string.startIndex.advancedBy(location + length)
+        return start ..&amp;lt; end
+    }
+}
+
+let sentence1 = &amp;quot;With great power comes great responsibility.&amp;quot;
+let sentence2 = &amp;quot;In critical moments, men sometimes see exactly what they wish to see.&amp;quot;
+let sentence3 = &amp;quot;He can make the choice that no one else can make, the right choice.&amp;quot;
+
+let availableSchemes = NSLinguisticTagger.availableTagSchemesForLanguage(&amp;quot;en&amp;quot;)
+let optionsRawValue: UInt =
+    NSLinguisticTaggerOptions.OmitWhitespace.rawValue | NSLinguisticTaggerOptions.JoinNames.rawValue
+
+let tagger = NSLinguisticTagger(tagSchemes: availableSchemes, options: Int(optionsRawValue))
+
+for sentence in [sentence1, sentence2, sentence3] {
+    tagger.string = sentence
+
+    let range = NSRange(location: 0, length: sentence.characters.count)
+    tagger.enumerateTagsInRange(
+        range,
+        scheme: NSLinguisticTagSchemeNameTypeOrLexicalClass,
+        options: NSLinguisticTaggerOptions(rawValue: optionsRawValue)) {
+            tag, tokenRange, sentenceRange, stop in
+            let token = sentence.substringWithRange(tokenRange.rangeForString(sentence)!)
+            print(&amp;quot;\(tag): \(token)&amp;quot;)
+    }
+    print(&amp;quot;\n&amp;quot;)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;参考&#34;&gt;参考&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://developer.apple.com/library/mac/documentation/Cocoa/Reference/NSLinguisticTagger_Class/&#34;&gt;NSLinguisticTagger Class Reference&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://realm.io/jp/news/natural-language-processing-with-swift/&#34;&gt;Natural Language Processing with Swift&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://nshipster.com/nslinguistictagger/&#34;&gt;NSLinguisticTagger - NSHipster&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>RxJavaのconcatMapEager</title>
