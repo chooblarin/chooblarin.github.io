@@ -287,3 +287,7 @@ article section img {
     height: auto;
     margin: 13px auto;
 }
+
+.article-list article h2 {
+    font-size: xx-large;
+}
