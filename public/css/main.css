@@ -291,3 +291,9 @@ article section img {
 .article-list article h2 {
     font-size: xx-large;
 }
+
+code.has-jax {font: inherit;
+              font-size: 100%;
+              background: inherit;
+              border: inherit;
+              color: #515151;}

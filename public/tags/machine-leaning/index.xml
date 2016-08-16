@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Machine Leaning on chooblarin&#39;s blog</title>
+    <link>http://chooblarin.github.io/tags/machine-leaning/</link>
+    <description>Recent content in Machine Leaning on chooblarin&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016 chooblarin</copyright>
+    <lastBuildDate>Tue, 16 Aug 2016 21:00:25 +0900</lastBuildDate>
+    <atom:link href="http://chooblarin.github.io/tags/machine-leaning/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>TensorFlow入門以前</title>
+      <link>http://chooblarin.github.io/post/getting-started-tensorflow/</link>
+      <pubDate>Tue, 16 Aug 2016 21:00:25 +0900</pubDate>
+      
+      <guid>http://chooblarin.github.io/post/getting-started-tensorflow/</guid>
+      <description>
+
+&lt;p&gt;ずっと気になっていた&lt;a href=&#34;https://www.tensorflow.org/&#34;&gt;TensorFlow&lt;/a&gt;を触ってみました．
+TensorFlowの情報は既にWeb上で大量に溢れかえっていてとてもありがたかったです．
+&lt;a href=&#34;http://qiita.com/search?q=tensorflow&#34;&gt;Qiitaでのキーワード検索結果&lt;/a&gt;は執筆時点で472件です．
+大いに参考にさせて頂きました．&lt;/p&gt;
+
+&lt;p&gt;ちなみに私は少し前から機械学習をこそこそと勉強しているアプリエンジニアです．&lt;/p&gt;
+
+&lt;p&gt;実験環境は下記．&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Python: &lt;code&gt;3.5.1&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;TensorFlow: &lt;code&gt;0.10.0rc0&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;※ニューラルネットワークはでてきません&lt;/p&gt;
+
+&lt;h2 id=&#34;tensorflowの基礎知識&#34;&gt;TensorFlowの基礎知識&lt;/h2&gt;
+
+&lt;p&gt;TensorFlowは一連の計算を&lt;a href=&#34;https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)&#34;&gt;グラフ&lt;/a&gt;で表現します．
+&amp;ldquo;&lt;strong&gt;Operation&lt;/strong&gt;&amp;ldquo;と呼ばれるものがグラフのノードです．
+Operationは0個以上の計算対象を受け取って0個以上の計算結果を生成します．
+計算結果と計算対象は，&lt;strong&gt;Tensor&lt;/strong&gt; と呼ばれる多次元配列です (物理や数学でのテンソルと同義)．
+Tensorはグラフのエッジに相当します．
+このOperationを複数つなぎ合わせて所望の結果を得るようです．
+このようにグラフで表された計算を，実行するには，&lt;strong&gt;Session&lt;/strong&gt; オブジェクトを利用します．
+また，学習の状態を保存するために，&lt;strong&gt;Variable&lt;/strong&gt; を使うようです．&lt;/p&gt;
+
+&lt;p&gt;↓ドキュメントをパラパラっと見てイメージを掴むと良さそうです．&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.tensorflow.org/versions/r0.10/api_docs/python/framework.html#Graph&#34;&gt;Graph&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.tensorflow.org/versions/r0.10/api_docs/python/framework.html#Operation&#34;&gt;Operations&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.tensorflow.org/versions/r0.10/api_docs/python/framework.html#Tensor&#34;&gt;Tensors&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.tensorflow.org/versions/r0.10/api_docs/python/client.html#Session&#34;&gt;Sessions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.tensorflow.org/versions/r0.10/api_docs/python/state_ops.html&#34;&gt;Variables&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;introductionをやってみる&#34;&gt;Introductionをやってみる&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.tensorflow.org/versions/r0.10/get_started/index.html&#34;&gt;公式のGET STARTED&lt;/a&gt;では
+一次関数&lt;code&gt;$y = Wx + b$&lt;/code&gt;について，&lt;code&gt;$W$&lt;/code&gt;と&lt;code&gt;$b$&lt;/code&gt;を最小二乗法で求めるサンプルが公開されていました．
+（ちなみに&lt;code&gt;$W$&lt;/code&gt;はweight, &lt;code&gt;$b$&lt;/code&gt;はbiasです．）&lt;/p&gt;
+
+&lt;p&gt;上述の基礎知識を思い出しつつコードを眺めると，やっていることが大体理解出来ました．
+（ここでさっぱりイメージが湧かない人は，おそらく機械学習に関する知識が不足していますのでどこかで補いましょう．）&lt;/p&gt;
+
+&lt;h2 id=&#34;example&#34;&gt;Example&lt;/h2&gt;
+
+&lt;p&gt;Exampleの多くが&lt;a href=&#34;http://yann.lecun.com/exdb/mnist/&#34;&gt;MNIST&lt;/a&gt;の手書き数字画像を用いたものになっています．
+素晴らしいExampleなのですがもう少し単純なもので試したい気もします．
+今回は&lt;a href=&#34;https://archive.ics.uci.edu/ml/datasets/Iris&#34;&gt;Iris Data Set&lt;/a&gt;を使います．
+アルゴリズムは機械学習で最も単純な&lt;a href=&#34;https://ja.wikipedia.org/wiki/K%E8%BF%91%E5%82%8D%E6%B3%95&#34;&gt;最近傍法&lt;/a&gt;を用います．&lt;/p&gt;
+
+&lt;p&gt;下記は&lt;a href=&#34;https://github.com/aymericdamien/TensorFlow-Examples/blob/master/notebooks/2_BasicModels/nearest_neighbor.ipynb&#34;&gt;こちらのサンプルコード&lt;/a&gt;をIris版に書きなおしたものです．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# -*- coding: utf-8 -*-
+
+import random
+import numpy as np
+import tensorflow as tf
+from sklearn import datasets
+
+iris = datasets.load_iris()
+
+n_sample = list(range(len(iris.data)))
+random.seed(0)
+random.shuffle(n_sample)
+
+n_train = n_sample[:100]
+n_test = n_sample[100:]
+
+X_train = [iris.data[i] for i in n_train]
+Y_train = [iris.target[i] for i in n_train]
+
+X_test = [iris.data[i] for i in n_test]
+Y_test = [iris.target[i] for i in n_test]
+
+x_train = tf.placeholder(&amp;quot;float&amp;quot;, [None, 4])
+x_test = tf.placeholder(&amp;quot;float&amp;quot;, [4])
+
+distance = tf.reduce_sum(tf.abs(tf.add(x_train, tf.neg(x_test))), reduction_indices=1)
+prediction = tf.arg_min(distance, 0)
+
+accuracy = 0
+
+init = tf.initialize_all_variables()
+
+with tf.Session() as sess:
+    sess.run(init)
+
+    for i in range(len(X_test)):
+        nn_index = sess.run(prediction, feed_dict={x_train: X_train, x_test: X_test[i]})
+        pred = Y_train[nn_index]
+        cls = Y_test[i]
+        print(&amp;quot;Test&amp;quot;, i, &amp;quot;Prediction:&amp;quot;, pred, &amp;quot;True Class:&amp;quot;, cls)
+
+        if pred == cls:
+            accuracy += 1./len(X_test)
+    print(&amp;quot;Done.&amp;quot;)
+    print(&amp;quot;Accuracy:&amp;quot;, accuracy)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;実行結果&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Test 0 Prediction: 0 True Class: 0
+Test 1 Prediction: 1 True Class: 1
+Test 2 Prediction: 2 True Class: 1
+Test 3 Prediction: 2 True Class: 2
+Test 4 Prediction: 1 True Class: 1
+Test 5 Prediction: 1 True Class: 1
+Test 6 Prediction: 1 True Class: 1
+Test 7 Prediction: 0 True Class: 0
+Test 8 Prediction: 0 True Class: 0
+Test 9 Prediction: 2 True Class: 2
+Test 10 Prediction: 2 True Class: 2
+Test 11 Prediction: 0 True Class: 0
+Test 12 Prediction: 0 True Class: 0
+Test 13 Prediction: 2 True Class: 2
+Test 14 Prediction: 2 True Class: 2
+Test 15 Prediction: 1 True Class: 1
+Test 16 Prediction: 1 True Class: 1
+Test 17 Prediction: 2 True Class: 1
+Test 18 Prediction: 0 True Class: 0
+Test 19 Prediction: 2 True Class: 2
+Test 20 Prediction: 1 True Class: 1
+Test 21 Prediction: 1 True Class: 1
+Test 22 Prediction: 0 True Class: 0
+Test 23 Prediction: 2 True Class: 2
+Test 24 Prediction: 0 True Class: 0
+Test 25 Prediction: 0 True Class: 0
+Test 26 Prediction: 1 True Class: 1
+Test 27 Prediction: 2 True Class: 2
+Test 28 Prediction: 1 True Class: 1
+Test 29 Prediction: 0 True Class: 0
+Test 30 Prediction: 0 True Class: 0
+Test 31 Prediction: 1 True Class: 1
+Test 32 Prediction: 0 True Class: 0
+Test 33 Prediction: 1 True Class: 1
+Test 34 Prediction: 0 True Class: 0
+Test 35 Prediction: 2 True Class: 2
+Test 36 Prediction: 2 True Class: 1
+Test 37 Prediction: 0 True Class: 0
+Test 38 Prediction: 2 True Class: 2
+Test 39 Prediction: 1 True Class: 1
+Test 40 Prediction: 1 True Class: 1
+Test 41 Prediction: 2 True Class: 2
+Test 42 Prediction: 1 True Class: 1
+Test 43 Prediction: 2 True Class: 2
+Test 44 Prediction: 2 True Class: 2
+Test 45 Prediction: 2 True Class: 2
+Test 46 Prediction: 1 True Class: 1
+Test 47 Prediction: 0 True Class: 0
+Test 48 Prediction: 2 True Class: 2
+Test 49 Prediction: 1 True Class: 1
+Done.
+Accuracy: 0.94
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;今日はここまで．&lt;/p&gt;
+
+&lt;h2 id=&#34;参考&#34;&gt;参考&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.tensorflow.org/&#34;&gt;TensorFlow — an Open Source Software Library for Machine Intelligence&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://qiita.com/yanosen_jp/items/70e6d6afc36e1c0a3ef3&#34;&gt;TensorFlowのキーコンセプト: Opノード、セッション、変数 - Qiita&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://qiita.com/icoxfog417/items/fb5c24e35a849f8e2c5d&#34;&gt;TensorFlowを算数で理解する - Qiita&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
