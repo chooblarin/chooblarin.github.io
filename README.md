@@ -1,3 +1,3 @@
 # chooblarin's site.
 
-[visit](http://chooblarin.com)
+[visit](http://chooblarin.github.io/)
