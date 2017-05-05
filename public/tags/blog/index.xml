@@ -2,12 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Blog on chooblarin&#39;s blog</title>
-    <link>http://chooblarin.github.io/tags/blog/</link>
+    <link>http://chooblarin.github.io/tags/blog/index.xml</link>
     <description>Recent content in Blog on chooblarin&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2016 chooblarin</copyright>
-    <lastBuildDate>Sat, 20 Jun 2015 16:12:00 +0900</lastBuildDate>
     <atom:link href="http://chooblarin.github.io/tags/blog/index.xml" rel="self" type="application/rss+xml" />
     
     <item>

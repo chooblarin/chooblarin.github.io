@@ -3,19 +3,19 @@
 <head prefix="og: http://ogp.me/ns#">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-  <meta property="og:title" content=" Categories &middot;  chooblarin&#39;s blog" />
+  <meta property="og:title" content=" Rxswift &middot;  chooblarin&#39;s blog" />
   
   <meta name="theme-color" content="#8B3381" />
  
   <meta property="og:site_name" content="chooblarin&#39;s blog" />
-  <meta property="og:url" content="http://chooblarin.github.io/categories/" />
+  <meta property="og:url" content="http://chooblarin.github.io/tags/rxswift/" />
   
   
   <meta property="og:type" content="website" />
   
 
   <title>
-     Categories &middot;  chooblarin&#39;s blog
+     Rxswift &middot;  chooblarin&#39;s blog
   </title>
 
   <link rel="stylesheet" href="http://chooblarin.github.io/css/bootstrap.min.css" />
@@ -80,7 +80,7 @@
       </a>
       
       
-      <a href="http://chooblarin.github.io/categories/index.xml" class="btn-header btn-subscribe hidden-xs">
+      <a href="http://chooblarin.github.io/tags/rxswift/index.xml" class="btn-header btn-subscribe hidden-xs">
         <i class="fa fa-rss" aria-hidden="true"></i>
         &nbsp;Subscribe
       </a>
@@ -89,13 +89,35 @@
   </header>
   <main class="container">
 
+<section class="article-list">
+  <h1>Rxswift</h1>
+  
+  <hr/>
+  <article>
+  <header>
+    <h2><a href="http://chooblarin.github.io/post/understanding-schedulers/">RxSwiftのSchedulersと戯れる</a></h2>
+    <div class="post-meta clearfix">
+      <div class="post-date pull-left">
+        Posted on
+        <time datetime="2017-05-05T13:36:25&#43;09:00">
+          May 5, 2017
+        </time>
+      </div>
+    </div>
+  </header>
+  <div>
+    iOSのアプリ開発を始めて1年が経過しました．RxSwiftとの付き合いも1年が経過しました．最近は仕事で再びAndroidの担当になりまし
+  </div>
+  
+  <footer>
+    <ul class="pager">
+      <li class="next"><a href="http://chooblarin.github.io/post/understanding-schedulers/">Read more <span aria-hidden="true">&raquo;</span></a></li>
+    </ul>
+  </footer>
+  
+</article>
 
-<section class="taxonomy-terms">
-  <h1>Categories</h1>
-  <ul>
-    
-    
-  </ul>
+  
 </section>
   </main>
   <footer class="container global-footer">
@@ -157,11 +179,11 @@
   </script>
   <script type="text/x-mathjax-config">
     MathJax.Hub.Queue(function() {
-      
-      
-      
+      // Fix <code> tags after MathJax finishes running. This is a
+      // hack to overcome a shortcoming of Markdown. Discussion at
+      // https://github.com/mojombo/jekyll/issues/199
       var all = MathJax.Hub.getAllJax(), i;
-      for(i = 0; i < all.length; i += 1) {
+      for(i = 0; i &lt; all.length; i += 1) {
           all[i].SourceElement().parentNode.className += ' has-jax';
       }
   });

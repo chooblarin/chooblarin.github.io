@@ -2,12 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Elixir on chooblarin&#39;s blog</title>
-    <link>http://chooblarin.github.io/tags/elixir/</link>
+    <link>http://chooblarin.github.io/tags/elixir/index.xml</link>
     <description>Recent content in Elixir on chooblarin&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2016 chooblarin</copyright>
-    <lastBuildDate>Fri, 28 Aug 2015 07:15:00 +0900</lastBuildDate>
     <atom:link href="http://chooblarin.github.io/tags/elixir/index.xml" rel="self" type="application/rss+xml" />
     
     <item>

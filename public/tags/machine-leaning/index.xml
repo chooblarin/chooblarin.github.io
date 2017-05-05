@@ -2,12 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Machine Leaning on chooblarin&#39;s blog</title>
-    <link>http://chooblarin.github.io/tags/machine-leaning/</link>
+    <link>http://chooblarin.github.io/tags/machine-leaning/index.xml</link>
     <description>Recent content in Machine Leaning on chooblarin&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2016 chooblarin</copyright>
-    <lastBuildDate>Tue, 16 Aug 2016 21:00:25 +0900</lastBuildDate>
     <atom:link href="http://chooblarin.github.io/tags/machine-leaning/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
