@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://chooblarin.github.io/post/trying-beat-detection/</loc>
+    <lastmod>2017-07-17T14:08:00+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://chooblarin.github.io/post/understanding-schedulers/</loc>
     <lastmod>2017-05-05T13:36:25+09:00</lastmod>
   </url>
@@ -71,14 +76,26 @@
   </url>
   
   <url>
+    <loc>http://chooblarin.github.io/tags/javascript/</loc>
+    <lastmod>2017-07-17T14:08:00+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://chooblarin.github.io/tags/machine-leaning/</loc>
     <lastmod>2016-08-16T21:00:25+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
+    <loc>http://chooblarin.github.io/tags/p5/index.js/</loc>
+    <lastmod>2017-07-17T14:08:00+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://chooblarin.github.io/post/</loc>
-    <lastmod>2017-05-05T13:36:25+09:00</lastmod>
+    <lastmod>2017-07-17T14:08:00+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -113,7 +130,7 @@
   
   <url>
     <loc>http://chooblarin.github.io/</loc>
-    <lastmod>2017-05-05T13:36:25+09:00</lastmod>
+    <lastmod>2017-07-17T14:08:00+09:00</lastmod>
     <priority>0</priority>
   </url>
   

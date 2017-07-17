@@ -7,8 +7,143 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2016 chooblarin</copyright>
-    <lastBuildDate>Fri, 05 May 2017 13:36:25 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 17 Jul 2017 14:08:00 +0900</lastBuildDate>
     <atom:link href="http://chooblarin.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>p5.jsとBeat Detection</title>
+      <link>http://chooblarin.github.io/post/trying-beat-detection/</link>
+      <pubDate>Mon, 17 Jul 2017 14:08:00 +0900</pubDate>
+      
+      <guid>http://chooblarin.github.io/post/trying-beat-detection/</guid>
+      <description>
+
+&lt;p&gt;実は，兼ねてからJavaScriptで絵を描く遊びが好きで，ふと思いたつと書いては&lt;a href=&#34;https://chooblarin.tumblr.com&#34;&gt;Tumblr&lt;/a&gt;に投稿している．この中の多くは&lt;a href=&#34;https://p5js.org&#34;&gt;p5.js&lt;/a&gt;を使って書いた．&lt;/p&gt;
+
+&lt;h2 id=&#34;音に合わせてなにかを動かしたい&#34;&gt;音に合わせてなにかを動かしたい&lt;/h2&gt;
+
+&lt;p&gt;p5.jsには&lt;a href=&#34;https://p5js.org/reference/#/libraries/p5.sound&#34;&gt;p5.sound library&lt;/a&gt;という拡張がある．Web Audio APIに関する知識はほとんど無いけどこれならすぐに試せそう．これを使って絵を動かしてみたくなった．&lt;/p&gt;
+
+&lt;p&gt;オーディオの可視化に関しては以下の記事が大変参考になった．&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.airtightinteractive.com/2013/10/making-audio-reactive-visuals/&#34;&gt;Making Audio Reactive Visuals — Airtight Interactive&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;一般的に，以下の4つの要素が重要とのこと．&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Volume&lt;/li&gt;
+&lt;li&gt;Waveform&lt;/li&gt;
+&lt;li&gt;Level&lt;/li&gt;
+&lt;li&gt;Beat Detection&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;音に合わせて動かしたいので，上の記事のBeat Detectionアルゴリズムをそのまま拝借．&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Volumeの値を監視する．&lt;/li&gt;
+&lt;li&gt;Volumeの値が閾値を超えたときにBeatと判定し，閾値をVolumeの値で更新．&lt;/li&gt;
+&lt;li&gt;閾値は一定の割合(Decay Rate)で小さくなる．&lt;/li&gt;
+&lt;li&gt;Beatの発生直後の一定時間(Hold Time)は閾値が減少しない．&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;script src=&#34;https://gist.github.com/chooblarin/5597a1db253a77adf6758fe86d67f87f.js&#34;&gt;&lt;/script&gt;
+
+&lt;h2 id=&#34;demo&#34;&gt;Demo&lt;/h2&gt;
+
+&lt;p&gt;p5.jsを使ったサンプルは下記．5つの周波数レンジ毎にVolumeの値を取得してBeat Detectionしてみました．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import p5 from &#39;p5&#39;
+import &#39;p5/lib/addons/p5.sound&#39;
+import BeatDetector from &#39;./BeatDetector&#39;
+
+export function sketch(p) {
+
+  const ranges = [&#39;bass&#39;, &#39;lowMid&#39;, &#39;mid&#39;, &#39;highMid&#39;, &#39;treble&#39;]
+
+  let p5canvas
+  let sampleSound
+  let amplitude
+  let fft
+
+  let detectors = {}
+
+  p.preload = function () {
+    sampleSound = p.loadSound(&#39;assets/sample.mp3&#39;)
+  }
+
+  p.setup = function () {
+    p5canvas = p.createCanvas(p.windowWidth, p.windowHeight)
+    p5canvas.mouseClicked(togglePlay)
+
+    amplitude = new p5.Amplitude()
+    fft = new p5.FFT()
+
+    sampleSound.play()
+
+    detectors[&#39;bass&#39;] = new BeatDetector(10, 0.85, 0.65)
+    detectors[&#39;lowMid&#39;] = new BeatDetector(30, 0.97, 0.40)
+    detectors[&#39;mid&#39;] = new BeatDetector(20, 0.90, 0.3)
+    detectors[&#39;highMid&#39;] = new BeatDetector(40, 0.97, 0.3)
+    detectors[&#39;treble&#39;] = new BeatDetector(20, 0.90, 0.15)
+  }
+
+  p.draw = function () {
+    p.clear()
+    p.background(0)
+
+    fft.analyze()
+
+    for (let i = 0; i &amp;lt; ranges.length; i += 1) {
+      const r = ranges[i]
+      const x = i * (p.width / ranges.length) + 30
+      const e = fft.getEnergy(r)
+      const level = e / 255.0
+
+      const beatDetector = detectors[r]
+      const isBeatDetected = beatDetector.detect(level)
+
+      p.fill(255, 0, 0)
+      drawLevelBar(x, level)
+
+      p.fill(0, 255, 0)
+      drawThreshold(x, beatDetector.cutOff)
+
+      if (isBeatDetected) {
+        p.fill(255)
+        p.ellipse(x, 100, 60, 60)
+      }
+    }
+  }
+
+  let togglePlay = () =&amp;gt; {
+    if (sampleSound.isPlaying()) {
+      sampleSound.pause()
+    } else {
+      sampleSound.play()
+    }
+  }
+
+  let drawThreshold = (x, level) =&amp;gt; {
+    const barWidth = 60
+    const maxHeight = p.height - 400
+    const barHeight = p.map(level, 0, 1.0, 0, maxHeight)
+    p.rect(x - 30, p.height - barHeight, barWidth, 10)
+  }
+
+  let drawLevelBar = (x, level) =&amp;gt; {
+    const barWidth = 60
+    const maxHeight = p.height - 400
+    const barHeight = p.map(level, 0, 1.0, 0, maxHeight)
+    p.rect(x - barWidth / 2, p.height - barHeight, barWidth, barHeight)
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;以上です．引き続きよろしくお願いします．&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>RxSwiftのSchedulersと戯れる</title>
