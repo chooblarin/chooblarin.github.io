@@ -36,6 +36,19 @@
   <link rel="shortcut icon" href="http://chooblarin.github.io/images/favicon.ico" />
   <link rel="apple-touch-icon" href="http://chooblarin.github.io/images/apple-touch-icon.png" />
   
+
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    },
+    CommonHTML: { matchFontHeight: false },
+    displayAlign: "left",
+    displayIndent: "2em"
+  });
+  </script>
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
 </head>
 <body>
     <header class="global-header"  style="background-image:url( /images/bg.jpg )">
@@ -156,8 +169,8 @@ Tensorはグラフのエッジに相当します．
 <h2 id="introductionをやってみる">Introductionをやってみる</h2>
 
 <p><a href="https://www.tensorflow.org/versions/r0.10/get_started/index.html">公式のGET STARTED</a>では
-一次関数<code>$y = Wx + b$</code>について，<code>$W$</code>と<code>$b$</code>を最小二乗法で求めるサンプルが公開されていました．
-（ちなみに<code>$W$</code>はweight, <code>$b$</code>はbiasです．）</p>
+一次関数 $y = Wx + b$ について，$W$ と $b$ を最小二乗法で求めるサンプルが公開されていました．
+（ちなみに $W$ はweight, $b$ はbiasです．）</p>
 
 <p>上述の基礎知識を思い出しつつコードを眺めると，やっていることが大体理解出来ました．
 （ここでさっぱりイメージが湧かない人は，おそらく機械学習に関する知識が不足していますのでどこかで補いましょう．）</p>
@@ -375,33 +388,7 @@ Accuracy: 0.94
 </div>
 
   </footer>
-
   <script src="http://chooblarin.github.io/js/highlight.pack.js"></script>
-  <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  <script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [['$','$'], ['\\(','\\)']],
-      displayMath: [['$$','$$'],
-      processEscapes: true,
-      processEnvironments: true,
-      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-      TeX: { equationNumbers: { autoNumber: "AMS" },
-           extensions: ["AMSmath.js", "AMSsymbols.js"] }
-    }
-  });
-  </script>
-  <script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-      // Fix <code> tags after MathJax finishes running. This is a
-      // hack to overcome a shortcoming of Markdown. Discussion at
-      // https://github.com/mojombo/jekyll/issues/199
-      var all = MathJax.Hub.getAllJax(), i;
-      for(i = 0; i &lt; all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-      }
-  });
-  </script>
   <script>
     hljs.initHighlightingOnLoad();
   </script>

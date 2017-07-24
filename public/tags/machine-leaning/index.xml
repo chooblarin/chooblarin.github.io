@@ -57,8 +57,8 @@ Tensorはグラフのエッジに相当します．
 &lt;h2 id=&#34;introductionをやってみる&#34;&gt;Introductionをやってみる&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://www.tensorflow.org/versions/r0.10/get_started/index.html&#34;&gt;公式のGET STARTED&lt;/a&gt;では
-一次関数&lt;code&gt;$y = Wx + b$&lt;/code&gt;について，&lt;code&gt;$W$&lt;/code&gt;と&lt;code&gt;$b$&lt;/code&gt;を最小二乗法で求めるサンプルが公開されていました．
-（ちなみに&lt;code&gt;$W$&lt;/code&gt;はweight, &lt;code&gt;$b$&lt;/code&gt;はbiasです．）&lt;/p&gt;
+一次関数 $y = Wx + b$ について，$W$ と $b$ を最小二乗法で求めるサンプルが公開されていました．
+（ちなみに $W$ はweight, $b$ はbiasです．）&lt;/p&gt;
 
 &lt;p&gt;上述の基礎知識を思い出しつつコードを眺めると，やっていることが大体理解出来ました．
 （ここでさっぱりイメージが湧かない人は，おそらく機械学習に関する知識が不足していますのでどこかで補いましょう．）&lt;/p&gt;
