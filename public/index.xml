@@ -7,8 +7,181 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2016 chooblarin</copyright>
-    <lastBuildDate>Mon, 17 Jul 2017 14:08:00 +0900</lastBuildDate>
+    <lastBuildDate>Sat, 26 Aug 2017 23:28:44 +0900</lastBuildDate>
     <atom:link href="http://chooblarin.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>ElixirでMIDIファイルをパースする</title>
+      <link>http://chooblarin.github.io/post/parsing-midi-by-elixir/</link>
+      <pubDate>Sat, 26 Aug 2017 23:28:44 +0900</pubDate>
+      
+      <guid>http://chooblarin.github.io/post/parsing-midi-by-elixir/</guid>
+      <description>
+
+&lt;h2 id=&#34;動機&#34;&gt;動機&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://chooblarin.github.io/post/trying-beat-detection/&#34;&gt;前回のエントリ&lt;/a&gt;では，音楽に合わせて何か絵を動かそうとしてbeat detectionを行いましたが，事前に音に関する情報を分析するアプローチにも挑戦して見たいと思っていたところ，MIDIファイルならElixirの勉強に丁度良いかもと思いついてこの記事を書きました．&lt;/p&gt;
+
+&lt;h2 id=&#34;midi&#34;&gt;MIDI&lt;/h2&gt;
+
+&lt;p&gt;MIDIは音の情報の形式の一つです．MIDIの最も一般的なファイルがSMF(Standard MIDI Format)です．以降，SMFのファイルを単に「MIDIファイル」と表記します．&lt;/p&gt;
+
+&lt;h2 id=&#34;elixir&#34;&gt;Elixir&lt;/h2&gt;
+
+&lt;p&gt;Elixirのパターンマッチは素晴らしいです．バイナリもパターンマッチ出来ます．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;iex(1)&amp;gt; &amp;lt;&amp;lt;header :: 8, data :: binary&amp;gt;&amp;gt; = &amp;lt;&amp;lt;1, 2, 3, 4, 5&amp;gt;&amp;gt;        
+&amp;lt;&amp;lt;1, 2, 3, 4, 5&amp;gt;&amp;gt;
+iex(2)&amp;gt; header
+1
+iex(3)&amp;gt; data
+&amp;lt;&amp;lt;2, 3, 4, 5&amp;gt;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;やってみる&#34;&gt;やってみる&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://maruyama.breadfish.jp/tech/smf&#34;&gt;こちらを&lt;/a&gt;参考にMIDIファイルの中身を覗いてみる．&lt;/p&gt;
+
+&lt;p&gt;まず，MIDIファイルを読み込みます．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;iex(1) {:ok, data} = File.read &#39;sample.midi&#39;
+{:ok,
+ &amp;lt;&amp;lt;77, 84, 104, 100, 0, 0, 0, 6, 0, 1, 0, 20, 1, 224, 77, 84, 114, 107, 0, 0, 0,
+   36, 0, 255, 3, 3, 82, 101, 105, 0, 255, 81, 3, 7, 161, 32, 0, 255, 88, 4, 4,
+   2, 24, 8, 143, 143, 0, 255, 88, ...&amp;gt;&amp;gt;}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;バイナリさんこんにちわ．MIDIファイルは必ずヘッダチャンクとトラックチャンクで構成されています．&lt;/p&gt;
+
+&lt;h3 id=&#34;ヘッダ&#34;&gt;ヘッダ&lt;/h3&gt;
+
+&lt;p&gt;ヘッダを覗いてみます．ヘッダのチャンク構成は以下のようになっています．括弧の数字はバイト数です．&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;&amp;lt;&amp;ldquo;MThd&amp;rdquo;&amp;gt; &amp;lt;データ長 (4)&amp;gt; &amp;lt;フォーマット (2)&amp;gt; &amp;lt;トラック数 (2)&amp;gt; &amp;lt;時間単位 (2)&amp;gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;パターンマッチを使うと一発でヘッダをパース出来ます．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;iex(2)&amp;gt; &amp;lt;&amp;lt;&amp;quot;MThd&amp;quot;, 6 :: size(32), format :: size(16), num_of_tracks :: size(16), time_unit :: size(16), rest :: binary&amp;gt;&amp;gt; = data
+&amp;lt;&amp;lt;77, 84, 104, 100, 0, 0, 0, 6, 0, 1, 0, 20, 1, 224, 77, 84, 114, 107, 0, 0, 0,
+  36, 0, 255, 3, 3, 82, 101, 105, 0, 255, 81, 3, 7, 161, 32, 0, 255, 88, 4, 4,
+  2, 24, 8, 143, 143, 0, 255, 88, 4, ...&amp;gt;&amp;gt;
+
+iex(3)&amp;gt; format
+1
+iex(4)&amp;gt; num_of_tracks
+20
+iex(5)&amp;gt; time_unit
+480
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;フォーマット1，トラック数20，時間単位480のようです．MIDIファイルのフォーマットは&amp;rdquo;0&amp;rdquo;, &amp;ldquo;1&amp;rdquo;, &amp;ldquo;2&amp;rdquo;の3種類が定義されています．フォーマット1はトラック構成を保存したフォーマットです (後にみていくと分かります)．このファイルは20トラックの情報を含んでいます．時間単位480の意味は，全音符の分解能が480という意味です．よくわからなくても気にせずに進みます．&lt;/p&gt;
+
+&lt;p&gt;ここで&lt;code&gt;MidiParser&lt;/code&gt;というmoduleを定義しておきます．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;defmodule MidiParser do
+
+  def parse_header(&amp;lt;&amp;lt;
+  &amp;quot;MThd&amp;quot;,
+  6 :: size(32),
+  format :: size(16),
+  num_of_tracks :: size(16),
+  time_unit :: size(16),
+  _ :: binary&amp;gt;&amp;gt;) do
+
+  IO.puts &amp;quot;format: #{format}&amp;quot;
+  IO.puts &amp;quot;number of tracks: #{num_of_tracks}&amp;quot;
+  IO.puts &amp;quot;time unit: #{time_unit}&amp;quot;
+  end
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;トラック&#34;&gt;トラック&lt;/h3&gt;
+
+&lt;p&gt;トラックのチャンク構成は以下のようになっています．&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;&amp;lt;&amp;ldquo;MTrk&amp;rdquo;&amp;gt; &amp;lt;データ長 (4)&amp;gt; &amp;lt;データ本体&amp;gt; &amp;lt;&amp;hellip;残りのトラックデータ&amp;gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;MidiParser&lt;/code&gt;に各トラックのデータ本体のバイナリを取得する関数を追加します．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;defmodule MidiParser do
+
+  ...
+
+  def parse_track(data) do
+    _parse_track_chunk(data, [])
+  end
+
+  defp _parse_track_chunk(&amp;lt;&amp;lt;&amp;gt;&amp;gt;, acc) do
+    Enum.reverse(acc)
+  end
+
+  defp _parse_track_chunk(&amp;lt;&amp;lt;
+    &amp;quot;MTrk&amp;quot;,
+    length :: size(32),
+    body :: binary - size(length),
+    chunks :: binary&amp;gt;&amp;gt;, tracks) do
+
+    _parse_track_chunk(chunks, [body | tracks])
+  end
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;トラック部分のバイナリを渡して…&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;iex(7)&amp;gt; tracks = MidiParser.parse_track(chunks)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;tracks&lt;/code&gt;はトラックの情報を持ったbinaryのリストです．長さを調べると…&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;iex(8)&amp;gt; length tracks
+20
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;20トラック分のバイナリを取得出来ました．これからトラック情報をパースしていきます．&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;&amp;lt;データ本体&amp;gt;&lt;/em&gt; は以下のような構成です．&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;&amp;lt;デルタタイム&amp;gt; &amp;lt;イベント&amp;gt; &amp;lt;デルタタイム&amp;gt; &amp;lt;イベント&amp;gt; &amp;lt;デルタタイム&amp;gt; &amp;lt;イベント&amp;gt;&amp;hellip;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;デルタタイムは可変長バイト列です．先頭1ビットはフラグで残りの7ビット分が数値を表しています．MSB(Most Significant Byte)が1のとき，次のバイトもデルタタイムを表現していることになります．この表現方法を解釈する関数を定義してみました．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def _extract_variable_length(&amp;lt;&amp;lt;msb :: 1, exp :: 7, _ :: binary&amp;gt;&amp;gt;) when msb == 0 do
+  &amp;lt;&amp;lt;exp :: 7&amp;gt;&amp;gt;
+end
+
+def _extract_variable_length(&amp;lt;&amp;lt;_ :: 1, exp :: 7, rest :: binary&amp;gt;&amp;gt;) do
+  next = _extract_variable_length(rest)
+  &amp;lt;&amp;lt; &amp;lt;&amp;lt;exp :: 7&amp;gt;&amp;gt; :: bitstring, next :: bitstring &amp;gt;&amp;gt;
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;これで数値部分のbitstringを抽出出来ました．バイト列に戻して値を抽出します．&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def extract_variable_length(data) do
+  bits = _extract_variable_length(data)
+  bs = bit_size(bits)
+  padding_size = 8 - rem(bs, 8)
+  byte_data = &amp;lt;&amp;lt; &amp;lt;&amp;lt;0 :: size(padding_size)&amp;gt;&amp;gt; :: bitstring, bits :: bitstring &amp;gt;&amp;gt;
+
+  bit_length = padding_size + bs
+  &amp;lt;&amp;lt;length :: size(bit_length)&amp;gt;&amp;gt; = byte_data
+  &amp;lt;&amp;lt;_ :: size(bit_length), chunks :: binary&amp;gt;&amp;gt; = data
+  {length, chunks}
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;あとはイベントを解釈するコードを追加するのですが，長くなりそうなので続きは後日書きます．
+ソースコードは&lt;a href=&#34;https://github.com/chooblarin/midi_parser&#34;&gt;こちら&lt;/a&gt;に置きました．&lt;/p&gt;
+
+&lt;h2 id=&#34;参考&#34;&gt;参考&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.music.mcgill.ca/~ich/classes/mumt306/StandardMIDIfileformat.html&#34;&gt;Standard MIDI-File Format Spec. 1.1, updated&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://maruyama.breadfish.jp/tech/smf&#34;&gt;SMF(Standard MIDI File)フォーマット解説 | 技術的読み物 | FISH&amp;amp;BREAD&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://zohaib.me/binary-pattern-matching-in-elixir/&#34;&gt;Binary pattern matching in Elixir with PNG parsing example&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>p5.jsとBeat Detection</title>
