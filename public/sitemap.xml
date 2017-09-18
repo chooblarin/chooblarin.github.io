@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
     <loc>http://chooblarin.github.io/post/parsing-midi-by-elixir/</loc>
@@ -69,6 +70,11 @@
   </url>
   
   <url>
+    <loc>http://chooblarin.github.io/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://chooblarin.github.io/tags/elixir/</loc>
     <lastmod>2017-08-26T23:28:44+09:00</lastmod>
     <priority>0</priority>
@@ -93,7 +99,7 @@
   </url>
   
   <url>
-    <loc>http://chooblarin.github.io/tags/p5/index.js/</loc>
+    <loc>http://chooblarin.github.io/tags/p5.js/</loc>
     <lastmod>2017-07-17T14:08:00+09:00</lastmod>
     <priority>0</priority>
   </url>
@@ -124,6 +130,7 @@
   
   <url>
     <loc>http://chooblarin.github.io/tags/</loc>
+    <lastmod>2016-05-29T22:18:00+09:00</lastmod>
     <priority>0</priority>
   </url>
   
