@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tensorflow on chooblarin&#39;s blog</title>
-    <link>http://chooblarin.github.io/tags/tensorflow/</link>
+    <link>https://chooblarin.github.io/tags/tensorflow/</link>
     <description>Recent content in Tensorflow on chooblarin&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2016 chooblarin</copyright>
     <lastBuildDate>Tue, 16 Aug 2016 21:00:25 +0900</lastBuildDate>
     
-	<atom:link href="http://chooblarin.github.io/tags/tensorflow/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://chooblarin.github.io/tags/tensorflow/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>TensorFlow入門以前</title>
-      <link>http://chooblarin.github.io/post/getting-started-tensorflow/</link>
+      <link>https://chooblarin.github.io/post/getting-started-tensorflow/</link>
       <pubDate>Tue, 16 Aug 2016 21:00:25 +0900</pubDate>
       
-      <guid>http://chooblarin.github.io/post/getting-started-tensorflow/</guid>
+      <guid>https://chooblarin.github.io/post/getting-started-tensorflow/</guid>
       <description>ずっと気になっていたTensorFlowを触ってみました． TensorFlowの情報は既にWeb上で大量に溢れかえっていてとてもありがたかっ</description>
     </item>
     

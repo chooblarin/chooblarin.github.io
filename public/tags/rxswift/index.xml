@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Rxswift on chooblarin&#39;s blog</title>
-    <link>http://chooblarin.github.io/tags/rxswift/</link>
+    <link>https://chooblarin.github.io/tags/rxswift/</link>
     <description>Recent content in Rxswift on chooblarin&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2016 chooblarin</copyright>
     <lastBuildDate>Fri, 05 May 2017 13:36:25 +0900</lastBuildDate>
     
-	<atom:link href="http://chooblarin.github.io/tags/rxswift/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://chooblarin.github.io/tags/rxswift/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>RxSwiftのSchedulersと戯れる</title>
-      <link>http://chooblarin.github.io/post/understanding-schedulers/</link>
+      <link>https://chooblarin.github.io/post/understanding-schedulers/</link>
       <pubDate>Fri, 05 May 2017 13:36:25 +0900</pubDate>
       
-      <guid>http://chooblarin.github.io/post/understanding-schedulers/</guid>
+      <guid>https://chooblarin.github.io/post/understanding-schedulers/</guid>
       <description>iOSのアプリ開発を始めて1年が経過しました．RxSwiftとの付き合いも1年が経過しました．最近は仕事で再びAndroidの担当になりまし</description>
     </item>
     

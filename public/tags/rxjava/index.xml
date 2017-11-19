@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Rxjava on chooblarin&#39;s blog</title>
-    <link>http://chooblarin.github.io/tags/rxjava/</link>
+    <link>https://chooblarin.github.io/tags/rxjava/</link>
     <description>Recent content in Rxjava on chooblarin&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2016 chooblarin</copyright>
     <lastBuildDate>Sun, 29 May 2016 22:18:00 +0900</lastBuildDate>
     
-	<atom:link href="http://chooblarin.github.io/tags/rxjava/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://chooblarin.github.io/tags/rxjava/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>RxJavaのconcatMapEager</title>
-      <link>http://chooblarin.github.io/post/20160529/</link>
+      <link>https://chooblarin.github.io/post/20160529/</link>
       <pubDate>Sun, 29 May 2016 22:18:00 +0900</pubDate>
       
-      <guid>http://chooblarin.github.io/post/20160529/</guid>
+      <guid>https://chooblarin.github.io/post/20160529/</guid>
       <description>少し前の出来事なので忘れかけています．完全に忘れる前にブログに残しておきます． Problem あるとき，Androidアプリの開発でこんなコードを書いてい</description>
     </item>
     
     <item>
       <title>Observableは友達</title>
-      <link>http://chooblarin.github.io/post/observable_is_my_friend/</link>
+      <link>https://chooblarin.github.io/post/observable_is_my_friend/</link>
       <pubDate>Tue, 17 Mar 2015 22:57:00 +0900</pubDate>
       
-      <guid>http://chooblarin.github.io/post/observable_is_my_friend/</guid>
+      <guid>https://chooblarin.github.io/post/observable_is_my_friend/</guid>
       <description>この文章はRxJavaとRxAndroidについて書かれています． 開発中のAndroidアプリに導入してみて得られた知見をまったりざっくりま</description>
     </item>
     
