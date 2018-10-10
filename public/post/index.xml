@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2016 chooblarin</copyright>
-    <lastBuildDate>Tue, 19 Jun 2018 21:00:00 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 11 Oct 2018 02:08:00 +0900</lastBuildDate>
     
 	<atom:link href="https://chooblarin.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>RxJSのforkJoinはPromise.all相当</title>
+      <link>https://chooblarin.github.io/post/forkjoin-in-rxjs-is-promiss-all/</link>
+      <pubDate>Thu, 11 Oct 2018 02:08:00 +0900</pubDate>
+      
+      <guid>https://chooblarin.github.io/post/forkjoin-in-rxjs-is-promiss-all/</guid>
+      <description>以前（ずいぶんと前だけど）に，RxJavaについてのエントリで，「RxJavaに Promise.all()は欲しい」という話をしました．この</description>
+    </item>
     
     <item>
       <title>CSS Houdiniを試した</title>

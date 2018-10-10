@@ -3,26 +3,26 @@
 <head prefix="og: http://ogp.me/ns#">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-  <meta property="og:title" content=" CSS Houdiniを試した &middot;  chooblarin&#39;s blog" />
+  <meta property="og:title" content=" RxJSのforkJoinはPromise.all相当 &middot;  chooblarin&#39;s blog" />
   
   <meta name="theme-color" content="#8B3381" />
  
   <meta property="og:site_name" content="chooblarin&#39;s blog" />
-  <meta property="og:url" content="https://chooblarin.github.io/post/try-css-houdini/" />
+  <meta property="og:url" content="https://chooblarin.github.io/post/forkjoin-in-rxjs-is-promiss-all/" />
   
   
   <meta property="og:type" content="article" />
   
   <meta property="og:article:author" content="https://facebook.com/sou.hatake" />
   
-  <meta property="og:article:published_time" content="2018-06-19T21:00:00&#43;09:00" />
+  <meta property="og:article:published_time" content="2018-10-11T02:08:00&#43;09:00" />
   
-  <meta property="og:article:tag" content="CSS" />
+  <meta property="og:article:tag" content="RxJS" />
   
   
 
   <title>
-     CSS Houdiniを試した &middot;  chooblarin&#39;s blog
+     RxJSのforkJoinはPromise.all相当 &middot;  chooblarin&#39;s blog
   </title>
 
   <link rel="stylesheet" href="https://chooblarin.github.io/css/bootstrap.min.css" />
@@ -107,17 +107,17 @@
 
 <article>
   <header>
-    <h1 class="text-primary">CSS Houdiniを試した</h1>
+    <h1 class="text-primary">RxJSのforkJoinはPromise.all相当</h1>
     <div class="post-meta clearfix">
       <div class="post-date pull-left">
         Posted on
-        <time datetime="2018-06-19T21:00:00&#43;09:00">
-          Jun 19, 2018
+        <time datetime="2018-10-11T02:08:00&#43;09:00">
+          Oct 11, 2018
         </time>
       </div>
       <div class="pull-right">
         
-        <span class="post-tag small"><a href="https://chooblarin.github.io//tags/css">#CSS</a></span>
+        <span class="post-tag small"><a href="https://chooblarin.github.io//tags/rxjs">#RxJS</a></span>
         
       </div>
     </div>
@@ -125,53 +125,147 @@
   <section>
     
 
-<p>CSSの機能に拡張性を提供する&rdquo;CSS Houdini&rdquo;が気になっていた．</p>
-
-<p><a href="https://mozaic.fm">mozaic.fm</a>というポッドキャストでHoudiniの話を聴いて以来，ずっと気になっていたので自分でも調べてみた．</p>
-
-<ul>
-<li><a href="https://mozaic.fm/episodes/29/houdini.html">ep29 Houdini | mozaic.fm</a></li>
-</ul>
+<p>以前（ずいぶんと前だけど）に，<a href="https://chooblarin.github.io/post/20160529/">RxJavaについてのエントリ</a>で，「RxJavaに <code>Promise.all()</code>は欲しい」という話をしました．この時に紹介したRxJavaの<code>concatMapEager</code>は，当時はExperimentalでしたが現在はStableになっています．</p>
 
 <hr />
 
-<p>以下，有益だった情報をまとめる．</p>
+<p>今回はRxJavaではなくRxJSについてです．</p>
 
-<ul>
-<li><a href="https://github.com/w3c/css-houdini-drafts/wiki/ideas">https://github.com/w3c/css-houdini-drafts/wiki/ideas</a></li>
-<li><a href="https://developers.google.com/web/updates/2016/05/houdini">Houdini: Demystifying CSS  | Google Developers</a></li>
-<li><a href="https://developers.google.com/web/updates/2018/01/paintapi">CSS Paint API  | Google Developers</a></li>
-<li><a href="https://developers.google.com/web/updates/2018/03/cssom">Working with the new CSS Typed Object Model  | Google Developers</a></li>
-<li><a href="https://developers.google.com/web/updates/2016/02/css-variables-why-should-you-care">CSS Variables: Why Should You Care?  | Google Developers</a></li>
-<li><a href="https://wicg.github.io/animation-worklet/">CSS Animation Worklet API</a></li>
-</ul>
+<p>先のエントリの中で，私が求めいたのは</p>
 
-<p>現在 (2018年06月19日) はChromeでPaint APIとAnimation Workletの一部を試すことが出来る．各ブラウザの実装状況 (Experimental) は，<a href="https://ishoudinireadyyet.com/">&ldquo;Is Houdini Ready Yet?&rdquo;</a> というサイトで確認できる．</p>
+<ol>
+<li>処理が並行して実行される</li>
+<li>順番が保存されている</li>
+</ol>
 
-<h2 id="demo">Demo</h2>
+<p>という特徴を持ったオペレータでした．そして最近，RxJSの<code>forkJoin</code>を知りました．</p>
 
-<p>以下のデモが参考になった．</p>
+<h2 id="rxjsのforkjoin">RxJSのforkJoin</h2>
 
-<ul>
-<li><a href="https://github.com/GoogleChromeLabs/houdini-samples">GoogleChromeLabs/houdini-samples</a></li>
-<li><a href="https://github.com/iamvdo/css-houdini.rocks">iamvdo/css-houdini.rocks</a></li>
-</ul>
+<p>RxJSに<code>forkJoin</code>というAPIがあります．これはObservableのリストを受け取り，それらが最後にemitした値のリストのObservableをつくります．</p>
 
-<p>自分でもHoudiniを試してみた．</p>
+<p>例えば</p>
 
-<p><p data-height="300" data-theme-id="0" data-slug-hash="VdyJQE" data-default-tab="js,result" data-user="chooblarin" data-embed-version="2" data-pen-title="Star block (CSS Houdini Demo)" class="codepen">See the Pen <a href="https://codepen.io/chooblarin/pen/VdyJQE/">Star block (CSS Houdini Demo)</a> by Sota Hatakeyama (<a href="https://codepen.io/chooblarin">@chooblarin</a>) on <a href="https://codepen.io">CodePen</a>.</p>
-<script async src="https://static.codepen.io/assets/embed/ei.js"></script></p>
-
-<p>下記のようにブロックを星形にするCSSを作ったりした．</p>
-
-<pre><code class="language-css">.star {
-  --radius: 60;
-  --point-num: 5;
-  ...
-}
+<pre><code class="language-js">forkJoin(
+  of('君がッ', '泣くまで'),
+  of('殴るのを', 'やめないッ！'),
+).subscribe(console.log); // [&quot;泣くまで&quot;, &quot;やめないッ！&quot;]
 </code></pre>
 
-<p>全体のソースコードは<a href="https://github.com/chooblarin/fun-with-css-houdini">GitHub</a>にある．W杯頑張れニッポン．</p>
+<p>という具合です．<code>forkJoin(...)</code>は<code>Promise.all(...)</code>のObservable版なのです．</p>
+
+<p>次に，こんなモノを用意しました．</p>
+
+<pre><code class="language-js">const rand = () =&gt; Math.floor(Math.random() * 3) * 1000;
+const delayedEcho = (message) =&gt; of(message).pipe(delay(rand()));
+</code></pre>
+
+<p>ランダム時間後にメッセージをそのまま返してくれる，その名も<code>delayedEcho</code>です．</p>
+
+<pre><code class="language-js">const ids = ['1', '2', '3', '4', '5'];
+const observables = ids.map(delayedEcho);
+forkJoin(observables).subscribe(console.log);
+// [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;]
+</code></pre>
+
+<p>はい，完全に思い通りに動いてくれました．</p>
+
+<h2 id="xxxmapなオペレータ達">xxxMapなオペレータ達</h2>
+
+<p>ここから先はおまけです．先ほどの<code>delayedEcho</code>で遊んでみます．</p>
+
+<h3 id="mergemap">mergeMap</h3>
+
+<pre><code class="language-js">from(ids)
+  .pipe(
+    mergeMap(delayedEcho),
+    toArray()
+  )
+  .subscribe(console.log);
+
+// [&quot;3&quot;, &quot;5&quot;, &quot;1&quot;, &quot;2&quot;, &quot;4&quot;]
+</code></pre>
+
+<p><code>mergeMap</code>は<code>flatMap</code>です (<code>flatMap</code>が<code>mergeMap</code>のエイリアス)．処理は並行に走りますが，購読される値は先着順です．</p>
+
+<h3 id="concatmap">concatMap</h3>
+
+<pre><code class="language-js">from(ids)
+  .pipe(
+    concatMap(delayedEcho),
+    toArray()
+  )
+  .subscribe(console.log);
+
+// [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;]
+</code></pre>
+
+<p><code>concatMap</code>は，処理が直列です．現在の処理が完了するまで次の処理を開始しません．したがって，上記の例は<code>mergeMap</code>の平均およそ5倍の時間が掛かります．</p>
+
+<h3 id="switchmap">switchMap</h3>
+
+<pre><code class="language-js">from(ids)
+  .pipe(
+    switchMap(delayedEcho),
+    toArray()
+  )
+  .subscribe(console.log);
+
+// [&quot;5&quot;]
+</code></pre>
+
+<p><code>switchMap</code>は最新のObservableに関心を切り替えます．</p>
+
+<p>ここで，<code>delayedEcho</code>に少し小細工をします．</p>
+
+<pre><code class="language-js">const delayedEcho = (message) =&gt; of(message)
+  .pipe(
+    tap(console.log), // &lt;= これを追加
+    delay(rand())
+  );
+</code></pre>
+
+<p>そして先ほどの<code>switchMap</code>のコードをもう一度実行すると&hellip;</p>
+
+<pre><code class="language-js">from(ids)
+  .pipe(
+    switchMap(delayedEcho),
+    toArray()
+  )
+  .subscribe(console.log);
+
+// &quot;1&quot;
+// &quot;2&quot;
+// &quot;3&quot;
+// &quot;4&quot;
+// &quot;5&quot;
+// [&quot;5&quot;]
+</code></pre>
+
+<p><code>&quot;1&quot;</code>から<code>&quot;4&quot;</code>は無視されたかと思いきや，全てのObservableの処理は実行を開始していたことがわかります．</p>
+
+<h3 id="exhaustmap">exhaustMap</h3>
+
+<p>最後が<code>exhaustMap</code>です．このオペレータは重要です．</p>
+
+<pre><code class="language-js">from(ids)
+  .pipe(
+    exhaustMap(delayedEcho),
+    toArray()
+  )
+  .subscribe(console.log);
+
+// &quot;1&quot;
+// [&quot;1&quot;]
+</code></pre>
+
+<p><code>exhaustMap</code>は，前の処理が完了していなかい場合には後続の処理を無視します．この挙動は，非同期処理が不整合を起こさないための様々なケースに使えます．</p>
+
+<h2 id="参考">参考</h2>
+
+<ul>
+<li><a href="https://rxjs-dev.firebaseapp.com/api">RxJS - API List</a></li>
+</ul>
 
   </section>
   <footer>
@@ -213,10 +307,10 @@
     </section>
     <ul class="pager">
       
-      <li class="previous"><a href="https://chooblarin.github.io/post/i-love-rx/"><span aria-hidden="true">&larr;</span> Older</a></li>
+      <li class="previous"><a href="https://chooblarin.github.io/post/try-css-houdini/"><span aria-hidden="true">&larr;</span> Older</a></li>
       
       
-      <li class="next"><a href="https://chooblarin.github.io/post/forkjoin-in-rxjs-is-promiss-all/">Newer <span aria-hidden="true">&rarr;</span></a></li>
+      <li class="next disabled"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
       
     </ul>
   </footer>
