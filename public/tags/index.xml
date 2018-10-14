@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2016 chooblarin</copyright>
-    <lastBuildDate>Sun, 29 May 2016 22:18:00 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 14 Oct 2018 10:56:00 +0900</lastBuildDate>
     
 	<atom:link href="https://chooblarin.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Algorithm</title>
+      <link>https://chooblarin.github.io/tags/algorithm/</link>
+      <pubDate>Sun, 14 Oct 2018 10:56:00 +0900</pubDate>
+      
+      <guid>https://chooblarin.github.io/tags/algorithm/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Android</title>
@@ -60,7 +69,7 @@
     <item>
       <title>Javascript</title>
       <link>https://chooblarin.github.io/tags/javascript/</link>
-      <pubDate>Mon, 17 Jul 2017 14:08:00 +0900</pubDate>
+      <pubDate>Sun, 14 Oct 2018 10:56:00 +0900</pubDate>
       
       <guid>https://chooblarin.github.io/tags/javascript/</guid>
       <description></description>
