@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2016 chooblarin</copyright>
-    <lastBuildDate>Thu, 24 May 2018 23:30:00 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 21 Nov 2018 23:40:00 +0900</lastBuildDate>
     
 	<atom:link href="https://chooblarin.github.io/tags/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>CHTF@深圳に行ってきた</title>
+      <link>https://chooblarin.github.io/post/chtf2018/</link>
+      <pubDate>Wed, 21 Nov 2018 23:40:00 +0900</pubDate>
+      
+      <guid>https://chooblarin.github.io/post/chtf2018/</guid>
+      <description>「深圳に行ってみたい」と言い続けていたら，とある視察ツアーに参加する機会を頂きました．大変感謝します． 深圳は，中国政府の政策を背景に数年で急</description>
+    </item>
     
     <item>
       <title>転職しました</title>
