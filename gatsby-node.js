@@ -6,12 +6,9 @@ exports.createPages = ({ actions: { createPage }, graphql }) => {
     {
       allMarkdownRemark(limit: 1000) {
         edges {
-          id
-          fields {
-            slug
-          }
           node {
             frontmatter {
+              slug
               tags
             }
           }
@@ -25,14 +22,11 @@ exports.createPages = ({ actions: { createPage }, graphql }) => {
     }
 
     result.data.allMarkdownRemark.edges.forEach(({ node }) => {
-      console.log(node);
       createPage({
-        path: node.fields.slug,
-        tags: edge.node.frontmatter.tags,
+        path: node.frontmatter.slug,
+        tags: node.frontmatter.tags || [],
         component: blogTemplate,
-        context: {
-          id
-        }
+        context: {}
       });
     });
   });
