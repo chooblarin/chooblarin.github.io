@@ -1,14 +1,24 @@
 import React from "react";
-import { graphql } from "gatsby";
+import { Link, graphql } from "gatsby";
 
 import Layout from "../components/layout";
 import PostLink from "../components/post-link";
 
 export default ({ data: { allMarkdownRemark } }) => {
-  const postLinks = allMarkdownRemark.edges.map(edge => (
-    <PostLink key={edge.node.id} post={edge.node} />
-  ));
-  return <Layout>{postLinks}</Layout>;
+  const pagenateSize = 10;
+
+  const postLinks = allMarkdownRemark.edges
+    .slice(0, pagenateSize)
+    .map(edge => <PostLink key={edge.node.id} post={edge.node} />);
+
+  return (
+    <Layout>
+      {postLinks}
+      {postLinks.length >= pagenateSize && (
+        <Link to="/page/2">Older posts</Link>
+      )}
+    </Layout>
+  );
 };
 
 export const pageQuery = graphql`
