@@ -1,8 +1,8 @@
 ---
-date = "2015-06-13T14:38:00+09:00"
-draft = false
-title = "Milestone"
-tags = ["blog"]
+date: "2015-06-13T14:38:00+09:00"
+draft: false
+title: "Milestone"
+tags: ["blog"]
 ---
 
 プログラマになってからおよそ2年が経った節目にブログを書きました．
