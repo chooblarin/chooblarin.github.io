@@ -1,9 +1,9 @@
-+++
+---
 date = "2015-03-17T22:57:00+09:00"
 draft = false
 title = "Observableは友達"
 tags = ["Java", "RxJava"]
-+++
+---
 
 この文章はRxJavaとRxAndroidについて書かれています．
 開発中のAndroidアプリに導入してみて得られた知見をまったりざっくりまとめてみます．
