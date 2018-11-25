@@ -1,19 +1,14 @@
 import React from "react";
 import { graphql } from "gatsby";
 
-import Header from "../components/header";
+import Layout from "../components/layout";
 import PostLink from "../components/post-link";
 
 export default ({ data: { allMarkdownRemark } }) => {
   const postLinks = allMarkdownRemark.edges.map(edge => (
     <PostLink key={edge.node.id} post={edge.node} />
   ));
-  return (
-    <div>
-      <Header />
-      <div>{postLinks}</div>
-    </div>
-  );
+  return <Layout>{postLinks}</Layout>;
 };
 
 export const pageQuery = graphql`
