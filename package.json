@@ -1,0 +1,22 @@
+{
+  "name": "chooblarin.github.io",
+  "description": "my personal blog",
+  "license": "MIT",
+  "scripts": {
+    "start": "gatsby develop",
+    "clean": "rimraf .cache public",
+    "build": "gatsby build",
+    "serve": "gatsby serve"
+  },
+  "dependencies": {
+    "gatsby": "^2.0.55",
+    "gatsby-source-filesystem": "^2.0.8",
+    "gatsby-transformer-remark": "^2.1.12",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3"
+  },
+  "devDependencies": {
+    "prettier": "^1.15.2",
+    "rimraf": "^2.6.2"
+  }
+}
