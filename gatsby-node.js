@@ -1,7 +1,6 @@
-const path = require("path");
+const createPostsPage = require("./gatsby-actions/create-posts-page");
 
 exports.createPages = ({ actions: { createPage }, graphql }) => {
-  const blogTemplate = path.resolve(`src/templates/blog-post.js`);
   return graphql(`
     {
       allMarkdownRemark(limit: 1000) {
@@ -20,16 +19,8 @@ exports.createPages = ({ actions: { createPage }, graphql }) => {
       result.errors.forEach(e => console.error(e.toString()));
       return Promise.reject(result.errors);
     }
+    const posts = result.data.allMarkdownRemark.edges;
 
-    result.data.allMarkdownRemark.edges.forEach(({ node }) => {
-      createPage({
-        path: node.frontmatter.slug,
-        tags: node.frontmatter.tags || [],
-        component: blogTemplate,
-        context: {
-          slug: node.frontmatter.slug
-        }
-      });
-    });
+    createPostsPage(createPage, posts);
   });
 };
