@@ -1,4 +1,5 @@
-const createPostsPage = require("./gatsby-actions/create-posts-page");
+const createPosts = require("./gatsby-actions/create-posts");
+const createPaginatedPosts = require("./gatsby-actions/create-pagenated-posts");
 
 exports.createPages = ({ actions: { createPage }, graphql }) => {
   return graphql(`
@@ -6,9 +7,11 @@ exports.createPages = ({ actions: { createPage }, graphql }) => {
       allMarkdownRemark(limit: 1000) {
         edges {
           node {
+            id
             frontmatter {
+              title
+              date(formatString: "MMMM DD, YYYY")
               slug
-              tags
             }
           }
         }
@@ -20,7 +23,7 @@ exports.createPages = ({ actions: { createPage }, graphql }) => {
       return Promise.reject(result.errors);
     }
     const posts = result.data.allMarkdownRemark.edges;
-
-    createPostsPage(createPage, posts);
+    createPosts(createPage, posts);
+    createPaginatedPosts(createPage, posts);
   });
 };
