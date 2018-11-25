@@ -10,7 +10,13 @@ module.exports = {
         name: "markdown-pages"
       }
     },
-    `gatsby-transformer-remark`,
-    `gatsby-plugin-twitter`
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        plugins: [`gatsby-remark-katex`]
+      }
+    },
+    `gatsby-plugin-twitter`,
+    `gatsby-plugin-purgecss`
   ]
 };

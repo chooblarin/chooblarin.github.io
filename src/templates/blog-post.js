@@ -1,6 +1,8 @@
 import React from "react";
 import { graphql } from "gatsby";
 
+import "katex/dist/katex.min.css";
+
 export default function({ data }) {
   const { frontmatter, html } = data.markdownRemark;
   return (
