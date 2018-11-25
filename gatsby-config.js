@@ -13,7 +13,7 @@ module.exports = {
     {
       resolve: `gatsby-transformer-remark`,
       options: {
-        plugins: [`gatsby-remark-katex`]
+        plugins: [`gatsby-remark-katex`, `gatsby-remark-embed-gist`]
       }
     },
     `gatsby-plugin-twitter`,
