@@ -2,8 +2,7 @@ import React from "react";
 import { graphql } from "gatsby";
 
 export default function({ data }) {
-  const { markdownRemark } = data;
-  const { frontmatter, html } = markdownRemark;
+  const { frontmatter, html } = data.markdownRemark;
   return (
     <div className="blog-post-container">
       <div className="blog-post">
@@ -19,8 +18,8 @@ export default function({ data }) {
 }
 
 export const pageQuery = graphql`
-  query($id: String!) {
-    markdownRemark(id: { eq: $id }) {
+  query($slug: String!) {
+    markdownRemark(frontmatter: { slug: { eq: $slug } }) {
       id
       html
       frontmatter {

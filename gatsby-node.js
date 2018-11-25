@@ -26,7 +26,9 @@ exports.createPages = ({ actions: { createPage }, graphql }) => {
         path: node.frontmatter.slug,
         tags: node.frontmatter.tags || [],
         component: blogTemplate,
-        context: {}
+        context: {
+          slug: node.frontmatter.slug
+        }
       });
     });
   });
