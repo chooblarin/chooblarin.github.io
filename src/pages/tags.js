@@ -11,7 +11,7 @@ export default ({
   }
 }) => (
   <Layout>
-    <Helmet title={`Tags | ${site.title}`} />
+    <Helmet title={`Tags | ${site.siteMetadata.title}`} />
     <ul>
       {group.map(tag => (
         <li key={tag.fieldValue}>{tag.fieldValue}</li>

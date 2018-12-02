@@ -3,10 +3,12 @@ import Helmet from "react-helmet";
 import { graphql } from "gatsby";
 
 export default function({ data }) {
-  const { frontmatter, html } = data.markdownRemark;
+  const { site, markdownRemark } = data;
+  const { frontmatter, html } = markdownRemark;
   return (
     <div className="blog-post-container">
       <Helmet>
+        <title>{`${frontmatter.title} | ${site.siteMetadata.title}`}</title>
         <script async src="https://static.codepen.io/assets/embed/ei.js" />
         <script
           async
@@ -40,6 +42,11 @@ export default function({ data }) {
 
 export const pageQuery = graphql`
   query($slug: String!) {
+    site {
+      siteMetadata {
+        title
+      }
+    }
     markdownRemark(frontmatter: { slug: { eq: $slug } }) {
       id
       html
