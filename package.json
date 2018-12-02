@@ -6,7 +6,8 @@
     "start": "gatsby develop",
     "clean": "rimraf .cache public",
     "build": "gatsby build",
-    "serve": "gatsby serve"
+    "serve": "gatsby serve",
+    "docz": "docz dev"
   },
   "husky": {
     "hooks": {
@@ -32,6 +33,7 @@
     "react-helmet": "^5.2.0"
   },
   "devDependencies": {
+    "docz": "^0.12.13",
     "husky": "^1.2.0",
     "lint-staged": "^8.1.0",
     "prettier": "^1.15.2",
