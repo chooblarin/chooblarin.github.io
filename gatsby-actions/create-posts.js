@@ -4,7 +4,7 @@ module.exports = (createPage, nodes) => {
   const blogTemplate = path.resolve(`src/templates/blog-post.js`);
   nodes.forEach(({ node }) => {
     createPage({
-      path: node.frontmatter.slug,
+      path: `/post/${node.frontmatter.slug}`,
       tags: node.frontmatter.tags || [],
       component: blogTemplate,
       context: {

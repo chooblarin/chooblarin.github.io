@@ -1,5 +1,6 @@
 const createPosts = require("./gatsby-actions/create-posts");
 const createPaginatedPosts = require("./gatsby-actions/create-pagenated-posts");
+const createTagsPages = require("./gatsby-actions/create-tags-pages");
 
 exports.createPages = ({ actions: { createPage }, graphql }) => {
   return graphql(`
@@ -12,6 +13,7 @@ exports.createPages = ({ actions: { createPage }, graphql }) => {
               title
               date(formatString: "MMMM DD, YYYY")
               slug
+              tags
             }
           }
         }
@@ -25,5 +27,6 @@ exports.createPages = ({ actions: { createPage }, graphql }) => {
     const posts = result.data.allMarkdownRemark.edges;
     createPosts(createPage, posts);
     createPaginatedPosts(createPage, posts);
+    createTagsPages(createPage, posts);
   });
 };
