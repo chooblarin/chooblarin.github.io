@@ -1,3 +1,12 @@
-import React from "react";
+/** @jsx jsx */
+import { jsx, css } from "@emotion/core";
 
-export default () => <div>header</div>;
+export default () => (
+  <div
+    css={css`
+      color: hotpink;
+    `}
+  >
+    header
+  </div>
+);
