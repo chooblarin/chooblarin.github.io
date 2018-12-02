@@ -2,14 +2,29 @@ import React from "react";
 import Helmet from "react-helmet";
 import { graphql } from "gatsby";
 
-import "katex/dist/katex.min.css";
-
 export default function({ data }) {
   const { frontmatter, html } = data.markdownRemark;
   return (
     <div className="blog-post-container">
       <Helmet>
         <script async src="https://static.codepen.io/assets/embed/ei.js" />
+        <script
+          async
+          src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"
+        />
+        <script type="text/x-mathjax-config">
+          {`
+          MathJax.Hub.Config({
+            tex2jax: {
+              inlineMath: [['$','$'], ['\\(','\\)']],
+              processEscapes: true
+            },
+            CommonHTML: { matchFontHeight: false },
+            displayAlign: "left",
+            displayIndent: "2em"
+          });
+          `}
+        </script>
       </Helmet>
       <div className="blog-post">
         <h1>{frontmatter.title}</h1>
