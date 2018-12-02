@@ -2,7 +2,6 @@ const path = require("path");
 const slugify = require("../src/helper/slugify");
 
 module.exports = (createPage, nodes) => {
-  const templatePath = path.resolve("src/templates/tags.js");
   const posts = {};
   for (const { node } of nodes) {
     const {
@@ -18,20 +17,26 @@ module.exports = (createPage, nodes) => {
   }
 
   // tags page
+  const tagListTemplate = path.resolve("src/templates/tag-list.js");
+
   createPage({
     path: `/tags`,
-    component: templatePath,
+    component: tagListTemplate,
     context: {
       posts
     }
   });
 
   // pages for each tag
+  const postListByTagTemplate = path.resolve(
+    "src/templates/post-list-by-tag.js"
+  );
+
   Object.keys(posts).forEach(tagSlug => {
     const { tag, items } = posts[tagSlug];
     createPage({
       path: `/tags/${tagSlug}`,
-      component: templatePath,
+      component: postListByTagTemplate,
       context: {
         tag,
         items
