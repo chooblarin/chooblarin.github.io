@@ -5,7 +5,10 @@ const createTagsPages = require("./gatsby-actions/create-tags-pages");
 exports.createPages = ({ actions: { createPage }, graphql }) => {
   return graphql(`
     {
-      allMarkdownRemark(limit: 1000) {
+      allMarkdownRemark(
+        sort: { fields: [frontmatter___date], order: DESC }
+        limit: 1000
+      ) {
         edges {
           node {
             id
