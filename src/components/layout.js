@@ -1,11 +1,11 @@
 import React from "react";
 
-import Header from "../components/header";
+import HomeHeader from "../components/home-header";
 
 export default ({ children }) => {
   return (
     <div>
-      <Header />
+      <HomeHeader />
       <div>{children}</div>
     </div>
   );
