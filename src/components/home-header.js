@@ -5,6 +5,7 @@ export default () => (
   <header
     css={css`
       color: 4a4a4a;
+      padding: 12px 8px 20px;
     `}
   >
     <section
