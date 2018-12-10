@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, css, Global } from "@emotion/core";
+import { jsx, css } from "@emotion/core";
 import { Link } from "gatsby";
 
 export default ({ post }) => {
@@ -10,27 +10,13 @@ export default ({ post }) => {
         padding: 8px;
       `}
     >
-      <Global
-        styles={css`
-          a {
-            color: #1eaedb;
-            background-color: transparent;
-            text-decoration: none;
-          }
-          a:active,
-          a:hover {
-            outline: 0;
-          }
-          a:hover {
-            color: #0fa0ce;
-          }
-        `}
-      />
       <Link to={`/post/${slug}`}>
         <h3
           css={css`
             margin: 0;
-            font-size: 20px;
+            &:hover {
+              color: #983bc9;
+            }
           `}
         >
           {title}
@@ -38,8 +24,9 @@ export default ({ post }) => {
       </Link>
       <p
         css={css`
-          margin: 0;
-          font-size: 12px;
+          font-size: 1.4rem;
+          margin: 4px 0 12px;
+          color: #878787;
         `}
       >
         {date}

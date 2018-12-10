@@ -1,4 +1,5 @@
-import React from "react";
+/** @jsx jsx */
+import { jsx, css } from "@emotion/core";
 import { Link, graphql } from "gatsby";
 
 import Layout from "../components/layout";
@@ -13,7 +14,15 @@ export default ({ data: { allMarkdownRemark } }) => {
 
   return (
     <Layout>
-      {postLinks}
+      <main
+        css={css`
+          max-width: 640px;
+          padding: 0 10px;
+          margin: 0 auto;
+        `}
+      >
+        {postLinks}
+      </main>
       {postLinks.length >= pagenateSize && (
         <Link to="/page/2">Older posts</Link>
       )}

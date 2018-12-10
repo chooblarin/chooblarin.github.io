@@ -1,12 +1,15 @@
-import React from "react";
+/** @jsx jsx */
+import { jsx, css } from "@emotion/core";
 import Helmet from "react-helmet";
 import { graphql } from "gatsby";
+
+import Layout from "../components/layout";
 
 export default function({ data }) {
   const { site, markdownRemark } = data;
   const { frontmatter, html } = markdownRemark;
   return (
-    <div className="blog-post-container">
+    <Layout>
       <Helmet>
         <title>{`${frontmatter.title} | ${site.siteMetadata.title}`}</title>
         <script async src="https://static.codepen.io/assets/embed/ei.js" />
@@ -28,15 +31,32 @@ export default function({ data }) {
           `}
         </script>
       </Helmet>
-      <div className="blog-post">
-        <h1>{frontmatter.title}</h1>
-        <h2>{frontmatter.date}</h2>
-        <div
-          className="blog-post-content"
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
-      </div>
-    </div>
+      <main
+        css={css`
+          padding: 0 16px;
+          margin: 0 auto;
+          max-width: 750px;
+        `}
+      >
+        <h1
+          css={css`
+            font-size: 3rem;
+            margin: 20px 0 24px;
+          `}
+        >
+          {frontmatter.title}
+        </h1>
+        <p
+          css={css`
+            color: #878787;
+            font-size: 16px;
+          `}
+        >
+          {frontmatter.date}
+        </p>
+        <div dangerouslySetInnerHTML={{ __html: html }} />
+      </main>
+    </Layout>
   );
 }
 
