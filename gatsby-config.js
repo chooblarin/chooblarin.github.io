@@ -17,7 +17,15 @@ module.exports = {
     {
       resolve: `gatsby-transformer-remark`,
       options: {
-        plugins: [`gatsby-remark-embed-gist`]
+        plugins: [
+          `gatsby-remark-embed-gist`,
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              noInlineHighlight: true
+            }
+          }
+        ]
       }
     },
     `gatsby-plugin-twitter`,
