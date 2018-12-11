@@ -22,7 +22,7 @@ export default () => (
     >
       <p
         css={css`
-          margin: 0 8px;
+          margin: 0 20px;
         `}
       >
         &copy; 2016-2018 chooblarin

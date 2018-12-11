@@ -1,9 +1,10 @@
 /** @jsx jsx */
-import { jsx, css } from "@emotion/core";
-import { Link, graphql } from "gatsby";
+import { jsx } from "@emotion/core";
+import { graphql } from "gatsby";
 
 import Layout from "../components/layout";
 import PostLink from "../components/post-link";
+import Pagination from "../components/pagination";
 
 export default ({ data: { allMarkdownRemark } }) => {
   const pagenateSize = 10;
@@ -12,20 +13,12 @@ export default ({ data: { allMarkdownRemark } }) => {
     .slice(0, pagenateSize)
     .map(edge => <PostLink key={edge.node.id} post={edge.node} />);
 
+  const hasNext = postLinks.length >= pagenateSize;
+
   return (
     <Layout>
-      <main
-        css={css`
-          max-width: 740px;
-          padding: 0 10px;
-          margin: 0 auto;
-        `}
-      >
-        {postLinks}
-      </main>
-      {postLinks.length >= pagenateSize && (
-        <Link to="/page/2">Older posts</Link>
-      )}
+      {postLinks}
+      {hasNext ? <Pagination first={true} last={!hasNext} page={1} /> : null}
     </Layout>
   );
 };

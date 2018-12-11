@@ -176,7 +176,15 @@ export default ({ children }) => {
         `}
       />
       <HomeHeader />
-      {children}
+      <main
+        css={css`
+          max-width: 740px;
+          margin: 0 auto;
+          padding: 0 20px;
+        `}
+      >
+        {children}
+      </main>
       <Footer />
     </div>
   );

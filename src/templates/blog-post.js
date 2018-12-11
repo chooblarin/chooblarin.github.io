@@ -32,31 +32,23 @@ export default function({ data }) {
           `}
         </script>
       </Helmet>
-      <main
+      <h1
         css={css`
-          max-width: 740px;
-          padding: 0 16px;
-          margin: 0 auto;
+          font-size: 3.2rem;
+          margin: 20px 0 24px;
         `}
       >
-        <h1
-          css={css`
-            font-size: 3.2rem;
-            margin: 20px 0 24px;
-          `}
-        >
-          {frontmatter.title}
-        </h1>
-        <p
-          css={css`
-            color: #878787;
-            font-size: 16px;
-          `}
-        >
-          {frontmatter.date}
-        </p>
-        <div dangerouslySetInnerHTML={{ __html: html }} />
-      </main>
+        {frontmatter.title}
+      </h1>
+      <p
+        css={css`
+          color: #878787;
+          font-size: 16px;
+        `}
+      >
+        {frontmatter.date}
+      </p>
+      <div dangerouslySetInnerHTML={{ __html: html }} />
     </Layout>
   );
 }

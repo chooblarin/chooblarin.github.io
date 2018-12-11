@@ -1,8 +1,8 @@
 import React from "react";
-import { Link } from "gatsby";
 
 import Layout from "../components/layout";
 import PostLink from "../components/post-link";
+import Pagination from "../components/pagination";
 
 export default ({ pageContext }) => {
   const { group, first, last, pageIndex } = pageContext;
@@ -14,8 +14,7 @@ export default ({ pageContext }) => {
   return (
     <Layout>
       {postLinks}
-      <div>{!first && <Link to={`page/${page - 1}`}>Newer posts</Link>}</div>
-      <div>{!last && <Link to={`page/${page + 1}`}>Older posts</Link>}</div>
+      <Pagination first={first} last={last} page={page} />
     </Layout>
   );
 };
