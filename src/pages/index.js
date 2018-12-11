@@ -16,7 +16,7 @@ export default ({ data: { allMarkdownRemark } }) => {
     <Layout>
       <main
         css={css`
-          max-width: 640px;
+          max-width: 740px;
           padding: 0 10px;
           margin: 0 auto;
         `}

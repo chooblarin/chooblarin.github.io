@@ -1,7 +1,8 @@
-import React from "react";
-import { Global, css } from "@emotion/core";
+/** @jsx jsx */
+import { Global, jsx, css } from "@emotion/core";
 
 import HomeHeader from "../components/home-header";
+import Footer from "../components/footer";
 
 export default ({ children }) => {
   return (
@@ -175,7 +176,8 @@ export default ({ children }) => {
         `}
       />
       <HomeHeader />
-      <div>{children}</div>
+      {children}
+      <Footer />
     </div>
   );
 };

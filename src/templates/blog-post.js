@@ -34,14 +34,14 @@ export default function({ data }) {
       </Helmet>
       <main
         css={css`
+          max-width: 740px;
           padding: 0 16px;
           margin: 0 auto;
-          max-width: 750px;
         `}
       >
         <h1
           css={css`
-            font-size: 3rem;
+            font-size: 3.2rem;
             margin: 20px 0 24px;
           `}
         >
