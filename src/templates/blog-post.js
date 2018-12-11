@@ -1,15 +1,21 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core";
-import { Link } from "gatsby";
+import { graphql, Link } from "gatsby";
 import Helmet from "react-helmet";
-import { graphql } from "gatsby";
+import { DiscussionEmbed } from "disqus-react";
 
 import Layout from "../components/layout";
 const slugify = require("../helper/slugify");
 
+const disqusShortname = "chooblarin";
+
 export default function({ data }) {
   const { site, markdownRemark } = data;
   const { frontmatter, html } = markdownRemark;
+  const disqusConfig = {
+    identifier: frontmatter.slug,
+    title: frontmatter.title
+  };
   return (
     <Layout>
       <Helmet>
@@ -66,12 +72,18 @@ export default function({ data }) {
         }}
       >
         {frontmatter.tags.map(tag => (
-          <Link to={`/tags/${slugify(tag)}`}>
-            <span className="tag" key={tag}>{`#${tag}`}</span>
+          <Link to={`/tags/${slugify(tag)}`} key={tag}>
+            <span className="tag">{`#${tag}`}</span>
           </Link>
         ))}
       </div>
-      <div dangerouslySetInnerHTML={{ __html: html }} />
+      <div
+        css={css`
+          margin-bottom: 8rem;
+        `}
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
+      <DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
     </Layout>
   );
 }
@@ -90,6 +102,7 @@ export const pageQuery = graphql`
         date(formatString: "MMMM DD, YYYY")
         title
         tags
+        slug
       }
     }
   }
