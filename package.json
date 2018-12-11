@@ -7,6 +7,7 @@
     "clean": "rimraf .cache public",
     "build": "gatsby build",
     "serve": "gatsby serve",
+    "deploy": "gatsby build && gh-pages -d public -b master",
     "docz": "docz dev"
   },
   "husky": {
@@ -42,6 +43,7 @@
   },
   "devDependencies": {
     "docz": "^0.12.13",
+    "gh-pages": "^2.0.1",
     "husky": "^1.2.0",
     "lint-staged": "^8.1.0",
     "prettier": "^1.15.2",
