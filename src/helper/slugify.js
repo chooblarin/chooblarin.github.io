@@ -1,3 +1,4 @@
+/* eslint-disable */
 module.exports = text =>
   text
     .toString()

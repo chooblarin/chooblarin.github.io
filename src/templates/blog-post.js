@@ -1,9 +1,11 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core";
+import { Link } from "gatsby";
 import Helmet from "react-helmet";
 import { graphql } from "gatsby";
 
 import Layout from "../components/layout";
+const slugify = require("../helper/slugify");
 
 export default function({ data }) {
   const { site, markdownRemark } = data;
@@ -35,7 +37,7 @@ export default function({ data }) {
       <h1
         css={css`
           font-size: 3.2rem;
-          margin: 20px 0 24px;
+          margin: 20px 0 12px;
         `}
       >
         {frontmatter.title}
@@ -48,6 +50,27 @@ export default function({ data }) {
       >
         {frontmatter.date}
       </p>
+      <div
+        css={{
+          display: "flex",
+          flexFlow: "row wrap",
+          marginBottom: "4rem",
+          "& .tag": {
+            color: "#6B6B6B",
+            background: "#EEEEEE",
+            fontSize: "12px",
+            padding: "7px 12px",
+            margin: "4px 8px 4px 0",
+            borderRadius: "2px"
+          }
+        }}
+      >
+        {frontmatter.tags.map(tag => (
+          <Link to={`/tags/${slugify(tag)}`}>
+            <span className="tag" key={tag}>{`#${tag}`}</span>
+          </Link>
+        ))}
+      </div>
       <div dangerouslySetInnerHTML={{ __html: html }} />
     </Layout>
   );

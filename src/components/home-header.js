@@ -76,9 +76,12 @@ export default () => (
         css={css`
           display: grid;
           grid-auto-flow: column;
-          grid-column-gap: 16px;
           justify-content: center;
           color: #777777;
+
+          & a {
+            padding: 8px;
+          }
         `}
       >
         <a href={twitterLink} target="_blank" rel="noopener noreferrer">

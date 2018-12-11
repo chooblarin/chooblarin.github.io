@@ -1,6 +1,8 @@
 import React from "react";
 import Link from "gatsby-link";
 
+import Layout from "../components/layout";
+
 export default ({ pageContext }) => {
   const { posts } = pageContext;
   const sortedPostArray = Object.keys(posts)
@@ -15,7 +17,7 @@ export default ({ pageContext }) => {
       return 0;
     });
   return (
-    <div>
+    <Layout>
       <h1>Tags</h1>
       <ul>
         {sortedPostArray.map(([key, tag, items]) => (
@@ -26,6 +28,6 @@ export default ({ pageContext }) => {
           </li>
         ))}
       </ul>
-    </div>
+    </Layout>
   );
 };
