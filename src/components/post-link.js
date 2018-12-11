@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core";
-import { Link } from "gatsby";
 
 export default ({ post }) => {
   const { slug, title, date } = post.frontmatter;
@@ -10,7 +9,7 @@ export default ({ post }) => {
         padding: 8px;
       `}
     >
-      <Link to={`/post/${slug}`}>
+      <a href={`/post/${slug}`}>
         <h3
           css={css`
             margin: 0;
@@ -21,7 +20,7 @@ export default ({ post }) => {
         >
           {title}
         </h3>
-      </Link>
+      </a>
       <p
         css={css`
           font-size: 1.4rem;

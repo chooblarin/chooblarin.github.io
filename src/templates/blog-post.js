@@ -21,7 +21,8 @@ export default function({ data }) {
           {`
           MathJax.Hub.Config({
             tex2jax: {
-              inlineMath: [['$','$'], ['\\(','\\)']],
+              inlineMath: [['$','$']],
+              displayMath: [['$$','$$']],
               processEscapes: true
             },
             CommonHTML: { matchFontHeight: false },
