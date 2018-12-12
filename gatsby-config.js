@@ -2,7 +2,9 @@ const path = require(`path`);
 
 module.exports = {
   siteMetadata: {
-    title: `chooblarin's blog`
+    title: `chooblarin's blog`,
+    slogan: `Sympathy Driven Development`,
+    pageURL: `https://chooblarin.github.io`
   },
   plugins: [
     `gatsby-plugin-emotion`,
