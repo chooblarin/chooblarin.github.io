@@ -2,21 +2,14 @@
 import { jsx, css } from "@emotion/core";
 import { graphql, Link } from "gatsby";
 import Helmet from "react-helmet";
-import { DiscussionEmbed } from "disqus-react";
 
 import PostMeta from "../components/post-meta";
 import Layout from "../components/layout";
 const slugify = require("../helper/slugify");
 
-const disqusShortname = "chooblarin";
-
 export default function({ data }) {
   const { site, markdownRemark } = data;
   const { frontmatter, html } = markdownRemark;
-  const disqusConfig = {
-    identifier: frontmatter.slug,
-    title: frontmatter.title
-  };
   return (
     <Layout>
       <PostMeta data={data} />
@@ -91,7 +84,6 @@ export default function({ data }) {
         `}
         dangerouslySetInnerHTML={{ __html: html }}
       />
-      <DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
     </Layout>
   );
 }
