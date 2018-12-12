@@ -7,6 +7,18 @@ module.exports = {
     pageURL: `https://chooblarin.github.io`
   },
   plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `chooblarin's blog`,
+        short_name: `chooblarin`,
+        start_url: `/`,
+        background_color: `#ffffff`,
+        theme_color: `#ad1edc`,
+        display: `standalone`,
+        icon: `static/images/icon-512x512.png`
+      }
+    },
     `gatsby-plugin-emotion`,
     `gatsby-plugin-react-helmet`,
     {

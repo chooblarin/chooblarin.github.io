@@ -24,7 +24,7 @@ export default ({ children }) => {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
               Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans",
               "Helvetica Neue", sans-serif;
-            color: #222;
+            color: #222222;
           }
           h1,
           h2,
@@ -95,7 +95,7 @@ export default ({ children }) => {
             vertical-align: baseline;
           }
           a {
-            color: #0047aa;
+            color: #ad1edc;
             background-color: transparent;
             text-decoration: none;
           }
