@@ -14,10 +14,10 @@ tags: ["Java", "RxJava"]
 これについて解説している記事は既にたくさん（ここ最近では特に）あるので割愛します．
 せっかくなので分かりやすかった記事をいくつかリンクします．
 
-- [Grokking RxJava](http://blog.danlew.net/2014/09/15/grokking-rxjava-part-1/)
-- [Top 7 Tips for RxJava on Android — Futurice](http://futurice.com/blog/top-7-tips-for-rxjava-on-android)
-- [Reactive Porn - steps to phantasien](http://steps.dodgson.org/b/2014/12/07/reactive-porn/)
-- [関数型プログラマのための Rx 入門（前編） - Okapies' Archive](http://okapies.hateblo.jp/entry/2015/03/04/031148)
+- [Grokking RxJava](https://blog.danlew.net/2014/09/15/grokking-rxjava-part-1/)
+- [Top 7 Tips for RxJava on Android — Futurice](https://futurice.com/blog/top-7-tips-for-rxjava-on-android)
+- [Reactive Porn - steps to phantasien](https://steps.dodgson.org/b/2014/12/07/reactive-porn/)
+- [関数型プログラマのための Rx 入門（前編） - Okapies' Archive](https://okapies.hateblo.jp/entry/2015/03/04/031148)
 
 ### Observable の生成
 
@@ -110,7 +110,7 @@ dataService.load(context)
 subscriber が値を emit しはじめるのは，その Observable が subscribe されてからです．つまり，`subscribe()`が呼ばれるまでは何も起こりません．
 更に，Observable は subscribe が呼ばれる度に値を`create`のオペレーターが実行されます．
 
-[この記事](http://qiita.com/toRisouP/items/f6088963037bfda658d3)がわかりやすいです．
+[この記事](https://qiita.com/toRisouP/items/f6088963037bfda658d3)がわかりやすいです．
 
 例えば以下のようにファイルから読み込んだデータを複数の Observer が subscribe したいとします．
 
