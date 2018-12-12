@@ -25,7 +25,7 @@ export default function({ data }) {
         <script async src="https://static.codepen.io/assets/embed/ei.js" />
         <script
           async
-          src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"
+          src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
         />
         <script type="text/x-mathjax-config">
           {`
@@ -33,6 +33,12 @@ export default function({ data }) {
             tex2jax: {
               inlineMath: [['$','$']],
               displayMath: [['$$','$$']],
+              extensions: ["[Contrib]/a11y/accessibility-menu.js"],
+              menuSettings: {
+                collapsible: true,
+                autocollapse: true,
+                explorer: true
+              },
               processEscapes: true
             },
             CommonHTML: { matchFontHeight: false },
