@@ -23,6 +23,7 @@ module.exports = {
     `gatsby-plugin-offline`,
     `gatsby-plugin-emotion`,
     `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-catch-links`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
