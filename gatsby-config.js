@@ -16,7 +16,8 @@ module.exports = {
         background_color: `#ffffff`,
         theme_color: `#ad1edc`,
         display: `standalone`,
-        icon: `static/images/icon-512x512.png`
+        icon: `static/images/icon-512x512.png`,
+        legacy: true
       }
     },
     `gatsby-plugin-emotion`,
