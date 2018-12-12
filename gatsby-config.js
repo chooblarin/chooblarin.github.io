@@ -37,6 +37,11 @@ module.exports = {
       }
     },
     `gatsby-plugin-twitter`,
-    `gatsby-plugin-purgecss`
+    {
+      resolve: `gatsby-plugin-purgecss`,
+      options: {
+        ignore: [`prismjs/themes/prism-twilight.css`]
+      }
+    }
   ]
 };
