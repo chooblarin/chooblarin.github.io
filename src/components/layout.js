@@ -95,7 +95,7 @@ export default ({ children }) => {
             vertical-align: baseline;
           }
           a {
-            color: #1eaedb;
+            color: #0047aa;
             background-color: transparent;
             text-decoration: none;
           }
