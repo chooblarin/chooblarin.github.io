@@ -31,6 +31,10 @@ export default ({
         <meta property="og:title" content={`${title}`} />
         <meta property="og:description" content={slogan} />
         {/* TODO: <meta property="og:image" content={} /> */}
+        <meta
+          name="google-site-verification"
+          content="5MMy9toPN2P8O6xmRyiBp-l97-pCGSnLGS2AwiUdWpI"
+        />
       </Helmet>
       {postLinks}
       {hasNext ? <Pagination first={true} last={!hasNext} page={1} /> : null}
