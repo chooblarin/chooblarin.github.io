@@ -2,6 +2,7 @@ import { BlogPostContent } from "@/lib/BlogPost";
 import { mathJaxConfigScript } from "@/lib/mathjax";
 import { getAllBlogPosts, getBlogPostContent } from "@/lib/post-files-handler";
 import { css } from "@emotion/core";
+import "highlight.js/styles/night-owl.css";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import React from "react";

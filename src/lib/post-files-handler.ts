@@ -4,6 +4,7 @@ import path from "path";
 import remark from "remark";
 import html from "remark-html";
 import { BlogPost, BlogPostContent } from "./BlogPost";
+const highlight = require("remark-highlight.js");
 
 const pattern = /\.(md|mdx)$/.compile();
 
@@ -53,15 +54,18 @@ export async function getBlogPostContent(
   const source = fs.readFileSync(path, "utf-8");
   const { content, data } = matter(source);
 
+  const post = getFrontMatter(data);
+
   const markdown = await remark()
+    .use(highlight)
     .use(html)
     .process(content || "");
 
-  const post = getFrontMatter(data);
+  const markdownString = markdown.toString();
 
   return {
     ...post,
-    content: markdown.toString(),
+    content: markdownString,
   };
 }
 
