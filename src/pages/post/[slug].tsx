@@ -1,6 +1,9 @@
 import { BlogPostContent } from "@/lib/BlogPost";
+import { mathJaxConfigScript } from "@/lib/mathjax";
 import { getAllBlogPosts, getBlogPostContent } from "@/lib/post-files-handler";
+import { css } from "@emotion/core";
 import { GetStaticPaths, GetStaticProps } from "next";
+import Head from "next/head";
 import React from "react";
 
 type PostProps = {
@@ -37,10 +40,32 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 const Post: React.FC<PostProps> = ({ postContent }) => {
   return (
-    <div>
-      <h1>{postContent.title}</h1>
-      <div dangerouslySetInnerHTML={{ __html: postContent.content }} />
-    </div>
+    <>
+      <Head>
+        {/* script for embedding CodePen */}
+        <script async src="https://static.codepen.io/assets/embed/ei.js" />
+
+        {/* MathJax */}
+        <script
+          async
+          src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+        />
+        <script
+          type="text/x-mathjax-config"
+          dangerouslySetInnerHTML={{ __html: mathJaxConfigScript }}
+        />
+      </Head>
+      <main
+        css={css`
+          max-width: 740px;
+          margin: 0 auto;
+          padding: 0 20px;
+        `}
+      >
+        <h1>{postContent.title}</h1>
+        <div dangerouslySetInnerHTML={{ __html: postContent.content }} />
+      </main>
+    </>
   );
 };
 
