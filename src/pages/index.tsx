@@ -1,4 +1,4 @@
-import { HomeHeader } from "@/components/HomeHeader";
+import { Layout } from "@/components/Layout";
 import { BlogPost } from "@/lib/BlogPost";
 import { getAllBlogPosts } from "@/lib/post-files-handler";
 import { GetStaticProps } from "next";
@@ -27,9 +27,7 @@ const Home: React.FC<HomeProps> = ({ posts }) => {
         <title>chooblarin's blog</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <HomeHeader />
-        Blog posts
+      <Layout>
         <section>
           {posts.map((post) => (
             <div key={post.slug}>
@@ -37,7 +35,7 @@ const Home: React.FC<HomeProps> = ({ posts }) => {
             </div>
           ))}
         </section>
-      </main>
+      </Layout>
     </div>
   );
 };
