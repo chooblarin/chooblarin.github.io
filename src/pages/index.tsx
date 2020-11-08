@@ -1,7 +1,8 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { BlogPost, getAllBlogPosts } from "../lib/post-files-handler";
+import { BlogPost } from "../lib/BlogPost";
+import { getAllBlogPosts } from "../lib/post-files-handler";
 
 type HomeProps = {
   posts: BlogPost[];
@@ -10,7 +11,7 @@ type HomeProps = {
 export const getStaticProps: GetStaticProps = async () => {
   const posts = await getAllBlogPosts();
   const props: HomeProps = {
-    posts,
+    posts: posts.map(({ post }) => post),
   };
   return {
     props,

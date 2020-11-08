@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import React from "react";
+import { BlogPostContent } from "../../lib/BlogPost";
 import {
-  BlogPostContent,
   getAllBlogPosts,
   getBlogPostContent,
 } from "../../lib/post-files-handler";
@@ -14,7 +14,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const slug = context.params.slug as string;
 
   const posts = await getAllBlogPosts();
-  const found = posts.find((p) => p.slug === slug);
+  const found = posts.find(({ post }) => post.slug === slug);
 
   let postContent: BlogPostContent | undefined;
 
@@ -31,7 +31,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const posts = await getAllBlogPosts();
-  const paths = posts.map((p) => `/post/${p.slug}`);
+  const paths = posts.map(({ post }) => `/post/${post.slug}`);
   return {
     paths,
     fallback: false,
