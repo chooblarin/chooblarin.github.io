@@ -42,13 +42,25 @@ const Post: React.FC<PostProps> = ({ postContent }) => {
   return (
     <>
       <Head>
-        {/* script for embedding CodePen */}
-        <script async src="https://static.codepen.io/assets/embed/ei.js" />
+        {/* Twitter */}
+        <script
+          async
+          src="https://platform.twitter.com/widgets.js"
+          charSet="utf-8"
+        />
+
+        {/* CodePen */}
+        <script
+          async
+          src="https://static.codepen.io/assets/embed/ei.js"
+          charSet="utf-8"
+        />
 
         {/* MathJax */}
         <script
           async
           src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+          charSet="utf-8"
         />
         <script
           type="text/x-mathjax-config"
