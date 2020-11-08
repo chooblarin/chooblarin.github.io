@@ -1,10 +1,7 @@
+import { BlogPostContent } from "@/lib/BlogPost";
+import { getAllBlogPosts, getBlogPostContent } from "@/lib/post-files-handler";
 import { GetStaticPaths, GetStaticProps } from "next";
 import React from "react";
-import { BlogPostContent } from "../../lib/BlogPost";
-import {
-  getAllBlogPosts,
-  getBlogPostContent,
-} from "../../lib/post-files-handler";
 
 type PostProps = {
   postContent?: BlogPostContent;

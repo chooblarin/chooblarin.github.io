@@ -1,8 +1,8 @@
+import { BlogPost } from "@/lib/BlogPost";
+import { getAllBlogPosts } from "@/lib/post-files-handler";
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { BlogPost } from "../lib/BlogPost";
-import { getAllBlogPosts } from "../lib/post-files-handler";
 
 type HomeProps = {
   posts: BlogPost[];
