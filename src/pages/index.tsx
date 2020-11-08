@@ -1,6 +1,9 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
-import { getBlogPostFilenames } from "../lib/getBlogPostFilenames";
+import {
+  getBlogPostContent,
+  getBlogPostFilenames,
+} from "../lib/post-files-handler";
 
 type HomeProps = {
   postIds: string[];
@@ -8,6 +11,11 @@ type HomeProps = {
 
 export const getStaticProps: GetStaticProps = async () => {
   const filenames = getBlogPostFilenames();
+
+  for (const filename of filenames) {
+    await getBlogPostContent(filename);
+  }
+
   const props: HomeProps = {
     postIds: filenames,
   };
