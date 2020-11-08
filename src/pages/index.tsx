@@ -1,9 +1,10 @@
-import { TitleLogo } from "@/components/TitleLogo";
+import { HomeHeader } from "@/components/HomeHeader";
 import { BlogPost } from "@/lib/BlogPost";
 import { getAllBlogPosts } from "@/lib/post-files-handler";
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import * as React from "react";
 
 type HomeProps = {
   posts: BlogPost[];
@@ -27,9 +28,7 @@ const Home: React.FC<HomeProps> = ({ posts }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div>
-          <TitleLogo />
-        </div>
+        <HomeHeader />
         Blog posts
         <section>
           {posts.map((post) => (
