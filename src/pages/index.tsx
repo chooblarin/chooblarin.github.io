@@ -1,41 +1,38 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
-import {
-  getBlogPostContent,
-  getBlogPostFilenames,
-} from "../lib/post-files-handler";
+import Link from "next/link";
+import { BlogPost, getAllBlogPosts } from "../lib/post-files-handler";
 
 type HomeProps = {
-  postIds: string[];
+  posts: BlogPost[];
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const filenames = getBlogPostFilenames();
-
-  for (const filename of filenames) {
-    await getBlogPostContent(filename);
-  }
-
+  const posts = await getAllBlogPosts();
   const props: HomeProps = {
-    postIds: filenames,
+    posts,
   };
   return {
     props,
   };
 };
 
-const Home: React.FC<HomeProps> = ({ postIds }) => {
+const Home: React.FC<HomeProps> = ({ posts }) => {
   return (
     <div>
       <Head>
         <title>chooblarin's blog</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      Hello
       <main>
-        {postIds.map((postId) => (
-          <div key={postId}>{postId}</div>
-        ))}
+        Blog posts
+        <section>
+          {posts.map((post) => (
+            <div key={post.slug}>
+              <Link href={`/post/${post.slug}`}>{post.title}</Link>
+            </div>
+          ))}
+        </section>
       </main>
     </div>
   );
