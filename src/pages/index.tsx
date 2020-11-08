@@ -1,3 +1,4 @@
+import { TitleLogo } from "@/components/TitleLogo";
 import { BlogPost } from "@/lib/BlogPost";
 import { getAllBlogPosts } from "@/lib/post-files-handler";
 import { GetStaticProps } from "next";
@@ -26,6 +27,9 @@ const Home: React.FC<HomeProps> = ({ posts }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+        <div>
+          <TitleLogo />
+        </div>
         Blog posts
         <section>
           {posts.map((post) => (
