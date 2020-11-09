@@ -7,6 +7,11 @@
   box-sizing: border-box;
 }
 
+::selection {
+  color: white;
+  background: #932ab5;
+}
+
 /* Remove default padding */
 ul[class],
 ol[class] {
@@ -42,7 +47,7 @@ body {
   min-height: 100vh;
   scroll-behavior: smooth;
   text-rendering: optimizeSpeed;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 /* Remove list styles on ul, ol elements with a class attribute */
@@ -73,6 +78,16 @@ button,
 textarea,
 select {
   font: inherit;
+}
+
+a {
+  color: rgb(173, 30, 220);
+  background-color: transparent;
+  text-decoration: none;
+}
+
+li {
+  margin: 0 0 0.5rem;
 }
 
 /* Remove all animations and transitions for people that prefer not to see them */
