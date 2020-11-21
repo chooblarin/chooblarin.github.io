@@ -10,7 +10,6 @@ export const RectLink: React.FC<RectLinkProps> = ({ children, ...rest }) => (
       css={css`
         padding: 5px 14px;
         border: 1px solid #dddddd;
-        margin: 48px 0;
       `}
     >
       {children}

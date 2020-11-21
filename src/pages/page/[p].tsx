@@ -4,6 +4,7 @@ import { RectLink } from "@/components/RectLink";
 import { BlogPost } from "@/lib/BlogPost";
 import { getAllBlogPosts } from "@/lib/post-files-handler";
 import { chunk } from "@/lib/util";
+import { css } from "@emotion/core";
 import { GetStaticPaths, GetStaticProps } from "next";
 import * as React from "react";
 import { postsPerPage } from "src/constants";
@@ -63,13 +64,24 @@ const Page: React.FC<PageProps> = ({ posts, prevPage, nextPage }) => {
             <BlogPostListItem key={post.slug} post={post} />
           ))}
         </div>
-        <div>
+
+        <div
+          css={css`
+            display: flex;
+            justify-content: space-between;
+            margin: 48px 0;
+          `}
+        >
           {prevPage ? (
             <RectLink href={`/page/${prevPage}`}>&lt; Newer posts</RectLink>
-          ) : null}
+          ) : (
+            <span />
+          )}
           {nextPage ? (
             <RectLink href={`/page/${nextPage}`}>Older posts &gt;</RectLink>
-          ) : null}
+          ) : (
+            <span />
+          )}
         </div>
       </Layout>
     </div>
