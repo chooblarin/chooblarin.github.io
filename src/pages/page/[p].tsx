@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { RectLink } from "@/components/RectLink";
 import { BlogPost } from "@/lib/BlogPost";
 import { getAllBlogPosts } from "@/lib/post-files-handler";
 import { chunk } from "@/lib/util";
@@ -26,10 +27,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const chunkIndex = pageNumber - 1;
   const posts = chunked[chunkIndex].map((c) => c.post);
   if (chunkIndex - 1 >= 0) {
-    prevPage = chunkIndex - 1;
+    prevPage = pageNumber - 1;
   }
   if (chunkIndex + 1 < chunked.length) {
-    nextPage = chunkIndex + 1;
+    nextPage = pageNumber + 1;
   }
 
   const props: PageProps = {
@@ -53,15 +54,25 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-const Page: React.FC<PageProps> = ({ posts }) => {
+const Page: React.FC<PageProps> = ({ posts, prevPage, nextPage }) => {
   return (
     <div>
       <Layout>
-        {posts.map((post) => (
-          <div key={post.slug}>
-            <Link href={`/post/${post.slug}`}>{post.title}</Link>
-          </div>
-        ))}
+        <div>
+          {posts.map((post) => (
+            <div key={post.slug}>
+              <Link href={`/post/${post.slug}`}>{post.title}</Link>
+            </div>
+          ))}
+        </div>
+        <div>
+          {prevPage ? (
+            <RectLink href={`/page/${prevPage}`}>&lt; Newer posts</RectLink>
+          ) : null}
+          {nextPage ? (
+            <RectLink href={`/page/${nextPage}`}>Older posts &gt;</RectLink>
+          ) : null}
+        </div>
       </Layout>
     </div>
   );
