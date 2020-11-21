@@ -3,7 +3,7 @@ import Link from "next/link";
 import * as React from "react";
 import { TitleLogo } from "./TitleLogo";
 
-const mailToLink = "mailto://choo.bla.rin@gmail.com";
+const mailToLink = "mailto:choo.bla.rin@gmail.com";
 const twitterLink = "https://twitter.com/chooblarin";
 const githubLink = "https://github.com/chooblarin";
 const linkedInLink = "https://linkedin.com/in/sota-hatakeyama-35bb07120";
