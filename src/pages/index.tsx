@@ -1,9 +1,9 @@
+import { BlogPostListItem } from "@/components/BlogPostListItem";
 import { Layout } from "@/components/Layout";
 import { BlogPost } from "@/lib/BlogPost";
 import { getAllBlogPosts } from "@/lib/post-files-handler";
 import { GetStaticProps } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import * as React from "react";
 
 type HomeProps = {
@@ -30,9 +30,7 @@ const Home: React.FC<HomeProps> = ({ posts }) => {
       <Layout>
         <section>
           {posts.map((post) => (
-            <div key={post.slug}>
-              <Link href={`/post/${post.slug}`}>{post.title}</Link>
-            </div>
+            <BlogPostListItem key={post.slug} post={post} />
           ))}
         </section>
       </Layout>

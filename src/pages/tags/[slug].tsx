@@ -1,9 +1,9 @@
+import { BlogPostListItem } from "@/components/BlogPostListItem";
 import { Layout } from "@/components/Layout";
 import { BlogPost } from "@/lib/BlogPost";
 import { getAllBlogPosts } from "@/lib/post-files-handler";
 import { slugify } from "@/lib/util";
 import { GetStaticPaths, GetStaticProps } from "next";
-import Link from "next/link";
 import * as React from "react";
 import { PostTag } from ".";
 
@@ -72,9 +72,7 @@ const Tag: React.FC<TagProps> = ({ tag, posts }) => {
         <div>
           <ul>
             {posts.map((post) => (
-              <li>
-                <Link href={`/post/${post.slug}`}>{post.title}</Link>
-              </li>
+              <BlogPostListItem key={post.slug} post={post} />
             ))}
           </ul>
         </div>

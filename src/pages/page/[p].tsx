@@ -1,10 +1,10 @@
+import { BlogPostListItem } from "@/components/BlogPostListItem";
 import { Layout } from "@/components/Layout";
 import { RectLink } from "@/components/RectLink";
 import { BlogPost } from "@/lib/BlogPost";
 import { getAllBlogPosts } from "@/lib/post-files-handler";
 import { chunk } from "@/lib/util";
 import { GetStaticPaths, GetStaticProps } from "next";
-import Link from "next/link";
 import * as React from "react";
 import { postsPerPage } from "src/constants";
 
@@ -60,9 +60,7 @@ const Page: React.FC<PageProps> = ({ posts, prevPage, nextPage }) => {
       <Layout>
         <div>
           {posts.map((post) => (
-            <div key={post.slug}>
-              <Link href={`/post/${post.slug}`}>{post.title}</Link>
-            </div>
+            <BlogPostListItem key={post.slug} post={post} />
           ))}
         </div>
         <div>
