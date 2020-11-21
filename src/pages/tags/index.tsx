@@ -9,12 +9,12 @@ type TagsProps = {
   tags: PostTagWithCount[];
 };
 
-type PostTag = {
+type PostTagWithCount = PostTag & { count: number };
+
+export type PostTag = {
   tagName: string;
   slug: string;
 };
-
-type PostTagWithCount = PostTag & { count: number };
 
 export const getStaticProps: GetStaticProps = async () => {
   const posts = await getAllBlogPosts();
