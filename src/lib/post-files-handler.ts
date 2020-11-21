@@ -6,17 +6,6 @@ import html from "remark-html";
 import { BlogPost, BlogPostContent } from "./BlogPost";
 const highlight = require("remark-highlight.js");
 
-const pattern = /\.(md|mdx)$/.compile();
-
-const postFilePath = (filename?: string) => {
-  const dir = process.cwd();
-  if (filename) {
-    return path.join(dir, "posts", filename);
-  } else {
-    return path.join(dir, "posts");
-  }
-};
-
 export async function getAllBlogPosts(): Promise<
   { filename: string; post: BlogPost }[]
 > {
@@ -32,19 +21,6 @@ export async function getAllBlogPosts(): Promise<
   posts.sort((a, b) => -a.post.date.localeCompare(b.post.date));
 
   return posts;
-}
-
-export function getBlogPostFilenames(): string[] {
-  const path = postFilePath();
-  const files = fs.readdirSync(path, "utf-8");
-  return files.filter((file) => pattern.test(file));
-}
-
-export async function getBlogPost(filename: string): Promise<BlogPost> {
-  const path = postFilePath(filename);
-  const source = fs.readFileSync(path, "utf-8");
-  const { data } = matter(source);
-  return getFrontMatter(data);
 }
 
 export async function getBlogPostContent(
@@ -67,6 +43,29 @@ export async function getBlogPostContent(
     ...post,
     content: markdownString,
   };
+}
+
+const postFilePath = (filename?: string) => {
+  const dir = process.cwd();
+  if (filename) {
+    return path.join(dir, "posts", filename);
+  } else {
+    return path.join(dir, "posts");
+  }
+};
+
+function getBlogPostFilenames(): string[] {
+  const pattern = /\.(md|mdx)$/.compile();
+  const path = postFilePath();
+  const files = fs.readdirSync(path, "utf-8");
+  return files.filter((file) => pattern.test(file));
+}
+
+async function getBlogPost(filename: string): Promise<BlogPost> {
+  const path = postFilePath(filename);
+  const source = fs.readFileSync(path, "utf-8");
+  const { data } = matter(source);
+  return getFrontMatter(data);
 }
 
 function getFrontMatter(data: unknown): BlogPost {
