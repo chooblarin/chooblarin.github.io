@@ -1,5 +1,6 @@
 import { DefaultSeo } from "next-seo";
 import { AppProps } from "next/app";
+import Head from "next/head";
 import * as React from "react";
 import { siteConfig } from "src/constants";
 import "../styles/globals.css";
@@ -28,6 +29,12 @@ function App({ Component, pageProps }: AppProps) {
           ],
         }}
       />
+      <Head>
+        <meta
+          name="google-site-verification"
+          content="5MMy9toPN2P8O6xmRyiBp-l97-pCGSnLGS2AwiUdWpI"
+        />
+      </Head>
       <Component {...pageProps} />
     </>
   );
