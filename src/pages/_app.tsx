@@ -20,6 +20,22 @@ function App({ Component, pageProps }: AppProps) {
     return () => router.events.off(type, handler);
   }, [router.events]);
 
+  // Unregister service worker at the moment
+  React.useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .getRegistrations()
+        .then((registrations) => {
+          for (const reg of registrations) {
+            reg.unregister();
+          }
+        })
+        .catch((err) =>
+          console.error("Service Worker registration failed:", err)
+        );
+    }
+  }, []);
+
   return (
     <>
       <DefaultSeo
