@@ -1,7 +1,7 @@
 export const gaMeasurementId = "UA-62520326-2";
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/pages
-export const pageview = (url: string) => {
+export const pageView = (url: string) => {
   const gtag = window as any;
   gtag("config", gaMeasurementId, {
     page_path: url,

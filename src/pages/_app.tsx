@@ -1,3 +1,4 @@
+import { pageView } from "@/lib/gtag";
 import { DefaultSeo } from "next-seo";
 import { AppProps } from "next/app";
 import Head from "next/head";
@@ -10,9 +11,11 @@ const { title, description, url } = siteConfig;
 
 function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
+
+  // Google Analytics tracking
   React.useEffect(() => {
     const type = "routeChangeComplete";
-    const handler = () => {};
+    const handler = (url: string) => pageView(url);
     router.events.on(type, handler);
     return () => router.events.off(type, handler);
   }, [router.events]);
