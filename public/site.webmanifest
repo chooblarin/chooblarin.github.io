@@ -2,6 +2,7 @@
   "name": "chooblarin's blog",
   "short_name": "chooblarin",
   "start_url": "/",
+  "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ad1edc",
   "icons": [
