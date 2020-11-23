@@ -8,8 +8,10 @@ import { css } from "@emotion/core";
 import { format } from "date-fns";
 import "highlight.js/styles/night-owl.css";
 import { GetStaticPaths, GetStaticProps } from "next";
+import { NextSeo } from "next-seo";
 import Head from "next/head";
 import * as React from "react";
+import { siteConfig } from "src/constants";
 
 type PostProps = {
   postContent?: BlogPostContent;
@@ -52,6 +54,13 @@ const Post: React.FC<PostProps> = ({ postContent }) => {
   }));
   return (
     <>
+      <NextSeo
+        title={title}
+        titleTemplate={`%s | ${siteConfig.title}`}
+        openGraph={{
+          title,
+        }}
+      />
       <Head>
         {/* Twitter */}
         <script
