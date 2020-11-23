@@ -28,7 +28,6 @@ const Home: React.FC<HomeProps> = ({ posts }) => {
   return (
     <div>
       <Head>
-        <title>chooblarin's blog</title>
         <meta name="theme-color" content="#ffffff" />
         <link rel="icon" type="image/svg+xml" href="favicon.svg" />
         <link rel="mask-icon" href="mask-icon.svg" color="#000000" />
