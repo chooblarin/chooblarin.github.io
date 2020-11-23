@@ -1,6 +1,7 @@
 import { DefaultSeo } from "next-seo";
 import { AppProps } from "next/app";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import * as React from "react";
 import { siteConfig } from "src/constants";
 import "../styles/globals.css";
@@ -8,6 +9,14 @@ import "../styles/globals.css";
 const { title, description, url } = siteConfig;
 
 function App({ Component, pageProps }: AppProps) {
+  const router = useRouter();
+  React.useEffect(() => {
+    const type = "routeChangeComplete";
+    const handler = () => {};
+    router.events.on(type, handler);
+    return () => router.events.off(type, handler);
+  }, [router.events]);
+
   return (
     <>
       <DefaultSeo
