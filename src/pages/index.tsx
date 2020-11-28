@@ -5,7 +5,6 @@ import { BlogPost } from "@/lib/BlogPost";
 import { getAllBlogPosts } from "@/lib/post-files-handler";
 import { css } from "@emotion/core";
 import { GetStaticProps } from "next";
-import Head from "next/head";
 import * as React from "react";
 
 type HomeProps = {
@@ -27,13 +26,6 @@ export const getStaticProps: GetStaticProps = async () => {
 const Home: React.FC<HomeProps> = ({ posts }) => {
   return (
     <div>
-      <Head>
-        <meta name="theme-color" content="#ffffff" />
-        <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-        <link rel="mask-icon" href="mask-icon.svg" color="#000000" />
-        <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-        <link rel="manifest" href="site.webmanifest" />
-      </Head>
       <Layout>
         <section>
           {posts.map((post) => (
