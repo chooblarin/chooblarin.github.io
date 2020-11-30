@@ -35,7 +35,6 @@ export const Layout: React.FC = ({ children }) => (
         h6 {
           font-weight: 600;
           line-height: 1;
-          color: #676767;
           margin: 2rem 0 1rem;
           padding-top: 0.875rem;
         }
@@ -61,7 +60,7 @@ export const Layout: React.FC = ({ children }) => (
           margin: 1.5rem 0;
         }
         li::marker {
-          color: #676767;
+          color: var(--color-sub-text);
         }
       `}
     >

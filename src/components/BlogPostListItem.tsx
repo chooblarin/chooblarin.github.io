@@ -29,7 +29,7 @@ export const BlogPostListItem: React.FC<BlogPostListItemProps> = ({ post }) => {
           }
           .date {
             font-size: 14px;
-            color: #767676;
+            color: var(--color-sub-text);
             margin: 8px 0;
           }
           &:hover {

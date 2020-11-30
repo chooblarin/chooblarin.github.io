@@ -16,7 +16,7 @@ export const Footer: React.FC = () => (
         height: 100%;
         margin: 0 auto;
         font-size: 12px;
-        color: #9b9b9b;
+        color: var(--color-sub-text);
         padding: 2rem 0;
       `}
     >

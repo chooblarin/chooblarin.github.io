@@ -12,6 +12,7 @@ export const PostTagLink: React.FC<PostTagLinkProps> = ({ tag }) => (
     <a
       css={css`
         color: #6b6b6b;
+        text-decoration: none;
         background: #eeeeee;
         font-size: 12px;
         padding: 7px 12px;

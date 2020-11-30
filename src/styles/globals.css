@@ -53,6 +53,17 @@ body {
   background: var(--color-background);
 }
 
+a {
+  color: #983bc9;
+  color: var(--color-primary);
+  background-color: transparent;
+}
+
+code {
+  color: #232323;
+  line-height: 1.6;
+}
+
 /* Remove list styles on ul, ol elements with a class attribute */
 ul[class],
 ol[class] {
@@ -81,11 +92,6 @@ button,
 textarea,
 select {
   font: inherit;
-}
-
-a {
-  color: #983bc9;
-  background-color: transparent;
 }
 
 li {

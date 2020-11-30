@@ -26,6 +26,12 @@ export const ColorThemeScript: React.FC = () => (
               : '${themeColors.dark.textColor}'
           );
           root.style.setProperty(
+            '--color-sub-text',
+            mode === 'light'
+              ? '${themeColors.light.subTextColor}'
+              : '${themeColors.dark.subTextColor}'
+          );
+          root.style.setProperty(
             '--color-background',
             mode === 'light'
               ? '${themeColors.light.backgroundColor}'
