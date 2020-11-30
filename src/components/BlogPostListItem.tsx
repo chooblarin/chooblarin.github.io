@@ -23,7 +23,7 @@ export const BlogPostListItem: React.FC<BlogPostListItemProps> = ({ post }) => {
           }
           .title {
             font-size: 24px;
-            color: #676767;
+            color: var(--color-text);
             margin: 12px 0px 8px;
             transition: color 0.2s linear;
           }
@@ -34,7 +34,7 @@ export const BlogPostListItem: React.FC<BlogPostListItemProps> = ({ post }) => {
           }
           &:hover {
             .title {
-              color: #983bc9;
+              color: var(--color-primary);
             }
           }
         `}
