@@ -20,7 +20,7 @@ const serviceIconStyle = css`
 export const HomeHeader: React.FC = () => (
   <header
     css={css`
-      color: 4a4a4a;
+      color: #4a4a4a;
       padding: 12px 8px 20px;
     `}
   >
