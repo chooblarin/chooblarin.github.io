@@ -11,6 +11,13 @@ export const ColorThemeScript: React.FC = () => (
         var supportsColorSchemeQuery = mql.media === preferDarkQuery;
 
         function getInitialColorMode() {
+          try {
+            var persistedColorPreference = localStorage.getItem('color-mode');
+            if (persistedColorPreference) {
+              return persistedColorPreference;
+            }
+          } catch (err) {}
+
           if (supportsColorSchemeQuery) {
             return mql.matches ? 'dark' : 'light';
           }
@@ -19,6 +26,7 @@ export const ColorThemeScript: React.FC = () => (
 
         function setThemeColors(mode) {
           var root = document.documentElement;
+          root.style.setProperty('--initial-color-mode', mode);
           root.style.setProperty(
             '--color-text',
             mode === 'light'

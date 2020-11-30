@@ -1,6 +1,7 @@
 import { css } from "@emotion/core";
 import Link from "next/link";
 import * as React from "react";
+import { ColorThemeSwitch } from "./ColorThemeSwitch";
 import { TitleLogo } from "./TitleLogo";
 
 const mailToLink = "mailto:choo.bla.rin@gmail.com";
@@ -25,14 +26,32 @@ export const HomeHeader: React.FC = () => (
     css={css`
       color: #4a4a4a;
       color: var(--color-text);
-      padding: 12px 8px 20px;
+      position: relative;
+      padding: 12px 8px;
     `}
   >
+    <div
+      css={css`
+        display: flex;
+        justify-content: flex-end;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        max-width: 740px;
+        margin: 20px auto;
+        padding: 0 20px;
+      `}
+    >
+      <ColorThemeSwitch />
+    </div>
     <section
       css={css`
         display: flex;
         flex-direction: column;
         align-items: center;
+        max-width: 740px;
+        margin: 72px auto;
       `}
     >
       <Link href="/">

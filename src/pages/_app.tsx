@@ -1,3 +1,4 @@
+import { ColorThemeProvider } from "@/lib/ColorThemeContext";
 import { pageView } from "@/lib/gtag";
 import { DefaultSeo } from "next-seo";
 import { AppProps } from "next/app";
@@ -70,7 +71,9 @@ function App({ Component, pageProps }: AppProps) {
         <link rel="apple-touch-icon" href="apple-touch-icon.png" />
         <link rel="manifest" href="site.webmanifest" />
       </Head>
-      <Component {...pageProps} />
+      <ColorThemeProvider>
+        <Component {...pageProps} />
+      </ColorThemeProvider>
     </>
   );
 }
