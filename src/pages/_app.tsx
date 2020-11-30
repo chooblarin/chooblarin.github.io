@@ -69,7 +69,7 @@ function App({ Component, pageProps }: AppProps) {
         <link rel="icon" type="image/svg+xml" href="favicon.svg" />
         <link rel="mask-icon" href="mask-icon.svg" color="#000000" />
         <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-        <link rel="manifest" href="site.webmanifest" />
+        <link rel="manifest" href="/site.webmanifest" />
       </Head>
       <ColorThemeProvider>
         <Component {...pageProps} />
