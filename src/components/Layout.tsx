@@ -34,7 +34,6 @@ export const Layout: React.FC = ({ children }) => (
         h5,
         h6 {
           font-weight: 600;
-          line-height: 1;
           margin: 2rem 0 1rem;
           padding-top: 0.875rem;
         }
@@ -42,18 +41,23 @@ export const Layout: React.FC = ({ children }) => (
           font-size: 2.25rem;
         }
         h2 {
+          line-height: 1;
           font-size: 1.85rem;
         }
         h3 {
+          line-height: 1;
           font-size: 1.55rem;
         }
         h4 {
+          line-height: 1;
           font-size: 1.25rem;
         }
         h5 {
+          line-height: 1;
           font-size: 1rem;
         }
         h6 {
+          line-height: 1;
           font-size: 0.875rem;
         }
         p {

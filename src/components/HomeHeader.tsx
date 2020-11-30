@@ -12,8 +12,11 @@ const serviceIconStyle = css`
   width: 24px;
   height: 24px;
   color: #4a4a4a;
+  color: var(--color-text);
+  transition: color 0.2s linear;
   &:hover {
     color: #983bc9;
+    color: var(--color-primary);
   }
 `;
 
@@ -21,6 +24,7 @@ export const HomeHeader: React.FC = () => (
   <header
     css={css`
       color: #4a4a4a;
+      color: var(--color-text);
       padding: 12px 8px 20px;
     `}
   >
@@ -47,6 +51,7 @@ export const HomeHeader: React.FC = () => (
           width: 64px;
           height: 64px;
           color: #4a4a4a;
+          color: var(--color-text);
           margin-bottom: 20px;
         `}
       >
