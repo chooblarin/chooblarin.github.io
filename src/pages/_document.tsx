@@ -1,3 +1,4 @@
+import { ColorThemeScript } from "@/lib/ColorThemeScript";
 import { gaMeasurementId } from "@/lib/gtag";
 import Document, { Head, Html, Main, NextScript } from "next/document";
 import * as React from "react";
@@ -27,6 +28,7 @@ export default class CustomDocument extends Document {
           />
         </Head>
         <body>
+          <ColorThemeScript />
           <Main />
           <NextScript />
         </body>
