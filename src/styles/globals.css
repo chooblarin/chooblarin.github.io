@@ -81,9 +81,8 @@ select {
 }
 
 a {
-  color: rgb(173, 30, 220);
+  color: #983bc9;
   background-color: transparent;
-  text-decoration: none;
 }
 
 li {

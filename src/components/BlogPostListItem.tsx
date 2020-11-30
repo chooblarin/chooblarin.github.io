@@ -17,10 +17,10 @@ export const BlogPostListItem: React.FC<BlogPostListItemProps> = ({ post }) => {
     <Link href={`/post/${slug}`} passHref={true}>
       <a
         css={css`
+          text-decoration: none;
           .post-item {
             padding: 8px 0;
           }
-
           .title {
             font-size: 24px;
             color: #676767;

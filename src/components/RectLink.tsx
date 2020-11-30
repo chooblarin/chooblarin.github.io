@@ -8,8 +8,13 @@ export const RectLink: React.FC<RectLinkProps> = ({ children, ...rest }) => (
   <Link passHref={true} {...rest}>
     <a
       css={css`
+        text-decoration: none;
         padding: 5px 14px;
         border: 1px solid #dddddd;
+        transition: border-color 0.2s linear;
+        &:hover {
+          border: 1px solid #9c9c9c;
+        }
       `}
     >
       {children}

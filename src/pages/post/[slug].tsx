@@ -88,7 +88,18 @@ const Post: React.FC<PostProps> = ({ postContent }) => {
         />
       </Head>
       <Layout>
-        <h1>{title}</h1>
+        <h1
+          css={css`
+            background: linear-gradient(90deg, #3b9ac9, #983bc9);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            box-decoration-break: clone;
+            -webkit-box-decoration-break: clone;
+          `}
+        >
+          {title}
+        </h1>
         <p
           css={css`
             font-size: 14px;
