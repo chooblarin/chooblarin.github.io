@@ -90,6 +90,7 @@ const Post: React.FC<PostProps> = ({ postContent }) => {
       <Layout>
         <h1
           css={css`
+            display: inline-block;
             line-height: 1.5;
             background: linear-gradient(90deg, #3b9ac9, #983bc9);
             background-clip: text;
