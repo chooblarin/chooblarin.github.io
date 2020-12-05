@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" aria-label="CodePen" role="img" viewBox="0 0 512 512">
+  <g fill="none" stroke="currentColor" stroke-width="33" stroke-linejoin="round">
+    <path d="M21 178.114V333.886L256 491L491 333.886V178.114L256 21L21 178.114Z" />
+    <path d="M21 178.114L256 333.886L491 178.114M256 21V178.114" />
+    <path d="M21 333.886L256 178.114L491 333.886M256 491C256 491 256 395.243 256 333.886" />
+  </g>
+</svg>
