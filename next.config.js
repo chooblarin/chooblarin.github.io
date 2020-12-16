@@ -15,6 +15,12 @@ module.exports = withPlugins(
     ],
   ],
   {
+    webpack: (config, { isServer }) => {
+      if (isServer) {
+        require("./generate-sitemap");
+      }
+      return config;
+    },
     reactStrictMode: true,
   }
 );
