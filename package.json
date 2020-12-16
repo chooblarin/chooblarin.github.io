@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "build-export": "next build && next export",
+    "generate-sitemap": "next build && node generate-sitemap.js",
     "start": "next start",
     "storybook": "start-storybook -p 6006 --no-dll",
     "build-storybook": "build-storybook --no-dll"
