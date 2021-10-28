@@ -16,6 +16,10 @@ type PageProps = {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
+  if (!context.params) {
+    return { notFound: true };
+  }
+
   const p = context.params.p as string;
   const pageNumber = parseInt(p);
 

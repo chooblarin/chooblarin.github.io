@@ -6,7 +6,7 @@ export const ColorThemeSwitch: React.FC = () => {
   const colorTheme = useContext(ColorThemeContext);
   const handleChange = (ev: ChangeEvent<HTMLInputElement>) => {
     const mode = ev.target.checked ? "dark" : "light";
-    colorTheme.changeColorMode(mode);
+    colorTheme?.changeColorMode(mode);
   };
 
   if (!colorTheme?.colorMode) {

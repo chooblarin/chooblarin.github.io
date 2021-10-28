@@ -14,23 +14,25 @@ import * as React from "react";
 import { siteConfig } from "src/constants";
 
 type PostProps = {
-  postContent?: BlogPostContent;
+  postContent: BlogPostContent;
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
+  if (!context.params) {
+    return { notFound: true };
+  }
+
   const slug = context.params.slug as string;
 
   const posts = await getAllBlogPosts();
   const found = posts.find(({ post }) => post.slug === slug);
 
-  let postContent: BlogPostContent | undefined;
-
-  if (found) {
-    postContent = await getBlogPostContent(found.filename);
+  if (!found) {
+    return { notFound: true };
   }
 
   const props: PostProps = {
-    postContent,
+    postContent: await getBlogPostContent(found.filename),
   };
 
   return { props };

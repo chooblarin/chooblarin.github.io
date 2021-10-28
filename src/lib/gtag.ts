@@ -9,7 +9,12 @@ export const pageView = (url: string) => {
 };
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/events
-export const event = ({ action, category, label, value }) => {
+export const event = (
+  action: string,
+  category: string,
+  label: string,
+  value: string
+) => {
   const gtag = (window as any).gtag;
   gtag("event", action, {
     event_category: category,

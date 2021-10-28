@@ -13,11 +13,15 @@ type TagProps = {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
+  if (!context.params) {
+    return { notFound: true };
+  }
+
   const slug = context.params.slug as string;
 
   const allPosts = await getAllBlogPosts();
 
-  let tagName: string;
+  let tagName = "";
   const posts: BlogPost[] = [];
 
   for (const { post } of allPosts) {

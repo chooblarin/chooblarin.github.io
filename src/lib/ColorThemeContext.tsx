@@ -1,24 +1,28 @@
 import React from "react";
 import { themeColors } from "src/constants";
 
+type ColorMode = "light" | "dark";
+
 type ColorTheme = {
-  colorMode: "light" | "dark";
+  colorMode: ColorMode;
   changeColorMode: (cm: "light" | "dark") => void;
 };
 
-export const ColorThemeContext = React.createContext<ColorTheme>(null);
+export const ColorThemeContext = React.createContext<ColorTheme | null>(null);
 
 export const ColorThemeProvider: React.FC = ({ children }) => {
-  const [colorMode, setColorMode] = React.useState(undefined);
+  const [colorMode, setColorMode] = React.useState<ColorMode | undefined>(
+    undefined
+  );
   React.useEffect(() => {
     const root = window.document.documentElement;
     const initialColorValue = root.style.getPropertyValue(
       "--initial-color-mode"
     );
-    setColorMode(initialColorValue);
+    setColorMode(initialColorValue as ColorMode);
   }, []);
 
-  const changeColorMode = (mode: string) => {
+  const changeColorMode = (mode: ColorMode) => {
     setColorMode(mode);
 
     window.localStorage.setItem("color-mode", mode);
@@ -51,7 +55,9 @@ export const ColorThemeProvider: React.FC = ({ children }) => {
     );
   };
   return (
-    <ColorThemeContext.Provider value={{ colorMode, changeColorMode }}>
+    <ColorThemeContext.Provider
+      value={colorMode ? { colorMode, changeColorMode } : null}
+    >
       {children}
     </ColorThemeContext.Provider>
   );

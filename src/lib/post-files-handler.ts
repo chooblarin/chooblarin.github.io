@@ -1,10 +1,10 @@
 import fs from "fs";
 import matter from "gray-matter";
 import path from "path";
-import remark from "remark";
+import { remark } from "remark";
+import highlight from "remark-highlight.js";
 import html from "remark-html";
 import { BlogPost, BlogPostContent } from "./BlogPost";
-const highlight = require("remark-highlight.js");
 
 export async function getAllBlogPosts(): Promise<
   { filename: string; post: BlogPost }[]
@@ -68,7 +68,7 @@ async function getBlogPost(filename: string): Promise<BlogPost> {
   return getFrontMatter(data);
 }
 
-function getFrontMatter(data: unknown): BlogPost {
+function getFrontMatter(data: any): BlogPost {
   const title = data["title"] as string;
   const date = data["date"] as string;
   const slug = data["slug"] as string;
