@@ -1,6 +1,5 @@
 import { css } from "@emotion/core";
 import React from "react";
-import { Svg } from "react-optimized-image";
 import Codepen from "src/assets/codepen.svg";
 import Email from "src/assets/email.svg";
 import Github from "src/assets/github.svg";
@@ -43,7 +42,7 @@ export const SocialAccountLinks: React.FC = () => (
       target="_blank"
       rel="noopener noreferrer"
     >
-      <Svg src={Twitter} css={serviceIconStyle} />
+      <Twitter css={serviceIconStyle} />
     </a>
 
     <a
@@ -52,7 +51,7 @@ export const SocialAccountLinks: React.FC = () => (
       target="_blank"
       rel="noopener noreferrer"
     >
-      <Svg src={Github} css={serviceIconStyle} />
+      <Github css={serviceIconStyle} />
     </a>
 
     <a
@@ -61,7 +60,7 @@ export const SocialAccountLinks: React.FC = () => (
       target="_blank"
       rel="noopener noreferrer"
     >
-      <Svg src={Codepen} css={serviceIconStyle} />
+      <Codepen css={serviceIconStyle} />
     </a>
 
     <a
@@ -70,11 +69,11 @@ export const SocialAccountLinks: React.FC = () => (
       target="_blank"
       rel="noopener noreferrer"
     >
-      <Svg src={Linkedin} css={serviceIconStyle} />
+      <Linkedin css={serviceIconStyle} />
     </a>
 
     <a href={mailToLink}>
-      <Svg src={Email} css={serviceIconStyle} />
+      <Email css={serviceIconStyle} />
     </a>
   </div>
 );
