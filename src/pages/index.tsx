@@ -3,7 +3,7 @@ import { Layout } from "@/components/Layout";
 import { RectLink } from "@/components/RectLink";
 import { BlogPost } from "@/lib/BlogPost";
 import { getAllBlogPosts } from "@/lib/post-files-handler";
-import { css } from "@emotion/core";
+import { css } from "@emotion/react";
 import { GetStaticProps } from "next";
 import * as React from "react";
 

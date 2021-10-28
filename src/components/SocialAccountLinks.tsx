@@ -1,4 +1,4 @@
-import { css } from "@emotion/core";
+import { css } from "@emotion/react";
 import React from "react";
 import Codepen from "src/assets/codepen.svg";
 import Email from "src/assets/email.svg";

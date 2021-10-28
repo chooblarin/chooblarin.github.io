@@ -1,4 +1,4 @@
-import { css } from "@emotion/core";
+import { css } from "@emotion/react";
 import Link from "next/link";
 import * as React from "react";
 import { PostTag } from "src/pages/tags";

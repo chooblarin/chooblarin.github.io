@@ -1,5 +1,5 @@
 import { BlogPost } from "@/lib/BlogPost";
-import { css } from "@emotion/core";
+import { css } from "@emotion/react";
 import { format } from "date-fns";
 import Link from "next/link";
 import * as React from "react";

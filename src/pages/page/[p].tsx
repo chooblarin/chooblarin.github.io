@@ -4,7 +4,7 @@ import { RectLink } from "@/components/RectLink";
 import { BlogPost } from "@/lib/BlogPost";
 import { getAllBlogPosts } from "@/lib/post-files-handler";
 import { chunk } from "@/lib/util";
-import { css } from "@emotion/core";
+import { css } from "@emotion/react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import * as React from "react";
 import { postsPerPage } from "src/constants";

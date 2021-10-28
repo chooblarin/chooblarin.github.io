@@ -4,7 +4,7 @@ import { BlogPostContent } from "@/lib/BlogPost";
 import { mathJaxConfigScript } from "@/lib/mathjax";
 import { getAllBlogPosts, getBlogPostContent } from "@/lib/post-files-handler";
 import { slugify } from "@/lib/util";
-import { css } from "@emotion/core";
+import { css } from "@emotion/react";
 import { format } from "date-fns";
 import "highlight.js/styles/night-owl.css";
 import { GetStaticPaths, GetStaticProps } from "next";

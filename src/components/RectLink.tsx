@@ -1,4 +1,4 @@
-import { css } from "@emotion/core";
+import { css } from "@emotion/react";
 import Link, { LinkProps } from "next/link";
 import * as React from "react";
 
