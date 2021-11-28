@@ -1,4 +1,5 @@
 import { css } from "@emotion/react";
+import Link from "next/link";
 import * as React from "react";
 
 export const NotFoundPage: React.FC = () => {
@@ -288,7 +289,7 @@ export const NotFoundPage: React.FC = () => {
           <div className="glitch__img" />
           <div className="glitch__img" />
         </div>
-        <a href="/">Back to Home</a>
+        <Link href="/">Back to Home</Link>
       </main>
     </div>
   );
