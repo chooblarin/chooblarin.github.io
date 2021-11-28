@@ -1,9 +1,12 @@
 import fs from "fs";
 import matter from "gray-matter";
+import "highlight.js";
 import path from "path";
-import { remark } from "remark";
-import highlight from "remark-highlight.js";
-import html from "remark-html";
+import rehypeHighlight from "rehype-highlight";
+import rehypeStringify from "rehype-stringify";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import { unified } from "unified";
 import { BlogPost, BlogPostContent } from "./BlogPost";
 
 export async function getAllBlogPosts(): Promise<
@@ -32,9 +35,11 @@ export async function getBlogPostContent(
 
   const post = getFrontMatter(data);
 
-  const markdown = await remark()
-    .use(highlight)
-    .use(html)
+  const markdown = await unified()
+    .use(remarkParse as any) // FIXME
+    .use(remarkRehype)
+    .use(rehypeHighlight)
+    .use(rehypeStringify as any) // FIXME
     .process(content || "");
 
   const markdownString = markdown.toString();
