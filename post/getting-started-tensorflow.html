@@ -23,7 +23,7 @@ MathJax.Hub.Config({
   displayAlign: "left",
   displayIndent: "2em"
 });
-</script><meta name="next-head-count" content="25"/><link rel="preload" href="/_next/static/css/4de487d25431dce1.css" as="style"/><link rel="stylesheet" href="/_next/static/css/4de487d25431dce1.css" data-n-g=""/><link rel="preload" href="/_next/static/css/00412b0bf6df8839.css" as="style"/><link rel="stylesheet" href="/_next/static/css/00412b0bf6df8839.css" data-n-p=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills-a40ef1678bae11e696dba45124eadd70.js"></script><script src="/_next/static/chunks/webpack-866f5b4ed198c054.js" defer=""></script><script src="/_next/static/chunks/framework-91d7f78b5b4003c8.js" defer=""></script><script src="/_next/static/chunks/main-33d281933b627a82.js" defer=""></script><script src="/_next/static/chunks/pages/_app-c30f9cf4db4b1f52.js" defer=""></script><script src="/_next/static/chunks/878-5255bc01820f01a3.js" defer=""></script><script src="/_next/static/chunks/13-1d43482f8f1b2190.js" defer=""></script><script src="/_next/static/chunks/612-b433d2f764d1c908.js" defer=""></script><script src="/_next/static/chunks/pages/post/%5Bslug%5D-00f6d8714be56cab.js" defer=""></script><script src="/_next/static/3d-PPhNSh_necZc8Vno-U/_buildManifest.js" defer=""></script><script src="/_next/static/3d-PPhNSh_necZc8Vno-U/_ssgManifest.js" defer=""></script><script src="/_next/static/3d-PPhNSh_necZc8Vno-U/_middlewareManifest.js" defer=""></script></head><body><script>
+</script><meta name="next-head-count" content="25"/><link rel="preload" href="/_next/static/css/4de487d25431dce1.css" as="style"/><link rel="stylesheet" href="/_next/static/css/4de487d25431dce1.css" data-n-g=""/><link rel="preload" href="/_next/static/css/00412b0bf6df8839.css" as="style"/><link rel="stylesheet" href="/_next/static/css/00412b0bf6df8839.css" data-n-p=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills-a40ef1678bae11e696dba45124eadd70.js"></script><script src="/_next/static/chunks/webpack-866f5b4ed198c054.js" defer=""></script><script src="/_next/static/chunks/framework-91d7f78b5b4003c8.js" defer=""></script><script src="/_next/static/chunks/main-33d281933b627a82.js" defer=""></script><script src="/_next/static/chunks/pages/_app-c30f9cf4db4b1f52.js" defer=""></script><script src="/_next/static/chunks/878-5255bc01820f01a3.js" defer=""></script><script src="/_next/static/chunks/13-1d43482f8f1b2190.js" defer=""></script><script src="/_next/static/chunks/612-b433d2f764d1c908.js" defer=""></script><script src="/_next/static/chunks/pages/post/%5Bslug%5D-00f6d8714be56cab.js" defer=""></script><script src="/_next/static/Ec0Sly56OmxAuPqXM7aXU/_buildManifest.js" defer=""></script><script src="/_next/static/Ec0Sly56OmxAuPqXM7aXU/_ssgManifest.js" defer=""></script><script src="/_next/static/Ec0Sly56OmxAuPqXM7aXU/_middlewareManifest.js" defer=""></script></head><body><script>
       (function() {
         var preferDarkQuery = '(prefers-color-scheme: dark)';
         var mql = window.matchMedia(preferDarkQuery);
@@ -121,102 +121,103 @@ Tensor はグラフのエッジに相当します．
 今回は<a href="https://archive.ics.uci.edu/ml/datasets/Iris">Iris Data Set</a>を使います．
 アルゴリズムは機械学習で最も単純な<a href="https://ja.wikipedia.org/wiki/K%E8%BF%91%E5%82%8D%E6%B3%95">最近傍法</a>を用います．</p>
 <p>下記は<a href="https://github.com/aymericdamien/TensorFlow-Examples/blob/master/notebooks/2_BasicModels/nearest_neighbor.ipynb">こちらのサンプルコード</a>を Iris 版に書きなおしたものです．</p>
-<pre><code><span># -*- coding: utf-8 -*-</span>
+<pre><code class="hljs language-python"><span class="hljs-comment"># -*- coding: utf-8 -*-</span>
 
-<span>import</span> random
-<span>import</span> numpy <span>as</span> np
-<span>import</span> tensorflow <span>as</span> tf
-<span>from</span> sklearn <span>import</span> datasets
+<span class="hljs-keyword">import</span> random
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> tensorflow <span class="hljs-keyword">as</span> tf
+<span class="hljs-keyword">from</span> sklearn <span class="hljs-keyword">import</span> datasets
 
 iris = datasets.load_iris()
 
-n_sample = <span>list</span>(<span>range</span>(<span>len</span>(iris.data)))
-random.seed(<span>0</span>)
+n_sample = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(iris.data)))
+random.seed(<span class="hljs-number">0</span>)
 random.shuffle(n_sample)
 
-n_train = n_sample[:<span>100</span>]
-n_test = n_sample[<span>100</span>:]
+n_train = n_sample[:<span class="hljs-number">100</span>]
+n_test = n_sample[<span class="hljs-number">100</span>:]
 
-X_train = [iris.data[i] <span>for</span> i <span>in</span> n_train]
-Y_train = [iris.target[i] <span>for</span> i <span>in</span> n_train]
+X_train = [iris.data[i] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> n_train]
+Y_train = [iris.target[i] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> n_train]
 
-X_test = [iris.data[i] <span>for</span> i <span>in</span> n_test]
-Y_test = [iris.target[i] <span>for</span> i <span>in</span> n_test]
+X_test = [iris.data[i] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> n_test]
+Y_test = [iris.target[i] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> n_test]
 
-x_train = tf.placeholder(<span>"float"</span>, [<span>None</span>, <span>4</span>])
-x_test = tf.placeholder(<span>"float"</span>, [<span>4</span>])
+x_train = tf.placeholder(<span class="hljs-string">"float"</span>, [<span class="hljs-literal">None</span>, <span class="hljs-number">4</span>])
+x_test = tf.placeholder(<span class="hljs-string">"float"</span>, [<span class="hljs-number">4</span>])
 
-distance = tf.reduce_sum(tf.<span>abs</span>(tf.add(x_train, tf.neg(x_test))), reduction_indices=<span>1</span>)
-prediction = tf.arg_min(distance, <span>0</span>)
+distance = tf.reduce_sum(tf.<span class="hljs-built_in">abs</span>(tf.add(x_train, tf.neg(x_test))), reduction_indices=<span class="hljs-number">1</span>)
+prediction = tf.arg_min(distance, <span class="hljs-number">0</span>)
 
-accuracy = <span>0</span>
+accuracy = <span class="hljs-number">0</span>
 
 init = tf.initialize_all_variables()
 
-<span>with</span> tf.Session() <span>as</span> sess:
+<span class="hljs-keyword">with</span> tf.Session() <span class="hljs-keyword">as</span> sess:
     sess.run(init)
 
-    <span>for</span> i <span>in</span> <span>range</span>(<span>len</span>(X_test)):
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(X_test)):
         nn_index = sess.run(prediction, feed_dict={x_train: X_train, x_test: X_test[i]})
         pred = Y_train[nn_index]
         cls = Y_test[i]
-        <span>print</span>(<span>"Test"</span>, i, <span>"Prediction:"</span>, pred, <span>"True Class:"</span>, cls)
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">"Test"</span>, i, <span class="hljs-string">"Prediction:"</span>, pred, <span class="hljs-string">"True Class:"</span>, cls)
 
-        <span>if</span> pred == cls:
-            accuracy += <span>1.</span>/<span>len</span>(X_test)
-    <span>print</span>(<span>"Done."</span>)
-    <span>print</span>(<span>"Accuracy:"</span>, accuracy)</code></pre>
+        <span class="hljs-keyword">if</span> pred == cls:
+            accuracy += <span class="hljs-number">1.</span>/<span class="hljs-built_in">len</span>(X_test)
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">"Done."</span>)
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">"Accuracy:"</span>, accuracy)
+</code></pre>
 <p>実行結果</p>
-<pre><code>Test 0 Prediction: 0 True Class: 0
-Test 1 Prediction: 1 True Class: 1
-Test 2 Prediction: 2 True Class: 1
-Test 3 Prediction: 2 True Class: 2
-Test 4 Prediction: 1 True Class: 1
-Test 5 Prediction: 1 True Class: 1
-Test 6 Prediction: 1 True Class: 1
-Test 7 Prediction: 0 True Class: 0
-Test 8 Prediction: 0 True Class: 0
-Test 9 Prediction: 2 True Class: 2
-Test 10 Prediction: 2 True Class: 2
-Test 11 Prediction: 0 True Class: 0
-Test 12 Prediction: 0 True Class: 0
-Test 13 Prediction: 2 True Class: 2
-Test 14 Prediction: 2 True Class: 2
-Test 15 Prediction: 1 True Class: 1
-Test 16 Prediction: 1 True Class: 1
-Test 17 Prediction: 2 True Class: 1
-Test 18 Prediction: 0 True Class: 0
-Test 19 Prediction: 2 True Class: 2
-Test 20 Prediction: 1 True Class: 1
-Test 21 Prediction: 1 True Class: 1
-Test 22 Prediction: 0 True Class: 0
-Test 23 Prediction: 2 True Class: 2
-Test 24 Prediction: 0 True Class: 0
-Test 25 Prediction: 0 True Class: 0
-Test 26 Prediction: 1 True Class: 1
-Test 27 Prediction: 2 True Class: 2
-Test 28 Prediction: 1 True Class: 1
-Test 29 Prediction: 0 True Class: 0
-Test 30 Prediction: 0 True Class: 0
-Test 31 Prediction: 1 True Class: 1
-Test 32 Prediction: 0 True Class: 0
-Test 33 Prediction: 1 True Class: 1
-Test 34 Prediction: 0 True Class: 0
-Test 35 Prediction: 2 True Class: 2
-Test 36 Prediction: 2 True Class: 1
-Test 37 Prediction: 0 True Class: 0
-Test 38 Prediction: 2 True Class: 2
-Test 39 Prediction: 1 True Class: 1
-Test 40 Prediction: 1 True Class: 1
-Test 41 Prediction: 2 True Class: 2
-Test 42 Prediction: 1 True Class: 1
-Test 43 Prediction: 2 True Class: 2
-Test 44 Prediction: 2 True Class: 2
-Test 45 Prediction: 2 True Class: 2
-Test 46 Prediction: 1 True Class: 1
-Test 47 Prediction: 0 True Class: 0
-Test 48 Prediction: 2 True Class: 2
-Test 49 Prediction: 1 True Class: 1
+<pre><code class="hljs language-subunit"><span class="hljs-keyword">Test </span>0 Prediction: 0 True Class: 0
+<span class="hljs-keyword">Test </span>1 Prediction: 1 True Class: 1
+<span class="hljs-keyword">Test </span>2 Prediction: 2 True Class: 1
+<span class="hljs-keyword">Test </span>3 Prediction: 2 True Class: 2
+<span class="hljs-keyword">Test </span>4 Prediction: 1 True Class: 1
+<span class="hljs-keyword">Test </span>5 Prediction: 1 True Class: 1
+<span class="hljs-keyword">Test </span>6 Prediction: 1 True Class: 1
+<span class="hljs-keyword">Test </span>7 Prediction: 0 True Class: 0
+<span class="hljs-keyword">Test </span>8 Prediction: 0 True Class: 0
+<span class="hljs-keyword">Test </span>9 Prediction: 2 True Class: 2
+<span class="hljs-keyword">Test </span>10 Prediction: 2 True Class: 2
+<span class="hljs-keyword">Test </span>11 Prediction: 0 True Class: 0
+<span class="hljs-keyword">Test </span>12 Prediction: 0 True Class: 0
+<span class="hljs-keyword">Test </span>13 Prediction: 2 True Class: 2
+<span class="hljs-keyword">Test </span>14 Prediction: 2 True Class: 2
+<span class="hljs-keyword">Test </span>15 Prediction: 1 True Class: 1
+<span class="hljs-keyword">Test </span>16 Prediction: 1 True Class: 1
+<span class="hljs-keyword">Test </span>17 Prediction: 2 True Class: 1
+<span class="hljs-keyword">Test </span>18 Prediction: 0 True Class: 0
+<span class="hljs-keyword">Test </span>19 Prediction: 2 True Class: 2
+<span class="hljs-keyword">Test </span>20 Prediction: 1 True Class: 1
+<span class="hljs-keyword">Test </span>21 Prediction: 1 True Class: 1
+<span class="hljs-keyword">Test </span>22 Prediction: 0 True Class: 0
+<span class="hljs-keyword">Test </span>23 Prediction: 2 True Class: 2
+<span class="hljs-keyword">Test </span>24 Prediction: 0 True Class: 0
+<span class="hljs-keyword">Test </span>25 Prediction: 0 True Class: 0
+<span class="hljs-keyword">Test </span>26 Prediction: 1 True Class: 1
+<span class="hljs-keyword">Test </span>27 Prediction: 2 True Class: 2
+<span class="hljs-keyword">Test </span>28 Prediction: 1 True Class: 1
+<span class="hljs-keyword">Test </span>29 Prediction: 0 True Class: 0
+<span class="hljs-keyword">Test </span>30 Prediction: 0 True Class: 0
+<span class="hljs-keyword">Test </span>31 Prediction: 1 True Class: 1
+<span class="hljs-keyword">Test </span>32 Prediction: 0 True Class: 0
+<span class="hljs-keyword">Test </span>33 Prediction: 1 True Class: 1
+<span class="hljs-keyword">Test </span>34 Prediction: 0 True Class: 0
+<span class="hljs-keyword">Test </span>35 Prediction: 2 True Class: 2
+<span class="hljs-keyword">Test </span>36 Prediction: 2 True Class: 1
+<span class="hljs-keyword">Test </span>37 Prediction: 0 True Class: 0
+<span class="hljs-keyword">Test </span>38 Prediction: 2 True Class: 2
+<span class="hljs-keyword">Test </span>39 Prediction: 1 True Class: 1
+<span class="hljs-keyword">Test </span>40 Prediction: 1 True Class: 1
+<span class="hljs-keyword">Test </span>41 Prediction: 2 True Class: 2
+<span class="hljs-keyword">Test </span>42 Prediction: 1 True Class: 1
+<span class="hljs-keyword">Test </span>43 Prediction: 2 True Class: 2
+<span class="hljs-keyword">Test </span>44 Prediction: 2 True Class: 2
+<span class="hljs-keyword">Test </span>45 Prediction: 2 True Class: 2
+<span class="hljs-keyword">Test </span>46 Prediction: 1 True Class: 1
+<span class="hljs-keyword">Test </span>47 Prediction: 0 True Class: 0
+<span class="hljs-keyword">Test </span>48 Prediction: 2 True Class: 2
+<span class="hljs-keyword">Test </span>49 Prediction: 1 True Class: 1
 Done.
 Accuracy: 0.94
 </code></pre>
@@ -226,5 +227,4 @@ Accuracy: 0.94
 <li><a href="https://www.tensorflow.org/">TensorFlow — an Open Source Software Library for Machine Intelligence</a></li>
 <li><a href="https://qiita.com/yanosen_jp/items/70e6d6afc36e1c0a3ef3">TensorFlow のキーコンセプト: Op ノード、セッション、変数 - Qiita</a></li>
 <li><a href="https://qiita.com/icoxfog417/items/fb5c24e35a849f8e2c5d">TensorFlow を算数で理解する - Qiita</a></li>
-</ul>
-</div></main><style data-emotion="css 1osq6pq">.css-1osq6pq{width:100%;height:140px;border-top:1px solid #e1e1e1;}</style><footer class="css-1osq6pq"><style data-emotion="css 17ttwh7">.css-17ttwh7{width:100%;max-width:740px;height:100%;margin:0 auto;font-size:12px;color:var(--color-sub-text);padding:2rem 0;}</style><div class="css-17ttwh7"><style data-emotion="css 260ftf">.css-260ftf{margin:0 20px;}</style><p class="css-260ftf">© 2020 chooblarin</p></div></footer></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"postContent":{"title":"TensorFlow入門以前","date":"2016-08-16T21:00:25+09:00","slug":"getting-started-tensorflow","tags":["Machine Leaning","TensorFlow"],"draft":false,"content":"\u003cp\u003eずっと気になっていた\u003ca href=\"https://www.tensorflow.org/\"\u003eTensorFlow\u003c/a\u003eを触ってみました．\nTensorFlow の情報は既に Web 上で大量に溢れかえっていてとてもありがたかったです．\n\u003ca href=\"https://qiita.com/search?q=tensorflow\"\u003eQiita でのキーワード検索結果\u003c/a\u003eは執筆時点で 472 件です．\n大いに参考にさせて頂きました．\u003c/p\u003e\n\u003cp\u003eちなみに私は少し前から機械学習をこそこそと勉強しているアプリエンジニアです．\u003c/p\u003e\n\u003cp\u003e実験環境は下記．\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003ePython: \u003ccode\u003e3.5.1\u003c/code\u003e\u003c/li\u003e\n\u003cli\u003eTensorFlow: \u003ccode\u003e0.10.0rc0\u003c/code\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003e※ニューラルネットワークはでてきません\u003c/p\u003e\n\u003ch2\u003eTensorFlow の基礎知識\u003c/h2\u003e\n\u003cp\u003eTensorFlow は一連の計算を\u003ca href=\"https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)\"\u003eグラフ\u003c/a\u003eで表現します．\n\"\u003cstrong\u003eOperation\u003c/strong\u003e\"と呼ばれるものがグラフのノードです．\nOperation は 0 個以上の計算対象を受け取って 0 個以上の計算結果を生成します．\n計算結果と計算対象は，\u003cstrong\u003eTensor\u003c/strong\u003e と呼ばれる多次元配列です (物理や数学でのテンソルと同義)．\nTensor はグラフのエッジに相当します．\nこの Operation を複数つなぎ合わせて所望の結果を得るようです．\nこのようにグラフで表された計算を，実行するには，\u003cstrong\u003eSession\u003c/strong\u003e オブジェクトを利用します．\nまた，学習の状態を保存するために，\u003cstrong\u003eVariable\u003c/strong\u003e を使うようです．\u003c/p\u003e\n\u003cp\u003e↓ ドキュメントをパラパラっと見てイメージを掴むと良さそうです．\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e\u003ca href=\"https://www.tensorflow.org/versions/r0.10/api_docs/python/framework.html#Graph\"\u003eGraph\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"https://www.tensorflow.org/versions/r0.10/api_docs/python/framework.html#Operation\"\u003eOperations\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"https://www.tensorflow.org/versions/r0.10/api_docs/python/framework.html#Tensor\"\u003eTensors\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"https://www.tensorflow.org/versions/r0.10/api_docs/python/client.html#Session\"\u003eSessions\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"https://www.tensorflow.org/versions/r0.10/api_docs/python/state_ops.html\"\u003eVariables\u003c/a\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch2\u003eIntroduction をやってみる\u003c/h2\u003e\n\u003cp\u003e\u003ca href=\"https://www.tensorflow.org/versions/r0.10/get_started/index.html\"\u003e公式の GET STARTED\u003c/a\u003eでは\n一次関数 $y = Wx + b$ について，$W$ と $b$ を最小二乗法で求めるサンプルが公開されていました．\n（ちなみに $W$ は weight, $b$ は bias です．）\u003c/p\u003e\n\u003cp\u003e上述の基礎知識を思い出しつつコードを眺めると，やっていることが大体理解出来ました．\n（ここでさっぱりイメージが湧かない人は，おそらく機械学習に関する知識が不足していますのでどこかで補いましょう．）\u003c/p\u003e\n\u003ch2\u003eExample\u003c/h2\u003e\n\u003cp\u003eExample の多くが\u003ca href=\"https://yann.lecun.com/exdb/mnist/\"\u003eMNIST\u003c/a\u003eの手書き数字画像を用いたものになっています．\n素晴らしい Example なのですがもう少し単純なもので試したい気もします．\n今回は\u003ca href=\"https://archive.ics.uci.edu/ml/datasets/Iris\"\u003eIris Data Set\u003c/a\u003eを使います．\nアルゴリズムは機械学習で最も単純な\u003ca href=\"https://ja.wikipedia.org/wiki/K%E8%BF%91%E5%82%8D%E6%B3%95\"\u003e最近傍法\u003c/a\u003eを用います．\u003c/p\u003e\n\u003cp\u003e下記は\u003ca href=\"https://github.com/aymericdamien/TensorFlow-Examples/blob/master/notebooks/2_BasicModels/nearest_neighbor.ipynb\"\u003eこちらのサンプルコード\u003c/a\u003eを Iris 版に書きなおしたものです．\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan\u003e# -*- coding: utf-8 -*-\u003c/span\u003e\n\n\u003cspan\u003eimport\u003c/span\u003e random\n\u003cspan\u003eimport\u003c/span\u003e numpy \u003cspan\u003eas\u003c/span\u003e np\n\u003cspan\u003eimport\u003c/span\u003e tensorflow \u003cspan\u003eas\u003c/span\u003e tf\n\u003cspan\u003efrom\u003c/span\u003e sklearn \u003cspan\u003eimport\u003c/span\u003e datasets\n\niris = datasets.load_iris()\n\nn_sample = \u003cspan\u003elist\u003c/span\u003e(\u003cspan\u003erange\u003c/span\u003e(\u003cspan\u003elen\u003c/span\u003e(iris.data)))\nrandom.seed(\u003cspan\u003e0\u003c/span\u003e)\nrandom.shuffle(n_sample)\n\nn_train = n_sample[:\u003cspan\u003e100\u003c/span\u003e]\nn_test = n_sample[\u003cspan\u003e100\u003c/span\u003e:]\n\nX_train = [iris.data[i] \u003cspan\u003efor\u003c/span\u003e i \u003cspan\u003ein\u003c/span\u003e n_train]\nY_train = [iris.target[i] \u003cspan\u003efor\u003c/span\u003e i \u003cspan\u003ein\u003c/span\u003e n_train]\n\nX_test = [iris.data[i] \u003cspan\u003efor\u003c/span\u003e i \u003cspan\u003ein\u003c/span\u003e n_test]\nY_test = [iris.target[i] \u003cspan\u003efor\u003c/span\u003e i \u003cspan\u003ein\u003c/span\u003e n_test]\n\nx_train = tf.placeholder(\u003cspan\u003e\"float\"\u003c/span\u003e, [\u003cspan\u003eNone\u003c/span\u003e, \u003cspan\u003e4\u003c/span\u003e])\nx_test = tf.placeholder(\u003cspan\u003e\"float\"\u003c/span\u003e, [\u003cspan\u003e4\u003c/span\u003e])\n\ndistance = tf.reduce_sum(tf.\u003cspan\u003eabs\u003c/span\u003e(tf.add(x_train, tf.neg(x_test))), reduction_indices=\u003cspan\u003e1\u003c/span\u003e)\nprediction = tf.arg_min(distance, \u003cspan\u003e0\u003c/span\u003e)\n\naccuracy = \u003cspan\u003e0\u003c/span\u003e\n\ninit = tf.initialize_all_variables()\n\n\u003cspan\u003ewith\u003c/span\u003e tf.Session() \u003cspan\u003eas\u003c/span\u003e sess:\n    sess.run(init)\n\n    \u003cspan\u003efor\u003c/span\u003e i \u003cspan\u003ein\u003c/span\u003e \u003cspan\u003erange\u003c/span\u003e(\u003cspan\u003elen\u003c/span\u003e(X_test)):\n        nn_index = sess.run(prediction, feed_dict={x_train: X_train, x_test: X_test[i]})\n        pred = Y_train[nn_index]\n        cls = Y_test[i]\n        \u003cspan\u003eprint\u003c/span\u003e(\u003cspan\u003e\"Test\"\u003c/span\u003e, i, \u003cspan\u003e\"Prediction:\"\u003c/span\u003e, pred, \u003cspan\u003e\"True Class:\"\u003c/span\u003e, cls)\n\n        \u003cspan\u003eif\u003c/span\u003e pred == cls:\n            accuracy += \u003cspan\u003e1.\u003c/span\u003e/\u003cspan\u003elen\u003c/span\u003e(X_test)\n    \u003cspan\u003eprint\u003c/span\u003e(\u003cspan\u003e\"Done.\"\u003c/span\u003e)\n    \u003cspan\u003eprint\u003c/span\u003e(\u003cspan\u003e\"Accuracy:\"\u003c/span\u003e, accuracy)\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e実行結果\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003eTest 0 Prediction: 0 True Class: 0\nTest 1 Prediction: 1 True Class: 1\nTest 2 Prediction: 2 True Class: 1\nTest 3 Prediction: 2 True Class: 2\nTest 4 Prediction: 1 True Class: 1\nTest 5 Prediction: 1 True Class: 1\nTest 6 Prediction: 1 True Class: 1\nTest 7 Prediction: 0 True Class: 0\nTest 8 Prediction: 0 True Class: 0\nTest 9 Prediction: 2 True Class: 2\nTest 10 Prediction: 2 True Class: 2\nTest 11 Prediction: 0 True Class: 0\nTest 12 Prediction: 0 True Class: 0\nTest 13 Prediction: 2 True Class: 2\nTest 14 Prediction: 2 True Class: 2\nTest 15 Prediction: 1 True Class: 1\nTest 16 Prediction: 1 True Class: 1\nTest 17 Prediction: 2 True Class: 1\nTest 18 Prediction: 0 True Class: 0\nTest 19 Prediction: 2 True Class: 2\nTest 20 Prediction: 1 True Class: 1\nTest 21 Prediction: 1 True Class: 1\nTest 22 Prediction: 0 True Class: 0\nTest 23 Prediction: 2 True Class: 2\nTest 24 Prediction: 0 True Class: 0\nTest 25 Prediction: 0 True Class: 0\nTest 26 Prediction: 1 True Class: 1\nTest 27 Prediction: 2 True Class: 2\nTest 28 Prediction: 1 True Class: 1\nTest 29 Prediction: 0 True Class: 0\nTest 30 Prediction: 0 True Class: 0\nTest 31 Prediction: 1 True Class: 1\nTest 32 Prediction: 0 True Class: 0\nTest 33 Prediction: 1 True Class: 1\nTest 34 Prediction: 0 True Class: 0\nTest 35 Prediction: 2 True Class: 2\nTest 36 Prediction: 2 True Class: 1\nTest 37 Prediction: 0 True Class: 0\nTest 38 Prediction: 2 True Class: 2\nTest 39 Prediction: 1 True Class: 1\nTest 40 Prediction: 1 True Class: 1\nTest 41 Prediction: 2 True Class: 2\nTest 42 Prediction: 1 True Class: 1\nTest 43 Prediction: 2 True Class: 2\nTest 44 Prediction: 2 True Class: 2\nTest 45 Prediction: 2 True Class: 2\nTest 46 Prediction: 1 True Class: 1\nTest 47 Prediction: 0 True Class: 0\nTest 48 Prediction: 2 True Class: 2\nTest 49 Prediction: 1 True Class: 1\nDone.\nAccuracy: 0.94\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e今日はここまで．\u003c/p\u003e\n\u003ch2\u003e参考\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003e\u003ca href=\"https://www.tensorflow.org/\"\u003eTensorFlow — an Open Source Software Library for Machine Intelligence\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"https://qiita.com/yanosen_jp/items/70e6d6afc36e1c0a3ef3\"\u003eTensorFlow のキーコンセプト: Op ノード、セッション、変数 - Qiita\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"https://qiita.com/icoxfog417/items/fb5c24e35a849f8e2c5d\"\u003eTensorFlow を算数で理解する - Qiita\u003c/a\u003e\u003c/li\u003e\n\u003c/ul\u003e\n"}},"__N_SSG":true},"page":"/post/[slug]","query":{"slug":"getting-started-tensorflow"},"buildId":"3d-PPhNSh_necZc8Vno-U","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>
+</ul></div></main><style data-emotion="css 1osq6pq">.css-1osq6pq{width:100%;height:140px;border-top:1px solid #e1e1e1;}</style><footer class="css-1osq6pq"><style data-emotion="css 17ttwh7">.css-17ttwh7{width:100%;max-width:740px;height:100%;margin:0 auto;font-size:12px;color:var(--color-sub-text);padding:2rem 0;}</style><div class="css-17ttwh7"><style data-emotion="css 260ftf">.css-260ftf{margin:0 20px;}</style><p class="css-260ftf">© 2020 chooblarin</p></div></footer></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"postContent":{"title":"TensorFlow入門以前","date":"2016-08-16T21:00:25+09:00","slug":"getting-started-tensorflow","tags":["Machine Leaning","TensorFlow"],"draft":false,"content":"\u003cp\u003eずっと気になっていた\u003ca href=\"https://www.tensorflow.org/\"\u003eTensorFlow\u003c/a\u003eを触ってみました．\nTensorFlow の情報は既に Web 上で大量に溢れかえっていてとてもありがたかったです．\n\u003ca href=\"https://qiita.com/search?q=tensorflow\"\u003eQiita でのキーワード検索結果\u003c/a\u003eは執筆時点で 472 件です．\n大いに参考にさせて頂きました．\u003c/p\u003e\n\u003cp\u003eちなみに私は少し前から機械学習をこそこそと勉強しているアプリエンジニアです．\u003c/p\u003e\n\u003cp\u003e実験環境は下記．\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003ePython: \u003ccode\u003e3.5.1\u003c/code\u003e\u003c/li\u003e\n\u003cli\u003eTensorFlow: \u003ccode\u003e0.10.0rc0\u003c/code\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003e※ニューラルネットワークはでてきません\u003c/p\u003e\n\u003ch2\u003eTensorFlow の基礎知識\u003c/h2\u003e\n\u003cp\u003eTensorFlow は一連の計算を\u003ca href=\"https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)\"\u003eグラフ\u003c/a\u003eで表現します．\n\"\u003cstrong\u003eOperation\u003c/strong\u003e\"と呼ばれるものがグラフのノードです．\nOperation は 0 個以上の計算対象を受け取って 0 個以上の計算結果を生成します．\n計算結果と計算対象は，\u003cstrong\u003eTensor\u003c/strong\u003e と呼ばれる多次元配列です (物理や数学でのテンソルと同義)．\nTensor はグラフのエッジに相当します．\nこの Operation を複数つなぎ合わせて所望の結果を得るようです．\nこのようにグラフで表された計算を，実行するには，\u003cstrong\u003eSession\u003c/strong\u003e オブジェクトを利用します．\nまた，学習の状態を保存するために，\u003cstrong\u003eVariable\u003c/strong\u003e を使うようです．\u003c/p\u003e\n\u003cp\u003e↓ ドキュメントをパラパラっと見てイメージを掴むと良さそうです．\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e\u003ca href=\"https://www.tensorflow.org/versions/r0.10/api_docs/python/framework.html#Graph\"\u003eGraph\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"https://www.tensorflow.org/versions/r0.10/api_docs/python/framework.html#Operation\"\u003eOperations\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"https://www.tensorflow.org/versions/r0.10/api_docs/python/framework.html#Tensor\"\u003eTensors\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"https://www.tensorflow.org/versions/r0.10/api_docs/python/client.html#Session\"\u003eSessions\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"https://www.tensorflow.org/versions/r0.10/api_docs/python/state_ops.html\"\u003eVariables\u003c/a\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch2\u003eIntroduction をやってみる\u003c/h2\u003e\n\u003cp\u003e\u003ca href=\"https://www.tensorflow.org/versions/r0.10/get_started/index.html\"\u003e公式の GET STARTED\u003c/a\u003eでは\n一次関数 $y = Wx + b$ について，$W$ と $b$ を最小二乗法で求めるサンプルが公開されていました．\n（ちなみに $W$ は weight, $b$ は bias です．）\u003c/p\u003e\n\u003cp\u003e上述の基礎知識を思い出しつつコードを眺めると，やっていることが大体理解出来ました．\n（ここでさっぱりイメージが湧かない人は，おそらく機械学習に関する知識が不足していますのでどこかで補いましょう．）\u003c/p\u003e\n\u003ch2\u003eExample\u003c/h2\u003e\n\u003cp\u003eExample の多くが\u003ca href=\"https://yann.lecun.com/exdb/mnist/\"\u003eMNIST\u003c/a\u003eの手書き数字画像を用いたものになっています．\n素晴らしい Example なのですがもう少し単純なもので試したい気もします．\n今回は\u003ca href=\"https://archive.ics.uci.edu/ml/datasets/Iris\"\u003eIris Data Set\u003c/a\u003eを使います．\nアルゴリズムは機械学習で最も単純な\u003ca href=\"https://ja.wikipedia.org/wiki/K%E8%BF%91%E5%82%8D%E6%B3%95\"\u003e最近傍法\u003c/a\u003eを用います．\u003c/p\u003e\n\u003cp\u003e下記は\u003ca href=\"https://github.com/aymericdamien/TensorFlow-Examples/blob/master/notebooks/2_BasicModels/nearest_neighbor.ipynb\"\u003eこちらのサンプルコード\u003c/a\u003eを Iris 版に書きなおしたものです．\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"hljs language-python\"\u003e\u003cspan class=\"hljs-comment\"\u003e# -*- coding: utf-8 -*-\u003c/span\u003e\n\n\u003cspan class=\"hljs-keyword\"\u003eimport\u003c/span\u003e random\n\u003cspan class=\"hljs-keyword\"\u003eimport\u003c/span\u003e numpy \u003cspan class=\"hljs-keyword\"\u003eas\u003c/span\u003e np\n\u003cspan class=\"hljs-keyword\"\u003eimport\u003c/span\u003e tensorflow \u003cspan class=\"hljs-keyword\"\u003eas\u003c/span\u003e tf\n\u003cspan class=\"hljs-keyword\"\u003efrom\u003c/span\u003e sklearn \u003cspan class=\"hljs-keyword\"\u003eimport\u003c/span\u003e datasets\n\niris = datasets.load_iris()\n\nn_sample = \u003cspan class=\"hljs-built_in\"\u003elist\u003c/span\u003e(\u003cspan class=\"hljs-built_in\"\u003erange\u003c/span\u003e(\u003cspan class=\"hljs-built_in\"\u003elen\u003c/span\u003e(iris.data)))\nrandom.seed(\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e)\nrandom.shuffle(n_sample)\n\nn_train = n_sample[:\u003cspan class=\"hljs-number\"\u003e100\u003c/span\u003e]\nn_test = n_sample[\u003cspan class=\"hljs-number\"\u003e100\u003c/span\u003e:]\n\nX_train = [iris.data[i] \u003cspan class=\"hljs-keyword\"\u003efor\u003c/span\u003e i \u003cspan class=\"hljs-keyword\"\u003ein\u003c/span\u003e n_train]\nY_train = [iris.target[i] \u003cspan class=\"hljs-keyword\"\u003efor\u003c/span\u003e i \u003cspan class=\"hljs-keyword\"\u003ein\u003c/span\u003e n_train]\n\nX_test = [iris.data[i] \u003cspan class=\"hljs-keyword\"\u003efor\u003c/span\u003e i \u003cspan class=\"hljs-keyword\"\u003ein\u003c/span\u003e n_test]\nY_test = [iris.target[i] \u003cspan class=\"hljs-keyword\"\u003efor\u003c/span\u003e i \u003cspan class=\"hljs-keyword\"\u003ein\u003c/span\u003e n_test]\n\nx_train = tf.placeholder(\u003cspan class=\"hljs-string\"\u003e\"float\"\u003c/span\u003e, [\u003cspan class=\"hljs-literal\"\u003eNone\u003c/span\u003e, \u003cspan class=\"hljs-number\"\u003e4\u003c/span\u003e])\nx_test = tf.placeholder(\u003cspan class=\"hljs-string\"\u003e\"float\"\u003c/span\u003e, [\u003cspan class=\"hljs-number\"\u003e4\u003c/span\u003e])\n\ndistance = tf.reduce_sum(tf.\u003cspan class=\"hljs-built_in\"\u003eabs\u003c/span\u003e(tf.add(x_train, tf.neg(x_test))), reduction_indices=\u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e)\nprediction = tf.arg_min(distance, \u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e)\n\naccuracy = \u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e\n\ninit = tf.initialize_all_variables()\n\n\u003cspan class=\"hljs-keyword\"\u003ewith\u003c/span\u003e tf.Session() \u003cspan class=\"hljs-keyword\"\u003eas\u003c/span\u003e sess:\n    sess.run(init)\n\n    \u003cspan class=\"hljs-keyword\"\u003efor\u003c/span\u003e i \u003cspan class=\"hljs-keyword\"\u003ein\u003c/span\u003e \u003cspan class=\"hljs-built_in\"\u003erange\u003c/span\u003e(\u003cspan class=\"hljs-built_in\"\u003elen\u003c/span\u003e(X_test)):\n        nn_index = sess.run(prediction, feed_dict={x_train: X_train, x_test: X_test[i]})\n        pred = Y_train[nn_index]\n        cls = Y_test[i]\n        \u003cspan class=\"hljs-built_in\"\u003eprint\u003c/span\u003e(\u003cspan class=\"hljs-string\"\u003e\"Test\"\u003c/span\u003e, i, \u003cspan class=\"hljs-string\"\u003e\"Prediction:\"\u003c/span\u003e, pred, \u003cspan class=\"hljs-string\"\u003e\"True Class:\"\u003c/span\u003e, cls)\n\n        \u003cspan class=\"hljs-keyword\"\u003eif\u003c/span\u003e pred == cls:\n            accuracy += \u003cspan class=\"hljs-number\"\u003e1.\u003c/span\u003e/\u003cspan class=\"hljs-built_in\"\u003elen\u003c/span\u003e(X_test)\n    \u003cspan class=\"hljs-built_in\"\u003eprint\u003c/span\u003e(\u003cspan class=\"hljs-string\"\u003e\"Done.\"\u003c/span\u003e)\n    \u003cspan class=\"hljs-built_in\"\u003eprint\u003c/span\u003e(\u003cspan class=\"hljs-string\"\u003e\"Accuracy:\"\u003c/span\u003e, accuracy)\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e実行結果\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"hljs language-subunit\"\u003e\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e0 Prediction: 0 True Class: 0\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e1 Prediction: 1 True Class: 1\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e2 Prediction: 2 True Class: 1\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e3 Prediction: 2 True Class: 2\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e4 Prediction: 1 True Class: 1\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e5 Prediction: 1 True Class: 1\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e6 Prediction: 1 True Class: 1\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e7 Prediction: 0 True Class: 0\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e8 Prediction: 0 True Class: 0\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e9 Prediction: 2 True Class: 2\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e10 Prediction: 2 True Class: 2\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e11 Prediction: 0 True Class: 0\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e12 Prediction: 0 True Class: 0\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e13 Prediction: 2 True Class: 2\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e14 Prediction: 2 True Class: 2\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e15 Prediction: 1 True Class: 1\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e16 Prediction: 1 True Class: 1\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e17 Prediction: 2 True Class: 1\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e18 Prediction: 0 True Class: 0\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e19 Prediction: 2 True Class: 2\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e20 Prediction: 1 True Class: 1\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e21 Prediction: 1 True Class: 1\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e22 Prediction: 0 True Class: 0\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e23 Prediction: 2 True Class: 2\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e24 Prediction: 0 True Class: 0\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e25 Prediction: 0 True Class: 0\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e26 Prediction: 1 True Class: 1\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e27 Prediction: 2 True Class: 2\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e28 Prediction: 1 True Class: 1\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e29 Prediction: 0 True Class: 0\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e30 Prediction: 0 True Class: 0\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e31 Prediction: 1 True Class: 1\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e32 Prediction: 0 True Class: 0\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e33 Prediction: 1 True Class: 1\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e34 Prediction: 0 True Class: 0\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e35 Prediction: 2 True Class: 2\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e36 Prediction: 2 True Class: 1\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e37 Prediction: 0 True Class: 0\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e38 Prediction: 2 True Class: 2\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e39 Prediction: 1 True Class: 1\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e40 Prediction: 1 True Class: 1\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e41 Prediction: 2 True Class: 2\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e42 Prediction: 1 True Class: 1\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e43 Prediction: 2 True Class: 2\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e44 Prediction: 2 True Class: 2\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e45 Prediction: 2 True Class: 2\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e46 Prediction: 1 True Class: 1\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e47 Prediction: 0 True Class: 0\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e48 Prediction: 2 True Class: 2\n\u003cspan class=\"hljs-keyword\"\u003eTest \u003c/span\u003e49 Prediction: 1 True Class: 1\nDone.\nAccuracy: 0.94\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e今日はここまで．\u003c/p\u003e\n\u003ch2\u003e参考\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003e\u003ca href=\"https://www.tensorflow.org/\"\u003eTensorFlow — an Open Source Software Library for Machine Intelligence\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"https://qiita.com/yanosen_jp/items/70e6d6afc36e1c0a3ef3\"\u003eTensorFlow のキーコンセプト: Op ノード、セッション、変数 - Qiita\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"https://qiita.com/icoxfog417/items/fb5c24e35a849f8e2c5d\"\u003eTensorFlow を算数で理解する - Qiita\u003c/a\u003e\u003c/li\u003e\n\u003c/ul\u003e"}},"__N_SSG":true},"page":"/post/[slug]","query":{"slug":"getting-started-tensorflow"},"buildId":"Ec0Sly56OmxAuPqXM7aXU","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>
