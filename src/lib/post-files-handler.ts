@@ -37,9 +37,9 @@ export async function getBlogPostContent(
 
   const markdown = await unified()
     .use(remarkParse as any) // FIXME
-    .use(remarkRehype)
+    .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeHighlight)
-    .use(rehypeStringify as any) // FIXME
+    .use(rehypeStringify as any, { allowDangerousHtml: true }) // FIXME
     .process(content || "");
 
   const markdownString = markdown.toString();
