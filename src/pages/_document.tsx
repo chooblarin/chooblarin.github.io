@@ -18,6 +18,10 @@ export default class CustomDocument extends Document {
               __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
+            gtag('consent', 'default', {
+              'ad_storage': 'denied'
+            });
+            gtag('set', 'ads_data_redaction', true);
             gtag('js', new Date());
             gtag('config', '${gaMeasurementId}', {
               page_path: window.location.pathname,
