@@ -1,4 +1,4 @@
-export const gaMeasurementId = "UA-62520326-2";
+export const gaMeasurementId = process.env["NEXT_PUBLIC_GA_TRACKING_ID"] as string;
 
 declare let window: Window & {
   gtag?: any;
