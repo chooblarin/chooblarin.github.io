@@ -19,6 +19,7 @@ export default class CustomDocument extends Document {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('consent', 'default', {
+              'analytics_storage': 'denied',
               'ad_storage': 'denied'
             });
             gtag('set', 'ads_data_redaction', true);
