@@ -100,6 +100,9 @@ const Post: React.FC<PostProps> = ({ postContent }) => {
             -webkit-text-fill-color: transparent;
             box-decoration-break: clone;
             -webkit-box-decoration-break: clone;
+            &::selection {
+              background: #932ab588;
+            }
           `}
         >
           {title}
