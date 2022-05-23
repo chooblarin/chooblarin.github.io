@@ -9,7 +9,7 @@ import { format } from "date-fns";
 import "highlight.js/styles/night-owl.css";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { NextSeo } from "next-seo";
-import Head from "next/head";
+import Script from "next/script";
 import * as React from "react";
 import { siteConfig } from "src/constants";
 
@@ -63,32 +63,31 @@ const Post: React.FC<PostProps> = ({ postContent }) => {
           title,
         }}
       />
-      <Head>
-        {/* Twitter */}
-        <script
-          async
-          src="https://platform.twitter.com/widgets.js"
-          charSet="utf-8"
-        />
+      {/* Twitter */}
+      <Script
+        async
+        src="https://platform.twitter.com/widgets.js"
+        charSet="utf-8"
+      />
 
-        {/* CodePen */}
-        <script
-          async
-          src="https://static.codepen.io/assets/embed/ei.js"
-          charSet="utf-8"
-        />
+      {/* CodePen */}
+      <Script
+        async
+        src="https://static.codepen.io/assets/embed/ei.js"
+        charSet="utf-8"
+      />
 
-        {/* MathJax */}
-        <script
-          async
-          src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
-          charSet="utf-8"
-        />
-        <script
-          type="text/x-mathjax-config"
-          dangerouslySetInnerHTML={{ __html: mathJaxConfigScript }}
-        />
-      </Head>
+      {/* MathJax */}
+      <Script
+        async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+        charSet="utf-8"
+      />
+      <Script
+        id="mathjax-config"
+        type="text/x-mathjax-config"
+        dangerouslySetInnerHTML={{ __html: mathJaxConfigScript }}
+      />
       <Layout>
         <h1
           css={css`
