@@ -68,7 +68,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-const Tag: React.FC<TagProps> = ({ tag, posts }) => {
+const Tag = ({ tag, posts }: TagProps) => {
   return (
     <div>
       <Layout>

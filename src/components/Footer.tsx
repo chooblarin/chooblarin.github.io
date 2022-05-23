@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import * as React from "react";
 
-export const Footer: React.FC = () => (
+export const Footer = () => (
   <footer
     css={css`
       width: 100%;

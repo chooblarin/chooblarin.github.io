@@ -43,7 +43,7 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-export const Tags: React.FC<TagsProps> = ({ tags }) => {
+export const Tags = ({ tags }: TagsProps) => {
   return (
     <div>
       <Layout>

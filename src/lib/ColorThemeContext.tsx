@@ -10,7 +10,11 @@ type ColorTheme = {
 
 export const ColorThemeContext = React.createContext<ColorTheme | null>(null);
 
-export const ColorThemeProvider: React.FC = ({ children }) => {
+export const ColorThemeProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [colorMode, setColorMode] = React.useState<ColorMode | undefined>(
     undefined
   );

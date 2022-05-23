@@ -2,9 +2,9 @@ import { css } from "@emotion/react";
 import Link, { LinkProps } from "next/link";
 import * as React from "react";
 
-export type RectLinkProps = {} & LinkProps;
+export type RectLinkProps = { children: React.ReactNode } & LinkProps;
 
-export const RectLink: React.FC<RectLinkProps> = ({ children, ...rest }) => (
+export const RectLink = ({ children, ...rest }: RectLinkProps) => (
   <Link passHref={true} {...rest}>
     <a
       css={css`

@@ -1,7 +1,7 @@
 import React from "react";
 import { themeColors } from "src/constants";
 
-export const ColorThemeScript: React.FC = () => (
+export const ColorThemeScript = () => (
   <script
     dangerouslySetInnerHTML={{
       __html: `

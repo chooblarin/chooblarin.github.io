@@ -47,7 +47,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-const Post: React.FC<PostProps> = ({ postContent }) => {
+const Post = ({ postContent }: PostProps) => {
   const { title, date, tags, content } = postContent;
   const formattedDate = format(new Date(date), "MMMM dd, yyyy");
   const tagItems = (tags || []).map((tagName) => ({

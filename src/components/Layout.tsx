@@ -3,7 +3,7 @@ import * as React from "react";
 import { Footer } from "./Footer";
 import { HomeHeader } from "./HomeHeader";
 
-export const Layout: React.FC = ({ children }) => (
+export const Layout = ({ children }: { children: React.ReactNode }) => (
   <div css={css``}>
     <HomeHeader />
     <main

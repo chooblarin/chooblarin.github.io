@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 import Link from "next/link";
 import * as React from "react";
 
-export const NotFoundPage: React.FC = () => {
+export const NotFoundPage = () => {
   return (
     <div
       css={css`

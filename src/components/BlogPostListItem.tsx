@@ -8,7 +8,7 @@ type BlogPostListItemProps = {
   post: BlogPost;
 };
 
-export const BlogPostListItem: React.FC<BlogPostListItemProps> = ({ post }) => {
+export const BlogPostListItem = ({ post }: BlogPostListItemProps) => {
   const { title, date, slug } = post;
 
   const formattedDate = format(new Date(date), "MMMM dd, yyyy");

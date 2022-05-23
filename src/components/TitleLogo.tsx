@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import * as React from "react";
 
-export const TitleLogo: React.FC = () => (
+export const TitleLogo = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 207 68"

@@ -5,7 +5,7 @@ import { ColorThemeSwitch } from "./ColorThemeSwitch";
 import { SocialAccountLinks } from "./SocialAccountLinks";
 import { TitleLogo } from "./TitleLogo";
 
-export const HomeHeader: React.FC = () => (
+export const HomeHeader = () => (
   <header
     css={css`
       color: #4a4a4a;

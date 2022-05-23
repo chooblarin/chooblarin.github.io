@@ -2,7 +2,7 @@ import { ColorThemeContext } from "@/lib/ColorThemeContext";
 import { css } from "@emotion/react";
 import React, { ChangeEvent, useContext } from "react";
 
-export const ColorThemeSwitch: React.FC = () => {
+export const ColorThemeSwitch = () => {
   const colorTheme = useContext(ColorThemeContext);
   const handleChange = (ev: ChangeEvent<HTMLInputElement>) => {
     const mode = ev.target.checked ? "dark" : "light";

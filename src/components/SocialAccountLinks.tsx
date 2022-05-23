@@ -24,7 +24,7 @@ const serviceIconStyle = css`
   }
 `;
 
-export const SocialAccountLinks: React.FC = () => (
+export const SocialAccountLinks = () => (
   <div
     css={css`
       display: flex;

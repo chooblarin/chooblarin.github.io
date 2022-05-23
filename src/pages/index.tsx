@@ -23,7 +23,7 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-const Home: React.FC<HomeProps> = ({ posts }) => {
+const Home = ({ posts }: HomeProps) => {
   return (
     <div>
       <Layout>

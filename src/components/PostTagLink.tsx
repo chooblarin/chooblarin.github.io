@@ -7,7 +7,7 @@ type PostTagLinkProps = {
   tag: PostTag;
 };
 
-export const PostTagLink: React.FC<PostTagLinkProps> = ({ tag }) => (
+export const PostTagLink = ({ tag }: PostTagLinkProps) => (
   <Link href={`/tags/${tag.slug}`} passHref={true}>
     <a
       css={css`

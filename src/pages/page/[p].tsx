@@ -59,7 +59,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-const Page: React.FC<PageProps> = ({ posts, prevPage, nextPage }) => {
+const Page = ({ posts, prevPage, nextPage }: PageProps) => {
   return (
     <div>
       <Layout>
