@@ -12,6 +12,8 @@ import { NextSeo } from "next-seo";
 import Script from "next/script";
 import * as React from "react";
 import { siteConfig } from "src/constants";
+import { useCodepenEmbed } from "src/hooks/useCodepenEmbed";
+import { useTwitterWidgets } from "src/hooks/useTwitterWidgets";
 
 type PostProps = {
   postContent: BlogPostContent;
@@ -54,6 +56,10 @@ const Post = ({ postContent }: PostProps) => {
     tagName,
     slug: slugify(tagName),
   }));
+
+  useTwitterWidgets();
+  useCodepenEmbed();
+
   return (
     <>
       <NextSeo
@@ -63,20 +69,6 @@ const Post = ({ postContent }: PostProps) => {
           title,
         }}
       />
-      {/* Twitter */}
-      <Script
-        async
-        src="https://platform.twitter.com/widgets.js"
-        charSet="utf-8"
-      />
-
-      {/* CodePen */}
-      <Script
-        async
-        src="https://static.codepen.io/assets/embed/ei.js"
-        charSet="utf-8"
-      />
-
       {/* MathJax */}
       <Script
         async
