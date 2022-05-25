@@ -25,7 +25,7 @@ export const Footer = () => (
           margin: 0 20px;
         `}
       >
-        &copy; 2020 chooblarin
+        &copy; 2022 chooblarin
       </p>
     </div>
   </footer>
