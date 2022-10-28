@@ -8,7 +8,7 @@ module.exports = {
     });
     return config;
   },
-  experimental: {
+  compiler: {
     emotion: true,
   },
   reactStrictMode: true,
