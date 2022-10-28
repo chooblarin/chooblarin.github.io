@@ -1,6 +1,5 @@
 import { css } from "@emotion/react";
 import Link from "next/link";
-import * as React from "react";
 import { ColorThemeSwitch } from "./ColorThemeSwitch";
 import { SocialAccountLinks } from "./SocialAccountLinks";
 import { TitleLogo } from "./TitleLogo";
@@ -38,7 +37,7 @@ export const HomeHeader = () => (
         margin: 72px auto;
       `}
     >
-      <Link href="/">
+      <Link href="/" legacyBehavior>
         <a
           css={css`
             cursor: pointer;

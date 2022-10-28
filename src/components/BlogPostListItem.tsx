@@ -2,7 +2,6 @@ import { BlogPost } from "@/lib/BlogPost";
 import { css } from "@emotion/react";
 import { format } from "date-fns";
 import Link from "next/link";
-import * as React from "react";
 
 type BlogPostListItemProps = {
   post: BlogPost;
@@ -14,7 +13,7 @@ export const BlogPostListItem = ({ post }: BlogPostListItemProps) => {
   const formattedDate = format(new Date(date), "MMMM dd, yyyy");
 
   return (
-    <Link href={`/post/${slug}`} passHref={true}>
+    <Link href={`/post/${slug}`} passHref={true} legacyBehavior>
       <a
         css={css`
           text-decoration: none;

@@ -5,7 +5,7 @@ import * as React from "react";
 export type RectLinkProps = { children: React.ReactNode } & LinkProps;
 
 export const RectLink = ({ children, ...rest }: RectLinkProps) => (
-  <Link passHref={true} {...rest}>
+  <Link passHref={true} {...rest} legacyBehavior>
     <a
       css={css`
         text-decoration: none;
