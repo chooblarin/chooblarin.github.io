@@ -1,6 +1,5 @@
 import { css } from "@emotion/react";
 import Link from "next/link";
-import * as React from "react";
 import { PostTag } from "src/pages/tags";
 
 type PostTagLinkProps = {
@@ -8,7 +7,7 @@ type PostTagLinkProps = {
 };
 
 export const PostTagLink = ({ tag }: PostTagLinkProps) => (
-  <Link href={`/tags/${tag.slug}`} passHref={true}>
+  <Link href={`/tags/${tag.slug}`} passHref={true} legacyBehavior>
     <a
       css={css`
         color: #6b6b6b;
