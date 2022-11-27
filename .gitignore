@@ -35,3 +35,6 @@ yarn-error.log*
 
 # generated sitemap
 public/sitemap.xml
+
+# vscode
+.vscode/
