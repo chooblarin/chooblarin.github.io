@@ -29,7 +29,6 @@ jobs:
           LOST_PIXEL_MODE: update
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
-        if: ${{ failure() && steps.lp.conclusion == 'failure' }}
         with:
           token: ${{ secrets.GH_TOKEN }}
           commit-message: update lost-pixel baselines
