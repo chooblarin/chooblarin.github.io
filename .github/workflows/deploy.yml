@@ -12,11 +12,11 @@ jobs:
       - uses: actions/checkout@v3
         with:
           persist-credentials: false
+      - uses: pnpm/action-setup@v2
       - name: Install and Build
         run: |
-          yarn
-          yarn generate-sitemap
-          yarn run build-export
+          pnpm i --frozen-lockfile
+          pnpm run build
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
