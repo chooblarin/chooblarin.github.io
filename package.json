@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build-export": "next build && next export",
     "generate-sitemap": "next build && node generate-sitemap.js",
     "start": "next start",
     "lint": "next lint",
