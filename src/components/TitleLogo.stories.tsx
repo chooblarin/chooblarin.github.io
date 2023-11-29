@@ -1,5 +1,4 @@
-import { Meta } from "@storybook/react/types-6-0";
-import React from "react";
+import type { Meta } from "@storybook/react";
 import { TitleLogo } from "./TitleLogo";
 
 export default {
