@@ -36,10 +36,10 @@ export async function getBlogPostContent(
   const post = getFrontMatter(data);
 
   const markdown = await unified()
-    .use(remarkParse as any) // FIXME
+    .use(remarkParse)
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeHighlight)
-    .use(rehypeStringify as any, { allowDangerousHtml: true }) // FIXME
+    .use(rehypeStringify, { allowDangerousHtml: true })
     .process(content || "");
 
   const markdownString = markdown.toString();
