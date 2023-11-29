@@ -2,6 +2,7 @@
   "name": "chooblarin.github.io",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@8.11.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,7 +11,8 @@
     "start": "next start",
     "lint": "next lint",
     "storybook": "start-storybook -p 6006 --no-dll",
-    "build-storybook": "build-storybook --no-dll"
+    "build-storybook": "build-storybook --no-dll",
+    "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
