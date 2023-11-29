@@ -60,7 +60,7 @@ const postFilePath = (filename?: string) => {
 };
 
 function getBlogPostFilenames(): string[] {
-  const pattern = /\.(md|mdx)$/.compile();
+  const pattern = /\.(md|mdx)$/;
   const path = postFilePath();
   const files = fs.readdirSync(path, "utf-8");
   return files.filter((file) => pattern.test(file));
