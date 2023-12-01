@@ -10,7 +10,6 @@ import "highlight.js/styles/night-owl.css";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { NextSeo } from "next-seo";
 import Script from "next/script";
-import * as React from "react";
 import { siteConfig } from "src/constants";
 import { useCodepenEmbed } from "src/hooks/useCodepenEmbed";
 import { useTwitterWidgets } from "src/hooks/useTwitterWidgets";
@@ -130,7 +129,14 @@ const Post = ({ postContent }: PostProps) => {
           </ul>
         </div>
 
-        <div dangerouslySetInnerHTML={{ __html: content }} />
+        <div
+          css={css`
+            ul {
+              padding-left: 20px;
+            }
+          `}
+          dangerouslySetInnerHTML={{ __html: content }}
+        />
       </Layout>
     </>
   );
