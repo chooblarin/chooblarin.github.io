@@ -1,5 +1,4 @@
 import { css } from "@emotion/react";
-import * as React from "react";
 
 export const Footer = () => (
   <footer
@@ -25,7 +24,7 @@ export const Footer = () => (
           margin: 0 20px;
         `}
       >
-        &copy; 2022 chooblarin
+        &copy; 2023 chooblarin
       </p>
     </div>
   </footer>
