@@ -1,0 +1,48 @@
+---
+import codepenIcon from "../assets/codepen.svg?raw";
+import emailIcon from "../assets/email.svg?raw";
+import githubIcon from "../assets/github.svg?raw";
+import linkedinIcon from "../assets/linkedin.svg?raw";
+import xIcon from "../assets/x.svg?raw";
+
+const twitterLink = "https://twitter.com/chooblarin";
+const githubLink = "https://github.com/chooblarin";
+const codepenLink = "https://codepen.io/chooblarin";
+const linkedInLink = "https://linkedin.com/in/sota-hatakeyama-35bb07120";
+const mailToLink = "mailto:choo.bla.rin@gmail.com";
+---
+
+<div class="social-acounts">
+  <a href={twitterLink}>
+    <Fragment set:html={xIcon} />
+  </a>
+  <a href={githubLink}>
+    <Fragment set:html={githubIcon} />
+  </a>
+  <a href={codepenLink}>
+    <Fragment set:html={codepenIcon} />
+  </a>
+  <a href={linkedInLink}>
+    <Fragment set:html={linkedinIcon} />
+  </a>
+  <a href={mailToLink}>
+    <Fragment set:html={emailIcon} />
+  </a>
+</div>
+
+<style>
+  .social-acounts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .social-acounts a {
+    width: 32px;
+    height: auto;
+    transition: color 0.2s linear;
+    margin: 0 8px;
+  }
+  .social-acounts a:hover {
+    color: #983bc9;
+  }
+</style>
