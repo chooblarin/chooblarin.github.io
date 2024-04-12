@@ -1,10 +1,16 @@
 ---
+import { getCollection } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
 import HomeHeader from "../components/HomeHeader.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts.ts";
 
 const title = SITE_TITLE;
 const description = SITE_DESCRIPTION;
+
+const allPosts = await getCollection("post");
+const latestPosts = allPosts
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 5);
 ---
 
 <html lang="ja">
@@ -13,5 +19,16 @@ const description = SITE_DESCRIPTION;
   </head>
   <body>
     <HomeHeader />
+    <main>
+      <ul>
+        {
+          latestPosts.map((post) => (
+            <li>
+              <a href={`/post/${post.slug}`}>{post.data.title}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </main>
   </body>
 </html>
