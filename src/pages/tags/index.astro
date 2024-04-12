@@ -1,0 +1,49 @@
+---
+import { getCollection } from "astro:content";
+import BaseHead from "../../components/BaseHead.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+
+const title = SITE_TITLE;
+const description = SITE_DESCRIPTION;
+
+const allPosts = await getCollection("post");
+
+const countedTags = allPosts
+  .map((post) => post.data.tags.flat())
+  .flat()
+  .reduce(
+    (acc, tag) => {
+      if (!acc[tag]) {
+        acc[tag] = 0;
+      }
+      acc[tag] += 1;
+      return acc;
+    },
+    {} as Record<string, number>
+  );
+const tagItems = Object.entries(countedTags)
+  .map(([tag, count]) => ({ tag, count }))
+  .sort((a, b) => a.tag.localeCompare(b.tag));
+---
+
+<html lang="ja">
+  <head>
+    <BaseHead title={title} description={description} />
+  </head>
+  <body>
+    <main>
+      <h1>Tags</h1>
+      <ul>
+        {
+          tagItems.map((item) => (
+            <li>
+              <a href={`/tags/${item.tag}`}>
+                {item.tag} ({item.count})
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </main>
+  </body>
+</html>
