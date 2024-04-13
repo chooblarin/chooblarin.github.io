@@ -39,11 +39,10 @@ const { title, description } = Astro.props;
 <!-- <meta property="twitter:image" content={new URL(image, Astro.url)} /> -->
 <meta name="title" content={title} />
 <style is:global>
-  *,
-  ::before,
-  ::after {
-    box-sizing: border-box;
-  }
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+
   html {
     font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
       "Apple Color Emoji", "Segoe UI Emoji";
@@ -53,49 +52,6 @@ const { title, description } = Astro.props;
     tab-size: 4;
   }
 
-  body,
-  h1,
-  h2,
-  h3,
-  h4,
-  p,
-  ul[class],
-  ol[class],
-  li,
-  figure,
-  figcaption,
-  blockquote,
-  dl,
-  dd {
-    margin: 0;
-  }
-
-  ul[class],
-  ol[class] {
-    padding: 0;
-    list-style: none;
-  }
-
-  a:not([class]) {
-    text-decoration-skip-ink: auto;
-  }
-
-  article > * + * {
-    margin-top: 1em;
-  }
-
-  input,
-  button,
-  textarea,
-  select {
-    font: inherit;
-  }
-
-  img {
-    max-width: 100%;
-    display: block;
-  }
-
   ::selection {
     color: white;
     background: #932ab5;
@@ -103,22 +59,15 @@ const { title, description } = Astro.props;
 
   body {
     color: #232323;
-    color: var(--color-text);
     background: #ffffff;
-    background: var(--color-background);
     transition: background-color 0.3s ease;
   }
 
   a {
     color: #983bc9;
-    color: var(--color-primary);
     background-color: transparent;
     word-break: break-all;
-  }
-
-  code {
-    color: #232323;
-    line-height: 1.6;
+    text-decoration: underline;
   }
 
   /* Remove all animations and transitions for people that prefer not to see them */
