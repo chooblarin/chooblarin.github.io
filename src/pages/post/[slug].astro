@@ -2,6 +2,7 @@
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import BaseHead from "../../components/BaseHead.astro";
+
 export const getStaticPaths = (async () => {
   const posts = await getCollection("post");
   return posts.map((post) => ({

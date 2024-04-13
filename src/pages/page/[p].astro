@@ -1,0 +1,42 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import BaseHead from "../../components/BaseHead.astro";
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection("post");
+  const countPerPage = 10;
+  const pageSize = Math.ceil(posts.length / countPerPage);
+  const chunked = Array.from({ length: pageSize }, (_, i) =>
+    posts
+      .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+      .slice(i * countPerPage, i * countPerPage + countPerPage)
+  );
+
+  return chunked.map((chunk, index) => ({
+    params: { p: (index + 1).toString() },
+    props: { chunk },
+  }));
+}) satisfies GetStaticPaths;
+
+const { chunk } = Astro.props;
+---
+
+<html lang="ja">
+  <head>
+    <BaseHead title={""} description={""} />
+  </head>
+  <body>
+    <main>
+      {
+        chunk.map((post) => (
+          <a href={`/post/${post.slug}`}>
+            <article>
+              <p>{post.data.title}</p>
+            </article>
+          </a>
+        ))
+      }
+    </main>
+  </body>
+</html>
