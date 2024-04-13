@@ -15,11 +15,11 @@ export const getStaticPaths = (async () => {
 
   return chunked.map((chunk, index) => ({
     params: { p: (index + 1).toString() },
-    props: { chunk },
+    props: { chunk, hasNext: index + 1 < chunked.length, page: index + 1 },
   }));
 }) satisfies GetStaticPaths;
 
-const { chunk } = Astro.props;
+const { chunk, hasNext, page } = Astro.props;
 ---
 
 <html lang="ja">
@@ -37,6 +37,7 @@ const { chunk } = Astro.props;
           </a>
         ))
       }
+      {hasNext && <a href={`/page/${page + 1}`}>次へ</a>}
     </main>
   </body>
 </html>
