@@ -9,4 +9,9 @@ export default defineConfig({
   },
   site: "https://chooblarin.com",
   integrations: [tailwind(), sitemap()],
+  markdown: {
+    shikiConfig: {
+      theme: "night-owl",
+    },
+  },
 });
