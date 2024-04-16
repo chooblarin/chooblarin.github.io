@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { format } from "date-fns";
 import BaseHead from "../components/BaseHead.astro";
 import HomeHeader from "../components/HomeHeader.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts.ts";
@@ -20,15 +21,20 @@ const latestPosts = allPosts
   <body>
     <HomeHeader />
     <main class="max-w-[740px] mx-auto px-5 pb-24">
-      <ul>
+      <section>
         {
           latestPosts.map((post) => (
-            <li>
-              <a href={`/post/${post.slug}`}>{post.data.title}</a>
-            </li>
+            <a href={`/post/${post.slug}`} class="no-underline text-inherit">
+              <div class="py-4">
+                <p class="text-xl my-2">{post.data.title}</p>
+                <p class="text-sm my-2 text-gray-500">
+                  {format(post.data.date, "MMMM dd, yyyy")}
+                </p>
+              </div>
+            </a>
           ))
         }
-      </ul>
+      </section>
 
       <a href="/page/1">View all</a>
     </main>

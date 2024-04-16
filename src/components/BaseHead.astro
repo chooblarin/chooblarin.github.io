@@ -43,6 +43,12 @@ const { title, description } = Astro.props;
   @tailwind components;
   @tailwind utilities;
 
+  @layer {
+    :root {
+      --color-primary: 147 42 181;
+    }
+  }
+
   html {
     font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
       "Apple Color Emoji", "Segoe UI Emoji";
@@ -54,7 +60,7 @@ const { title, description } = Astro.props;
 
   ::selection {
     color: white;
-    background: #932ab5;
+    background: rgb(var(--color-primary));
   }
 
   body {
