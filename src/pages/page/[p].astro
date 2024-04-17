@@ -2,6 +2,7 @@
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import BaseHead from "../../components/BaseHead.astro";
+import MaxWidthContainer from "../../components/MaxWidthContainer.astro";
 
 export const getStaticPaths = (async () => {
   const posts = await getCollection("post");
@@ -27,17 +28,19 @@ const { chunk, hasNext, page } = Astro.props;
     <BaseHead title={""} description={""} />
   </head>
   <body>
-    <main>
-      {
-        chunk.map((post) => (
-          <a href={`/post/${post.slug}`}>
-            <article>
-              <p>{post.data.title}</p>
-            </article>
-          </a>
-        ))
-      }
-      {hasNext && <a href={`/page/${page + 1}`}>次へ</a>}
-    </main>
+    <MaxWidthContainer>
+      <main>
+        {
+          chunk.map((post) => (
+            <a href={`/post/${post.slug}`}>
+              <article>
+                <p>{post.data.title}</p>
+              </article>
+            </a>
+          ))
+        }
+        {hasNext && <a href={`/page/${page + 1}`}>次へ</a>}
+      </main>
+    </MaxWidthContainer>
   </body>
 </html>

@@ -2,6 +2,7 @@
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import BaseHead from "../../components/BaseHead.astro";
+import MaxWidthContainer from "../../components/MaxWidthContainer.astro";
 import { slugify } from "../../lib/util";
 
 export const getStaticPaths = (async () => {
@@ -28,17 +29,19 @@ const { tag, posts } = Astro.props;
     <BaseHead title={""} description={""} />
   </head>
   <body>
-    <main class="max-w-[740px] mx-auto px-5 pb-24">
-      <h1>{tag}</h1>
-      <ul>
-        {
-          posts.map((post) => (
-            <li>
-              <a href={`/posts/${slugify(post.slug)}`}>{post.data.title}</a>
-            </li>
-          ))
-        }
-      </ul>
-    </main>
+    <MaxWidthContainer>
+      <main>
+        <h1>{tag}</h1>
+        <ul>
+          {
+            posts.map((post) => (
+              <li>
+                <a href={`/posts/${slugify(post.slug)}`}>{post.data.title}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </main>
+    </MaxWidthContainer>
   </body>
 </html>

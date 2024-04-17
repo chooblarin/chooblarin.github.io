@@ -1,5 +1,4 @@
 import sitemap from "@astrojs/sitemap";
-import tailwind from "@astrojs/tailwind";
 import { defineConfig } from "astro/config";
 
 // https://astro.build/config
@@ -8,7 +7,7 @@ export default defineConfig({
     "/page": "/page/1",
   },
   site: "https://chooblarin.com",
-  integrations: [tailwind(), sitemap()],
+  integrations: [sitemap()],
   markdown: {
     shikiConfig: {
       theme: "night-owl",

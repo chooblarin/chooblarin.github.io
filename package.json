@@ -15,8 +15,5 @@
     "astro": "^4.5.16",
     "date-fns": "^3.6.0",
     "typescript": "^5.4.4"
-  },
-  "devDependencies": {
-    "@astrojs/tailwind": "^5.1.0"
   }
 }

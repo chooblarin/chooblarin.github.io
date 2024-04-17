@@ -3,6 +3,7 @@ import type { CollectionEntry } from "astro:content";
 import { format } from "date-fns";
 import BaseHead from "../components/BaseHead.astro";
 import HomeHeader from "../components/HomeHeader.astro";
+import MaxWidthContainer from "../components/MaxWidthContainer.astro";
 import { slugify } from "../lib/util";
 
 type Props = CollectionEntry<"post">["data"];
@@ -19,24 +20,46 @@ const tagItems = tags.map((name) => ({
 <html lang="ja">
   <head>
     <BaseHead title={title} description={""} />
-    <style>
-      .post-title {
-        background: linear-gradient(
-          90deg,
-          rgb(59, 154, 201),
-          rgb(152, 59, 201)
-        );
-        background-clip: text;
-        color: transparent;
-      }
-    </style>
     <style is:inline>
       .post-content {
-        h2 {
-          font-size: 1.85rem;
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
           font-weight: 600;
           margin: 2rem 0 1rem;
           padding-top: 0.875rem;
+        }
+        h1 {
+          font-size: 2.25rem;
+        }
+        h2 {
+          line-height: 1;
+          font-size: 1.85rem;
+        }
+        h3 {
+          line-height: 1;
+          font-size: 1.55rem;
+        }
+        h4 {
+          line-height: 1;
+          font-size: 1.25rem;
+        }
+        h5 {
+          line-height: 1;
+          font-size: 1rem;
+        }
+        h6 {
+          line-height: 1;
+          font-size: 0.875rem;
+        }
+        p {
+          margin: 1.5rem 0;
+        }
+        li::marker {
+          color: rgb(107 114 128);
         }
         p {
           margin: 1.2rem 0;
@@ -58,27 +81,63 @@ const tagItems = tags.map((name) => ({
     </style>
   </head>
   <body>
-    <main class="max-w-[740px] mx-auto px-5 pb-24">
-      <HomeHeader />
-      <article>
-        <h1 class="mt-8 mb-4 text-4xl font-semibold post-title">{title}</h1>
-        <p class="text-gray-600 text-sm my-12 mb-6">{formattedDate}</p>
-        <ul class="mb-16">
-          {
-            tagItems.map((tag) => (
-              <li class="inline-block m-2 ml-0">
-                <a
-                  href={`/tags/${tag.slug}`}
-                  class=" text-gray-600 bg-gray-100 no-underline text-xs rounded-sm px-3 py-1.5"
-                >{`#${tag.name}`}</a>
-              </li>
-            ))
-          }
-        </ul>
-        <div class="post-content">
-          <slot />
-        </div>
-      </article>
-    </main>
+    <MaxWidthContainer>
+      <main>
+        <HomeHeader />
+        <article>
+          <h1 class="title">{title}</h1>
+          <p class="date">{formattedDate}</p>
+          <ul class="tags">
+            {
+              tagItems.map((tag) => (
+                <li class="tag">
+                  <a href={`/tags/${tag.slug}`}>{`#${tag.name}`}</a>
+                </li>
+              ))
+            }
+          </ul>
+          <div class="post-content">
+            <slot />
+          </div>
+        </article>
+      </main>
+    </MaxWidthContainer>
+
+    <style>
+      .title {
+        background: linear-gradient(
+          90deg,
+          rgb(59, 154, 201),
+          rgb(152, 59, 201)
+        );
+        background-clip: text;
+        font-size: 2.25rem;
+        font-weight: 600;
+        color: transparent;
+        margin: 32px 0 16px;
+      }
+      .date {
+        font-size: 0.875rem;
+        margin: 48px 0 24px;
+        color: rgb(75 85 99);
+      }
+      .tags {
+        margin: 24px 0;
+      }
+      .tag {
+        display: inline-block;
+        margin: 8px 8px 8px 0;
+      }
+      .tag a {
+        color: rgb(75 85 99);
+        background-color: rgb(243 244 246);
+        text-decoration: none;
+        border-radius: 4px;
+        padding: 6px 12px;
+      }
+      .content {
+        margin-top: 64px;
+      }
+    </style>
   </body>
 </html>

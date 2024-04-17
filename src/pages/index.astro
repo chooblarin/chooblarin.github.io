@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import { format } from "date-fns";
 import BaseHead from "../components/BaseHead.astro";
 import HomeHeader from "../components/HomeHeader.astro";
+import MaxWidthContainer from "../components/MaxWidthContainer.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts.ts";
 
 const title = SITE_TITLE;
@@ -20,23 +21,51 @@ const latestPosts = allPosts
   </head>
   <body>
     <HomeHeader />
-    <main class="max-w-[740px] mx-auto px-5 pb-24">
-      <section>
-        {
-          latestPosts.map((post) => (
-            <a href={`/post/${post.slug}`} class="no-underline text-inherit">
-              <div class="py-4">
-                <p class="text-xl my-2">{post.data.title}</p>
-                <p class="text-sm my-2 text-gray-500">
-                  {format(post.data.date, "MMMM dd, yyyy")}
-                </p>
-              </div>
-            </a>
-          ))
-        }
-      </section>
+    <MaxWidthContainer>
+      <main>
+        <section class="latest-posts">
+          {
+            latestPosts.map((post) => (
+              <a href={`/post/${post.slug}`} class="post-link">
+                <div class="post-content">
+                  <p class="post-title">{post.data.title}</p>
+                  <p class="post-date">
+                    {format(post.data.date, "MMMM dd, yyyy")}
+                  </p>
+                </div>
+              </a>
+            ))
+          }
+        </section>
 
-      <a href="/page/1">View all</a>
-    </main>
+        <a href="/page/1">View all</a>
+      </main>
+    </MaxWidthContainer>
+    <style>
+      .latest-posts {
+        margin: 20px 0 40px;
+      }
+      .post-link {
+        color: inherit;
+        text-decoration: none;
+      }
+      .post-content {
+        padding: 8px 0;
+      }
+      .post-title {
+        font-size: 1.25rem;
+        margin: 12px 0px 8px;
+        transition: color 0.2s linear;
+      }
+      .post-date {
+        /* text-sm my-2 text-gray-500 */
+        font-size: 0.875rem;
+        color: rgb(107 114 128);
+        margin: 8px 0;
+      }
+      .post-link:hover .post-title {
+        color: rgb(var(--color-primary));
+      }
+    </style>
   </body>
 </html>

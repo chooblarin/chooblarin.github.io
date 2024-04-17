@@ -39,16 +39,76 @@ const { title, description } = Astro.props;
 <!-- <meta property="twitter:image" content={new URL(image, Astro.url)} /> -->
 <meta name="title" content={title} />
 <style is:global>
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-
   @layer {
     :root {
       --color-primary: 147 42 181;
+      --color-primary-inverted: 255 255 255;
+      --color-text: 35 35 35;
+      --color-background: 255 255 255;
     }
   }
 
+  /* Box sizing rules */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  /* Remove default styles for list */
+  ul[class],
+  ol[class] {
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    margin: 0 0 0.25rem;
+  }
+
+  /* Remove default margin */
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  ul[class],
+  ol[class],
+  li,
+  figure,
+  figcaption,
+  blockquote,
+  dl,
+  dd {
+    margin: 0;
+  }
+
+  /* A elements that don't have a class get default styles */
+  a:not([class]) {
+    text-decoration-skip-ink: auto;
+  }
+
+  /* Make images easier to work with */
+  img {
+    max-width: 100%;
+    display: block;
+  }
+
+  /* Natural flow and rhythm in articles by default */
+  article > * + * {
+    margin-top: 1em;
+  }
+
+  /* Inherit fonts for inputs and buttons */
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  /* Base document */
   html {
     font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
       "Apple Color Emoji", "Segoe UI Emoji";
@@ -59,18 +119,18 @@ const { title, description } = Astro.props;
   }
 
   ::selection {
-    color: white;
+    color: rgb(var(--color-primary-inverted));
     background: rgb(var(--color-primary));
   }
 
   body {
-    color: #232323;
-    background: #ffffff;
+    color: rgb(var(--color-text));
+    background: rgb(var(--color-background));
     transition: background-color 0.3s ease;
   }
 
   a {
-    color: #983bc9;
+    color: rgb(var(--color-primary));
     background-color: transparent;
     word-break: break-all;
     text-decoration: underline;
