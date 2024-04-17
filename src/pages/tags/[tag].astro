@@ -2,6 +2,8 @@
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import BaseHead from "../../components/BaseHead.astro";
+import Footer from "../../components/Footer.astro";
+import HomeHeader from "../../components/HomeHeader.astro";
 import MaxWidthContainer from "../../components/MaxWidthContainer.astro";
 import { slugify } from "../../lib/util";
 
@@ -29,6 +31,7 @@ const { tag, posts } = Astro.props;
     <BaseHead title={""} description={""} />
   </head>
   <body>
+    <HomeHeader />
     <MaxWidthContainer>
       <main>
         <h1>{tag}</h1>
@@ -43,5 +46,6 @@ const { tag, posts } = Astro.props;
         </ul>
       </main>
     </MaxWidthContainer>
+    <Footer />
   </body>
 </html>

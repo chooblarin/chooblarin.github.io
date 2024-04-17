@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import { format } from "date-fns";
 import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
 import HomeHeader from "../components/HomeHeader.astro";
 import MaxWidthContainer from "../components/MaxWidthContainer.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts.ts";
@@ -41,6 +42,8 @@ const latestPosts = allPosts
         <a href="/page/1">View all</a>
       </main>
     </MaxWidthContainer>
+    <Footer />
+
     <style>
       .latest-posts {
         margin: 20px 0 40px;

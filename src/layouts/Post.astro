@@ -2,6 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import { format } from "date-fns";
 import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
 import HomeHeader from "../components/HomeHeader.astro";
 import MaxWidthContainer from "../components/MaxWidthContainer.astro";
 import { slugify } from "../lib/util";
@@ -102,6 +103,7 @@ const tagItems = tags.map((name) => ({
         </article>
       </main>
     </MaxWidthContainer>
+    <Footer />
 
     <style>
       .title {
