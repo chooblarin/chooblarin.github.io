@@ -1,0 +1,38 @@
+---
+import { format } from "date-fns";
+
+const { title, date, slug } = Astro.props;
+---
+
+<a href={`/post/${slug}`} class="post-link">
+  <article class="post-content">
+    <p class="post-title">{title}</p>
+    <p class="post-date">
+      {format(date, "MMMM dd, yyyy")}
+    </p>
+  </article>
+</a>
+
+<style>
+  .post-link {
+    color: inherit;
+    text-decoration: none;
+  }
+  .post-content {
+    padding: 8px 0;
+  }
+  .post-title {
+    font-size: 1.25rem;
+    margin: 12px 0px 8px;
+    transition: color 0.2s linear;
+  }
+  .post-date {
+    /* text-sm my-2 text-gray-500 */
+    font-size: 0.875rem;
+    color: rgb(107 114 128);
+    margin: 8px 0;
+  }
+  .post-link:hover .post-title {
+    color: rgb(var(--color-primary));
+  }
+</style>
