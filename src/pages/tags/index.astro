@@ -7,9 +7,6 @@ import MaxWidthContainer from "../../components/MaxWidthContainer.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 import { slugify } from "../../lib/util";
 
-const title = SITE_TITLE;
-const description = SITE_DESCRIPTION;
-
 const allPosts = await getCollection("post");
 
 const countedTags = allPosts
@@ -32,7 +29,10 @@ const tagItems = Object.entries(countedTags)
 
 <html lang="ja">
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead
+      title={`タグ一覧 | ${SITE_TITLE}`}
+      description={SITE_DESCRIPTION}
+    />
   </head>
   <body>
     <HomeHeader />
