@@ -81,9 +81,16 @@ const tagItems = tags.map((name) => ({
           padding: 0.8rem;
           border: 2px solid #aaa;
           border-radius: 4px;
+          scrollbar-width: none; /* Firefox */
+          &::-webkit-scrollbar {
+            display: none; /* Safari and Chrome */
+          }
         }
       }
     </style>
+
+    <!-- KaTeX styles -->
+    <link rel="stylesheet" href="/styles/katex/katex.min.css" rel="preload" />
   </head>
   <body>
     <MaxWidthContainer>
