@@ -15,7 +15,7 @@ export const getStaticPaths = (async () => {
   const chunked = Array.from({ length: pageSize }, (_, i) =>
     posts
       .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-      .slice(i * countPerPage, i * countPerPage + countPerPage)
+      .slice(i * countPerPage, i * countPerPage + countPerPage),
   );
 
   return chunked.map((chunk, index) => ({

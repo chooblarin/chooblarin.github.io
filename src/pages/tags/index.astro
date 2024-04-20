@@ -20,7 +20,7 @@ const countedTags = allPosts
       acc[tag] += 1;
       return acc;
     },
-    {} as Record<string, number>
+    {} as Record<string, number>,
   );
 const tagItems = Object.entries(countedTags)
   .map(([tag, count]) => ({ tag, count }))
