@@ -36,6 +36,28 @@ const { title, description, image = "/og-default.png" } = Astro.props;
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
 <meta name="title" content={title} />
+
+<!-- Google tag (gtag.js) -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QDHTHT3GC2"
+></script>
+<script is:inline>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    window.dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
+  gtag("consent", "default", {
+    ad_storage: "denied",
+  });
+  gtag("set", "ads_data_redaction", true);
+  gtag("config", "G-QDHTHT3GC2", {
+    page_path: window.location.pathname,
+    anonymize_ip: true,
+  });
+</script>
+
+<!-- Global styles -->
 <style is:global>
   @layer {
     :root {
