@@ -5,6 +5,7 @@ import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import HomeHeader from "../components/HomeHeader.astro";
 import MaxWidthContainer from "../components/MaxWidthContainer.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import { slugify } from "../lib/util";
 
 type Props = CollectionEntry<"post">["data"];
@@ -20,7 +21,10 @@ const tagItems = tags.map((name) => ({
 
 <html lang="ja">
   <head>
-    <BaseHead title={title} description={""} />
+    <BaseHead
+      title={`${title} | ${SITE_TITLE}`}
+      description={SITE_DESCRIPTION}
+    />
     <style is:inline>
       .post-content {
         h1,
