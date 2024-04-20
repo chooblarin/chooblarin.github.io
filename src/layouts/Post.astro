@@ -118,16 +118,17 @@ const tagItems = tags.map((name) => ({
 
     <style>
       .title {
+        display: inline-block;
         background: linear-gradient(
           90deg,
           rgb(59, 154, 201),
           rgb(152, 59, 201)
         );
         background-clip: text;
+        -webkit-background-clip: text;
         font-size: 2.25rem;
         font-weight: 600;
         color: transparent;
-        margin: 32px 0 16px;
       }
       .date {
         font-size: 0.875rem;
