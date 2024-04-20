@@ -69,7 +69,7 @@ const tagItems = tags.map((name) => ({
         p {
           margin: 1.2rem 0;
         }
-        p code {
+        :not(pre) > code {
           font-size: 1rem;
           font-family: monospace;
           background: #f3f4f6;
@@ -142,6 +142,7 @@ const tagItems = tags.map((name) => ({
         margin: 8px 8px 8px 0;
       }
       .tag a {
+        font-size: 0.75rem;
         color: rgb(75 85 99);
         background-color: rgb(243 244 246);
         text-decoration: none;
