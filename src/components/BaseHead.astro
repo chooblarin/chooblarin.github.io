@@ -12,7 +12,11 @@ const { title, description, image = "/og-default.png" } = Astro.props;
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
+<meta name="theme-color" content="#ffffff" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="mask-icon" href="mask-icon.svg" color="#000000" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 
 <!-- canonical URL -->
@@ -36,6 +40,12 @@ const { title, description, image = "/og-default.png" } = Astro.props;
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
 <meta name="title" content={title} />
+
+<!-- Google site verification -->
+<meta
+  name="google-site-verification"
+  content="5MMy9toPN2P8O6xmRyiBp-l97-pCGSnLGS2AwiUdWpI"
+/>
 
 <!-- Google tag (gtag.js) -->
 
