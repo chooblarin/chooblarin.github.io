@@ -4,3 +4,5 @@ Allow: /
 
 # Host
 Host: https://chooblarin.com
+
+Sitemap: https://chooblarin.com/sitemap-index.xml
