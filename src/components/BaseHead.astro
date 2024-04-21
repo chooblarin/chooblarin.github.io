@@ -49,8 +49,10 @@ const { title, description, image = "/og-default.png" } = Astro.props;
 
 <!-- Google tag (gtag.js) -->
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QDHTHT3GC2"
-></script>
+<script
+  is:inline
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-QDHTHT3GC2"></script>
 <script is:inline>
   window.dataLayer = window.dataLayer || [];
   function gtag() {
