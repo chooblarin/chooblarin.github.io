@@ -66,9 +66,17 @@ const tagItems = tags.map((name) => ({
         li::marker {
           color: rgb(107 114 128);
         }
-        p {
-          margin: 1.2rem 0;
+        blockquote {
+          color: rgb(31 41 55);
+          background: rgb(243 244 246);
+          padding: 1rem 0.875em;
+          border-radius: 8px;
+
+          p {
+            margin: 0;
+          }
         }
+        /* Code hightlight */
         :not(pre) > code {
           font-size: 1rem;
           font-family: monospace;
