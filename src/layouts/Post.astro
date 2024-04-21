@@ -8,9 +8,14 @@ import MaxWidthContainer from "../components/MaxWidthContainer.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import { slugify } from "../lib/util";
 
-type Props = CollectionEntry<"post">["data"];
+type Props = {
+  post: CollectionEntry<"post">;
+  prev: CollectionEntry<"post"> | null;
+  next: CollectionEntry<"post"> | null;
+};
 
-const { title, date, tags } = Astro.props;
+const { post, prev, next } = Astro.props;
+const { title, date, tags } = post.data;
 const formattedDate = format(date, "MMMM dd, yyyy");
 
 const tagItems = tags.map((name) => ({
@@ -121,6 +126,10 @@ const tagItems = tags.map((name) => ({
           </div>
         </article>
       </main>
+      <div class="links">
+        {next && <a href={`/post/${next.slug}`}>{`< 前の記事`}</a>}
+        {prev && <a href={`/post/${prev.slug}`}>{`次の記事 >`}</a>}
+      </div>
     </MaxWidthContainer>
     <Footer />
 
@@ -160,6 +169,11 @@ const tagItems = tags.map((name) => ({
       }
       .content {
         margin-top: 64px;
+      }
+      .links {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 128px;
       }
     </style>
   </body>
