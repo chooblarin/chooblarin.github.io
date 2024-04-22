@@ -1,10 +1,12 @@
 ---
+import type { MarkdownHeading } from "astro";
 import type { CollectionEntry } from "astro:content";
 import { format } from "date-fns";
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import HomeHeader from "../components/HomeHeader.astro";
 import MaxWidthContainer from "../components/MaxWidthContainer.astro";
+import TableOfContents from "../components/TableOfContents.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import { slugify } from "../lib/util";
 
@@ -12,9 +14,10 @@ type Props = {
   post: CollectionEntry<"post">;
   prev: CollectionEntry<"post"> | null;
   next: CollectionEntry<"post"> | null;
+  headings: MarkdownHeading[];
 };
 
-const { post, prev, next } = Astro.props;
+const { post, prev, next, headings } = Astro.props;
 const { title, date, tags } = post.data;
 const formattedDate = format(date, "MMMM dd, yyyy");
 
@@ -119,26 +122,31 @@ const tagItems = tags.map((name) => ({
     <link rel="stylesheet" href="/styles/katex/katex.min.css" rel="preload" />
   </head>
   <body>
-    <MaxWidthContainer>
+    <MaxWidthContainer width="68.75rem">
       <main>
         <HomeHeader />
-        <article>
-          <h1 class="title">{title}</h1>
-          <p class="date">{formattedDate}</p>
-          <ul class="tags">
-            {
-              tagItems.map((tag) => (
-                <li class="tag">
-                  <a href={`/tags/${tag.slug}`}>{`#${tag.name}`}</a>
-                </li>
-              ))
-            }
-          </ul>
-          <div class="post-content">
-            <slot />
-          </div>
-        </article>
+        <div class="container">
+          <TableOfContents headings={headings} />
+          <article>
+            <h1 class="title">{title}</h1>
+            <p class="date">{formattedDate}</p>
+            <ul class="tags">
+              {
+                tagItems.map((tag) => (
+                  <li class="tag">
+                    <a href={`/tags/${tag.slug}`}>{`#${tag.name}`}</a>
+                  </li>
+                ))
+              }
+            </ul>
+            <div class="post-content">
+              <slot />
+            </div>
+          </article>
+        </div>
       </main>
+    </MaxWidthContainer>
+    <MaxWidthContainer>
       <div class="links">
         {next && <a href={`/post/${next.slug}`}>{`< 前の記事`}</a>}
         {prev && <a href={`/post/${prev.slug}`}>{`次の記事 >`}</a>}
@@ -147,6 +155,16 @@ const tagItems = tags.map((name) => ({
     <Footer />
 
     <style>
+      .container {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: center;
+      }
+      article {
+        --base-width: 740px;
+        flex: 1 1 auto;
+        max-width: min(var(--base-width), 100%);
+      }
       .title {
         display: inline-block;
         background: linear-gradient(

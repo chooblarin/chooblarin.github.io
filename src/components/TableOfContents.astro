@@ -1,0 +1,61 @@
+---
+import type { MarkdownHeading } from "astro";
+
+type Props = {
+  headings: MarkdownHeading[];
+};
+const { headings } = Astro.props;
+---
+
+{
+  headings.length > 0 && (
+    <aside class="toc">
+      <nav>
+        <h2>目次</h2>
+        {headings
+          .filter((heading) => heading.depth <= 2)
+          .map((heading) => (
+            <div class="item">
+              <a href={`#${heading.slug}`}>{heading.text}</a>
+            </div>
+          ))}
+      </nav>
+    </aside>
+  )
+}
+
+<style>
+  .toc {
+    --top-offset: 128px;
+    display: none;
+    position: sticky;
+    max-width: 280px;
+    top: var(--top-offset);
+    max-height: calc(100vh - var(--top-offset));
+    overflow: auto;
+    margin-top: 8px;
+    margin-left: auto;
+  }
+  .toc nav {
+    height: fit-content;
+    border-left: 1px solid rgb(var(--color-text));
+    padding-left: 14px;
+  }
+  .toc h2 {
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+  }
+  .item {
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+  }
+  .item a {
+    color: rgb(var(--color-text));
+    text-decoration: none;
+  }
+  @media (min-width: 68.75rem) {
+    .toc {
+      display: block;
+    }
+  }
+</style>

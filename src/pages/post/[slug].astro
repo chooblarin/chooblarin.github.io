@@ -22,9 +22,15 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { post, prev, next } = Astro.props;
-const { Content } = await post.render();
+const { Content, headings } = await post.render();
 ---
 
-<Post {...{ post, prev, next }}>
+<Post {...{ post, prev, next, headings }}>
   <Content />
 </Post>
+
+<style>
+  .toc {
+    border: 1px solid #e2e8f0;
+  }
+</style>
