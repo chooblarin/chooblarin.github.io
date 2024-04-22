@@ -1,3 +1,4 @@
+import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
 import rehypeKatex from "rehype-katex";
@@ -9,7 +10,6 @@ export default defineConfig({
     "/page": "/page/1",
   },
   site: "https://chooblarin.com",
-  integrations: [sitemap()],
   markdown: {
     remarkPlugins: [remarkMath],
     rehypePlugins: [rehypeKatex],
@@ -17,4 +17,5 @@ export default defineConfig({
       theme: "night-owl",
     },
   },
+  integrations: [mdx(), sitemap()],
 });
