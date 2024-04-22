@@ -87,17 +87,6 @@ const { title, description, image = "/og-default.png" } = Astro.props;
     box-sizing: border-box;
   }
 
-  /* Remove default styles for list */
-  ul[class],
-  ol[class] {
-    padding: 0;
-    list-style: none;
-  }
-
-  li {
-    margin: 0 0 0.25rem;
-  }
-
   /* Remove default margin */
   body,
   h1,
@@ -114,6 +103,17 @@ const { title, description, image = "/og-default.png" } = Astro.props;
   dl,
   dd {
     margin: 0;
+  }
+
+  /* Remove default styles for list */
+  ul[class],
+  ol[class] {
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    margin: 0 0 0.25rem;
   }
 
   /* A elements that don't have a class get default styles */
