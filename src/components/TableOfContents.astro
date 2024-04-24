@@ -13,9 +13,9 @@ const { headings } = Astro.props;
       <nav>
         <h2>目次</h2>
         {headings
-          .filter((heading) => heading.depth <= 2)
+          .filter((heading) => heading.depth <= 3)
           .map((heading) => (
-            <div class="item">
+            <div class={`item depth-${heading.depth}`}>
               <a href={`#${heading.slug}`}>{heading.text}</a>
             </div>
           ))}
@@ -45,9 +45,14 @@ const { headings } = Astro.props;
     font-size: 1.25rem;
     margin-bottom: 12px;
   }
-  .item {
+  .item.depth-2 {
     font-size: 0.875rem;
-    margin-bottom: 0.5rem;
+    margin-top: 0.75rem;
+  }
+  .item.depth-3 {
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    padding-left: 0.25rem;
   }
   .item a {
     color: rgb(var(--color-text));
