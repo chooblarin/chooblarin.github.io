@@ -9,6 +9,7 @@ import MaxWidthContainer from "../components/MaxWidthContainer.astro";
 import TableOfContents from "../components/TableOfContents.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import { slugify } from "../lib/util";
+import "@fontsource-variable/jetbrains-mono";
 
 type Props = {
   post: CollectionEntry<"post">;
@@ -86,7 +87,7 @@ const tagItems = tags.map((name) => ({
         }
 
         code {
-          font-family: "Menlo", "Courier", monospace;
+          font-family: "JetBrains Mono Variable", "Menlo", "Courier", monospace;
           font-size: 0.875em;
         }
 
