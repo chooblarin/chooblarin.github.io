@@ -15,7 +15,7 @@
     "@astrojs/sitemap": "^3.2.1",
     "@fontsource-variable/jetbrains-mono": "^5.0.21",
     "astro": "^5.1.2",
-    "date-fns": "^3.6.0",
+    "date-fns": "^4.1.0",
     "rehype-katex": "^7.0.0",
     "remark-math": "^6.0.0",
     "typescript": "^5.4.4"
