@@ -4,6 +4,8 @@ import { defineConfig } from "astro/config";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 
+import svelte from "@astrojs/svelte";
+
 // https://astro.build/config
 export default defineConfig({
   redirects: {
@@ -17,5 +19,5 @@ export default defineConfig({
       theme: "houston",
     },
   },
-  integrations: [mdx(), sitemap()],
+  integrations: [mdx(), sitemap(), svelte()],
 });

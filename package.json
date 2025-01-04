@@ -13,11 +13,13 @@
     "@astrojs/check": "^0.9.4",
     "@astrojs/mdx": "^4.0.3",
     "@astrojs/sitemap": "^3.2.1",
+    "@astrojs/svelte": "^7.0.3",
     "@fontsource-variable/jetbrains-mono": "^5.1.2",
     "astro": "^5.1.2",
     "date-fns": "^4.1.0",
     "rehype-katex": "^7.0.0",
     "remark-math": "^6.0.0",
+    "svelte": "^5.16.1",
     "typescript": "^5.7.2"
   },
   "devDependencies": {
