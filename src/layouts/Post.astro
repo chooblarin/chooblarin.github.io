@@ -3,9 +3,10 @@ import "@fontsource-variable/jetbrains-mono";
 import type { MarkdownHeading } from "astro";
 import type { CollectionEntry } from "astro:content";
 import { format } from "date-fns";
+
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
-import HomeHeader from "../components/HomeHeader.astro";
+import Logo from "../components/Logo.astro";
 import MaxWidthContainer from "../components/MaxWidthContainer.astro";
 import TableOfContents from "../components/TableOfContents.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
@@ -35,6 +36,25 @@ const tagItems = tags.map((name) => ({
       description={SITE_DESCRIPTION}
     />
     <style is:inline>
+      header {
+        display: flex;
+        justify-content: center;
+        margin-top: 44px;
+        margin-bottom: 64px;
+      }
+      main {
+        padding: 0 16px 44px;
+      }
+      article {
+        --base-width: 740px;
+        flex: 1 1 auto;
+        max-width: min(var(--base-width), 100%);
+      }
+      .logo {
+        width: fit-content;
+        border-bottom: 1px solid rgb(209 213 219);
+        padding: 8px;
+      }
       .post-content {
         h1,
         h2,
@@ -107,62 +127,10 @@ const tagItems = tags.map((name) => ({
           }
         }
       }
-    </style>
-
-    <!-- Twitter widget -->
-    <script is:inline async src="https://platform.twitter.com/widgets.js"
-    ></script>
-
-    <!-- CodePen -->
-    <script
-      is:inline
-      async
-      src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
-
-    <!-- KaTeX styles -->
-    <link rel="stylesheet" href="/styles/katex/katex.min.css" rel="preload" />
-  </head>
-  <body>
-    <MaxWidthContainer width="68.75rem">
-      <main>
-        <HomeHeader />
-        <div class="container">
-          <TableOfContents headings={headings} />
-          <article>
-            <h1 class="title">{title}</h1>
-            <p class="date">{formattedDate}</p>
-            <ul class="tags">
-              {
-                tagItems.map((tag) => (
-                  <li class="tag">
-                    <a href={`/tags/${tag.slug}`}>{`#${tag.name}`}</a>
-                  </li>
-                ))
-              }
-            </ul>
-            <div class="post-content">
-              <slot />
-            </div>
-          </article>
-        </div>
-      </main>
-    </MaxWidthContainer>
-
-    <Footer />
-
-    <style>
       .container {
         display: flex;
         flex-direction: row-reverse;
         justify-content: center;
-      }
-      main {
-        padding: 0 16px 44px;
-      }
-      article {
-        --base-width: 740px;
-        flex: 1 1 auto;
-        max-width: min(var(--base-width), 100%);
       }
       .title {
         display: inline-block;
@@ -209,5 +177,50 @@ const tagItems = tags.map((name) => ({
         padding: 16px;
       }
     </style>
+
+    <!-- Twitter widget -->
+    <script is:inline async src="https://platform.twitter.com/widgets.js"
+    ></script>
+
+    <!-- CodePen -->
+    <script
+      is:inline
+      async
+      src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+    <!-- KaTeX styles -->
+    <link rel="stylesheet" href="/styles/katex/katex.min.css" rel="preload" />
+  </head>
+  <body>
+    <MaxWidthContainer width="68.75rem">
+      <main>
+        <header>
+          <div class="logo">
+            <Logo />
+          </div>
+        </header>
+        <div class="container">
+          <TableOfContents headings={headings} />
+          <article>
+            <h1 class="title">{title}</h1>
+            <p class="date">{formattedDate}</p>
+            <ul class="tags">
+              {
+                tagItems.map((tag) => (
+                  <li class="tag">
+                    <a href={`/tags/${tag.slug}`}>{`#${tag.name}`}</a>
+                  </li>
+                ))
+              }
+            </ul>
+            <div class="post-content">
+              <slot />
+            </div>
+          </article>
+        </div>
+      </main>
+    </MaxWidthContainer>
+
+    <Footer />
   </body>
 </html>
