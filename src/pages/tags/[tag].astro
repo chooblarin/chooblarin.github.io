@@ -12,7 +12,7 @@ import { slugify } from "../../lib/util";
 export const getStaticPaths = (async () => {
   const posts = await getCollection("post");
   const tags = Array.from(
-    new Set(posts.flatMap((post) => post.data.tags.flat())),
+    new Set(posts.flatMap((post) => post.data.tags.flat()))
   );
   return tags.map((tag) => ({
     params: { tag: slugify(tag) },
@@ -34,6 +34,11 @@ const { tag, posts } = Astro.props;
       title={`#${tag} | ${SITE_TITLE}`}
       description={SITE_DESCRIPTION}
     />
+    <style>
+      main {
+        padding: 0 16px 96px;
+      }
+    </style>
   </head>
   <body>
     <HomeHeader />

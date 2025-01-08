@@ -16,6 +16,14 @@ const latestPosts = allPosts
 <html lang="ja">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <style>
+      main {
+        padding: 0 16px 96px;
+      }
+      .latest-posts {
+        margin: 20px 0 40px;
+      }
+    </style>
   </head>
   <body>
     <HomeHeader />
@@ -37,11 +45,5 @@ const latestPosts = allPosts
       </main>
     </MaxWidthContainer>
     <Footer />
-
-    <style>
-      .latest-posts {
-        margin: 20px 0 40px;
-      }
-    </style>
   </body>
 </html>

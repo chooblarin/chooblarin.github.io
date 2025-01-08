@@ -4,7 +4,9 @@ import MaxWidthContainer from "./MaxWidthContainer.astro";
 
 <footer>
   <MaxWidthContainer>
-    <p class="copyright">&copy; 2015-2025 sotahatakeyama.</p>
+    <div class="footer-content">
+      <p class="copyright">&copy; 2015-2025 sotahatakeyama.</p>
+    </div>
   </MaxWidthContainer>
 </footer>
 
@@ -13,6 +15,9 @@ import MaxWidthContainer from "./MaxWidthContainer.astro";
     border-top: 1px solid rgb(209 213 219);
     min-height: 9rem;
     padding: 32px 16px;
+  }
+  .footer-content {
+    padding: 0 16px 96px;
   }
   .copyright {
     font-size: 0.75rem;

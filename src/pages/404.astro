@@ -25,16 +25,14 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
         --blend-mode-3: none;
         --blend-mode-4: none;
         --blend-mode-5: overlay;
-
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 20px 0 64px;
       }
       h1 {
         font-family: monospace;
         text-align: center;
         margin-bottom: 20px;
+      }
+      main {
+        padding: 0 16px 96px;
       }
       .back-to-home {
         display: inline-block;
@@ -292,8 +290,22 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 
         <a href="/" class="back-to-home">Back to Home</a>
       </main>
-      <SocialAccountLinks />
+      <div class="links">
+        <SocialAccountLinks />
+      </div>
     </MaxWidthContainer>
     <Footer />
   </body>
 </html>
+
+<style>
+  .not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 44px 0 64px;
+  }
+  .links {
+    margin-bottom: 40px;
+  }
+</style>

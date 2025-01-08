@@ -20,7 +20,7 @@ const countedTags = allPosts
       acc[tag] += 1;
       return acc;
     },
-    {} as Record<string, number>,
+    {} as Record<string, number>
   );
 const tagItems = Object.entries(countedTags)
   .map(([tag, count]) => ({ tag, count }))
@@ -33,6 +33,11 @@ const tagItems = Object.entries(countedTags)
       title={`タグ一覧 | ${SITE_TITLE}`}
       description={SITE_DESCRIPTION}
     />
+    <style>
+      main {
+        padding: 0 16px 96px;
+      }
+    </style>
   </head>
   <body>
     <HomeHeader />

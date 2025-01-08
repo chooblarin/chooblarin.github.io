@@ -15,7 +15,7 @@ export const getStaticPaths = (async () => {
   const chunked = Array.from({ length: pageSize }, (_, i) =>
     posts
       .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-      .slice(i * countPerPage, i * countPerPage + countPerPage),
+      .slice(i * countPerPage, i * countPerPage + countPerPage)
   );
 
   return chunked.map((chunk, index) => ({
@@ -38,6 +38,25 @@ const { chunk, hasNext, hasPrev, page } = Astro.props;
       title={`記事一覧 ${page}ページ目 | ${SITE_TITLE}`}
       description={SITE_DESCRIPTION}
     />
+    <style>
+      main {
+        padding: 0 16px 96px;
+      }
+      .links {
+        display: flex;
+        gap: 12px;
+        margin: 48px 0;
+      }
+      .link {
+        text-decoration: none;
+        border: 1px solid rgb(229 231 235);
+        padding: 8px 16px;
+        transition: border-color 0.2s linear;
+      }
+      .link:hover {
+        border-color: rgb(209 213 219);
+      }
+    </style>
   </head>
   <body>
     <HomeHeader />
@@ -73,21 +92,5 @@ const { chunk, hasNext, hasPrev, page } = Astro.props;
       </main>
     </MaxWidthContainer>
     <Footer />
-    <style>
-      .links {
-        display: flex;
-        gap: 12px;
-        margin: 48px 0;
-      }
-      .link {
-        text-decoration: none;
-        border: 1px solid rgb(229 231 235);
-        padding: 8px 16px;
-        transition: border-color 0.2s linear;
-      }
-      .link:hover {
-        border-color: rgb(209 213 219);
-      }
-    </style>
   </body>
 </html>
