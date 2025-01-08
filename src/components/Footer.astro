@@ -5,7 +5,11 @@ import MaxWidthContainer from "./MaxWidthContainer.astro";
 <footer>
   <MaxWidthContainer>
     <div class="footer-content">
-      <p class="copyright">&copy; 2015-2025 sotahatakeyama.</p>
+      <p class="copyright">
+        &copy; 2015-2025 <a href="https://www.sotahatakeyama.com/" class="me"
+          >sotahatakeyama.</a
+        >
+      </p>
     </div>
   </MaxWidthContainer>
 </footer>
@@ -13,14 +17,25 @@ import MaxWidthContainer from "./MaxWidthContainer.astro";
 <style>
   footer {
     border-top: 1px solid rgb(209 213 219);
-    min-height: 9rem;
     padding: 32px 16px;
   }
   .footer-content {
+    place-items: center;
     padding: 0 16px 96px;
   }
   .copyright {
-    font-size: 0.75rem;
+    font-size: 1rem;
     color: rgb(75 85 99);
+    letter-spacing: 0.05rem;
+  }
+  .me {
+    letter-spacing: 0.1rem;
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .me:hover {
+    color: revert;
+    text-decoration: underline;
   }
 </style>
