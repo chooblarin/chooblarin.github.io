@@ -15,7 +15,7 @@
     "@astrojs/sitemap": "^3.5.1",
     "@astrojs/svelte": "^7.1.0",
     "@fontsource-variable/jetbrains-mono": "^5.1.2",
-    "@rive-app/canvas": "^2.25.3",
+    "@rive-app/canvas": "^2.31.4",
     "astro": "^5.13.5",
     "date-fns": "^4.1.0",
     "rehype-katex": "^7.0.0",
