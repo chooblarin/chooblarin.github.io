@@ -5,7 +5,7 @@ import Footer from "../components/Footer.astro";
 import HomeHeader from "../components/HomeHeader.astro";
 import MaxWidthContainer from "../components/MaxWidthContainer.astro";
 import PostItem from "../components/PostItem.astro";
-import { SITE_DESCRIPTION, SITE_TITLE } from "../consts.ts";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 
 const allPosts = await getCollection("post");
 const latestPosts = allPosts
