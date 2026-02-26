@@ -164,6 +164,12 @@
 2. slug 規約（ASCII lowercase kebab-case）をドキュメント化し、既存URL互換の移行計画を作成
 3. コンテンツ品質チェック（frontmatter lint）をCIに追加
 
+7.2 実施ステータス（2026-02-26）:
+- `description` を全32記事に投入（暫定）
+- slug 規約違反4件を修正し、`astro.config.mjs` に互換 redirect を追加
+- `content:lint` を CI（Deploy workflow）に段階導入
+- 運用規約を `docs/content-governance.md` に作成
+
 ### 7.3 長期（1〜2か月）
 1. 投稿単位メタデータ運用を定着（OG画像運用含む）
 2. テスト基盤（最低限の静的検証・リンク検証）を導入

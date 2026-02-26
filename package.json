@@ -5,6 +5,9 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
+    "content:lint": "node scripts/content-lint.mjs",
+    "content:lint:strict": "node scripts/content-lint.mjs --strict",
+    "content:fix:description": "node scripts/backfill-description.mjs",
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro"

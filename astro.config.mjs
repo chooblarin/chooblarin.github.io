@@ -10,6 +10,12 @@ import svelte from "@astrojs/svelte";
 export default defineConfig({
   redirects: {
     "/page": "/page/1",
+    // slug 正規化前の旧URLを維持するための互換リダイレクト
+    "/post/job‐change": "/post/job-change",
+    "/post/forkJoin-in-rxjs-is-promiss-all":
+      "/post/fork-join-in-rxjs-is-promiss-all",
+    "/post/observable_is_my_friend": "/post/observable-is-my-friend",
+    "/post/to_be_an_android_developer": "/post/to-be-an-android-developer",
   },
   site: "https://chooblarin.com",
   markdown: {

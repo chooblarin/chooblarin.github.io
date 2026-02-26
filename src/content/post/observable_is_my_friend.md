@@ -2,7 +2,8 @@
 date: "2015-03-17T22:57:00+09:00"
 draft: false
 title: "Observableは友達"
-slug: "observable_is_my_friend"
+description: "この文章は RxJava と RxAndroid について書かれています． 開発中の Android アプリに導入してみて得られた知見をまったりざっくりまとめてみます．"
+slug: "observable-is-my-friend"
 tags: ["Java", "RxJava"]
 ---
 

@@ -27,6 +27,7 @@ jobs:
       - name: Install and Build
         run: |
           npm ci
+          npm run content:lint
           npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

@@ -2,7 +2,8 @@
 date: "2015-06-13T14:38:00+09:00"
 draft: false
 title: "Milestone"
-slug: "to_be_an_android_developer"
+description: "プログラマになってからおよそ 2 年が経った節目にブログを書きました．"
+slug: "to-be-an-android-developer"
 tags: ["blog"]
 ---
 
