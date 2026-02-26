@@ -18,7 +18,7 @@ type Props = {
 };
 
 const { post, headings } = Astro.props;
-const { title, date, tags } = post.data;
+const { title, date, tags, image } = post.data;
 const formattedDate = format(date, "MMMM dd, yyyy");
 
 const tagItems = tags.map((name) => ({
@@ -32,6 +32,7 @@ const tagItems = tags.map((name) => ({
     <BaseHead
       title={`${title} | ${SITE_TITLE}`}
       description={SITE_DESCRIPTION}
+      image={image}
     />
     <style is:inline>
       header {
@@ -148,6 +149,15 @@ const tagItems = tags.map((name) => ({
         margin: 48px 0 24px;
         color: rgb(75 85 99);
       }
+      .thumbnail {
+        margin: 32px 0 24px;
+      }
+      .thumbnail img {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+      }
       .tags {
         margin: 24px 0;
       }
@@ -201,6 +211,13 @@ const tagItems = tags.map((name) => ({
           <TableOfContents headings={headings} />
           <article>
             <h1 class="title">{title}</h1>
+            {
+              image && (
+                <figure class="thumbnail">
+                  <img src={image} alt={`${title} thumbnail`} />
+                </figure>
+              )
+            }
             <p class="date">{formattedDate}</p>
             <ul class="tags">
               {

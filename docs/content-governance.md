@@ -17,6 +17,18 @@
 ### 推奨（7.2）
 - `image`
 
+### image の運用ルール
+- 主用途: 記事詳細ページのサムネイル表示 + OG/Twitter 画像
+- 配置先: `public/images/posts/`
+- frontmatter 指定形式: `/images/posts/<file-name>.<ext>`
+- 許可拡張子: `png`, `jpg`, `jpeg`, `webp`, `avif`
+- 未設定時:
+  - 記事詳細ページ: 画像ブロックを表示しない
+  - OG/Twitter: `/og-default.png` を使用
+- 命名例:
+  - `20250104-thumb.webp`
+  - `post-dark-mode-cover.png`
+
 ### 次フェーズ
 - 7.3 で `description` を「運用上必須」から「スキーマ必須」へ移行します。
 
@@ -42,6 +54,9 @@
 - 判定:
   - `ERROR` は fail
   - `WARN` は pass（ログに表示）
+- 補足:
+  - `image` 未設定は `WARN`
+  - `image` の形式不正（パス/拡張子）は `ERROR`
 
 ### Stage 2（予定）
 - CI を `npm run content:lint:strict` に切り替えます。

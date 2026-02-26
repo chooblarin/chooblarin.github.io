@@ -6,6 +6,7 @@ const postDir = path.join(process.cwd(), "src", "content", "post");
 const astroConfigPath = path.join(process.cwd(), "astro.config.mjs");
 
 const slugRule = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const imageRule = /^\/images\/posts\/.+\.(png|jpg|jpeg|webp|avif)$/;
 const requiredFields = ["title", "date", "tags", "slug"];
 
 const warnings = [];
@@ -89,6 +90,13 @@ for (const file of files) {
 
   if (!hasField(frontmatter, "image")) {
     warnings.push(`${file}: missing recommended field "image"`);
+  } else {
+    const image = readQuotedValue(frontmatter, "image");
+    if (!imageRule.test(image)) {
+      errors.push(
+        `${file}: image "${image}" must match ${imageRule.toString()}`
+      );
+    }
   }
 
   const slug = readQuotedValue(frontmatter, "slug");
