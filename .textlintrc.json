@@ -1,0 +1,10 @@
+{
+  "plugins": {
+    "@textlint/markdown": true,
+    "mdx": true
+  },
+  "rules": {
+    "preset-ja-technical-writing": true,
+    "common-misspellings": true
+  }
+}

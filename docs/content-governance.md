@@ -57,16 +57,23 @@
 - 補足:
   - `image` 未設定は `WARN`
   - `image` の形式不正（パス/拡張子）は `ERROR`
+- CI で `npm run textlint || true` を実行します（non-blocking）。
+- textlint の対象:
+  - `docs/**/*.md`
+  - `src/content/post/**/*.{md,mdx}`
 
 ### Stage 2（予定）
 - CI を `npm run content:lint:strict` に切り替えます。
 - 判定:
   - `ERROR` または `WARN` で fail
+- CI の textlint を `npm run textlint`（blocking）へ切り替えます。
 
 ### strict 移行条件
 - warning 件数が 0 になり、1リリースサイクル以上安定した時点で strict に移行します。
 
 ## ローカル実行手順
-1. `npm run content:fix:description`
-2. `npm run content:lint`
-3. `npm run build`
+1. `npm run textlint`
+2. 必要に応じて `npm run textlint:fix`
+3. `npm run content:fix:description`
+4. `npm run content:lint`
+5. `npm run build`
