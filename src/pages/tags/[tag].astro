@@ -7,19 +7,18 @@ import HomeHeader from "../../components/HomeHeader.astro";
 import MaxWidthContainer from "../../components/MaxWidthContainer.astro";
 import PostItem from "../../components/PostItem.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
-import { slugify } from "../../lib/util";
+import { buildNormalizedTagGroups, hasNormalizedTag } from "../../lib/util";
 
 export const getStaticPaths = (async () => {
   const posts = await getCollection("post");
-  const tags = Array.from(
-    new Set(posts.flatMap((post) => post.data.tags.flat()))
-  );
-  return tags.map((tag) => ({
-    params: { tag: slugify(tag) },
+  const tagGroups = buildNormalizedTagGroups(posts);
+
+  return tagGroups.map((group) => ({
+    params: { tag: group.slug },
     props: {
-      tag,
+      tag: group.label,
       posts: posts
-        .filter((post) => post.data.tags.includes(tag))
+        .filter((post) => hasNormalizedTag(post.data.tags, group.slug))
         .sort((a, b) => b.data.date.getTime() - a.data.date.getTime()),
     },
   }));

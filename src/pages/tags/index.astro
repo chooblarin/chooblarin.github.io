@@ -5,26 +5,10 @@ import Footer from "../../components/Footer.astro";
 import HomeHeader from "../../components/HomeHeader.astro";
 import MaxWidthContainer from "../../components/MaxWidthContainer.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
-import { slugify } from "../../lib/util";
+import { buildNormalizedTagGroups } from "../../lib/util";
 
 const allPosts = await getCollection("post");
-
-const countedTags = allPosts
-  .map((post) => post.data.tags.flat())
-  .flat()
-  .reduce(
-    (acc, tag) => {
-      if (!acc[tag]) {
-        acc[tag] = 0;
-      }
-      acc[tag] += 1;
-      return acc;
-    },
-    {} as Record<string, number>
-  );
-const tagItems = Object.entries(countedTags)
-  .map(([tag, count]) => ({ tag, count }))
-  .sort((a, b) => a.tag.localeCompare(b.tag));
+const tagItems = buildNormalizedTagGroups(allPosts);
 ---
 
 <html lang="ja">
@@ -48,8 +32,8 @@ const tagItems = Object.entries(countedTags)
           {
             tagItems.map((item) => (
               <li>
-                <a href={`/tags/${slugify(item.tag)}`}>
-                  {item.tag} ({item.count})
+                <a href={`/tags/${item.slug}`}>
+                  {item.label} ({item.count})
                 </a>
               </li>
             ))

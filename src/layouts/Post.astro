@@ -14,12 +14,10 @@ import { slugify } from "../lib/util";
 
 type Props = {
   post: CollectionEntry<"post">;
-  prev: CollectionEntry<"post"> | null;
-  next: CollectionEntry<"post"> | null;
   headings: MarkdownHeading[];
 };
 
-const { post, prev, next, headings } = Astro.props;
+const { post, headings } = Astro.props;
 const { title, date, tags } = post.data;
 const formattedDate = format(date, "MMMM dd, yyyy");
 
