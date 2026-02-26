@@ -105,8 +105,8 @@ dataService.load(context)
 
 ### Hot と Cold
 
-- Hot ･･･ subscribe されていなくても値を emit する．
-- Cold ･･･ `subscribe()`が呼ばれるまで値を emit しない．`subscribe()`毎に新しく値を emit する．
+- Hot ・・・ subscribe されていなくても値を emit する．
+- Cold ・・・ `subscribe()`が呼ばれるまで値を emit しない．`subscribe()`毎に新しく値を emit する．
 
 subscriber が値を emit しはじめるのは，その Observable が subscribe されてからです．つまり，`subscribe()`が呼ばれるまでは何も起こりません．
 更に，Observable は subscribe が呼ばれる度に値を`create`のオペレーターが実行されます．

@@ -21,7 +21,7 @@
 - 主用途: 記事詳細ページのサムネイル表示 + OG/Twitter 画像
 - 配置先: `public/images/posts/`
 - frontmatter 指定形式: `/images/posts/<file-name>.<ext>`
-- 許可拡張子: `png`, `jpg`, `jpeg`, `webp`, `avif`
+- 許可拡張子: `png` / `jpg` / `jpeg` / `webp` / `avif`
 - 未設定時:
   - 記事詳細ページ: 画像ブロックを表示しない
   - OG/Twitter: `/og-default.png` を使用
@@ -30,7 +30,7 @@
   - `post-dark-mode-cover.png`
 
 ### 次フェーズ
-- 7.3 で `description` を「運用上必須」から「スキーマ必須」へ移行します。
+- 7.4 で `description` を「運用上必須」から「スキーマ必須」へ移行します。
 
 ## slug ポリシー
 - パターン: `^[a-z0-9]+(?:-[a-z0-9]+)*$`
@@ -49,7 +49,7 @@
 
 ## CI の段階導入ポリシー
 
-### Stage 1（7.2）
+### 現在（7.3）
 - CI で `npm run content:lint` を実行します。
 - 判定:
   - `ERROR` は fail
@@ -57,16 +57,30 @@
 - 補足:
   - `image` 未設定は `WARN`
   - `image` の形式不正（パス/拡張子）は `ERROR`
-- CI で `npm run textlint || true` を実行します（non-blocking）。
+- CI で `npm run textlint` を実行します（blocking）。
 - textlint の対象:
   - `docs/**/*.md`
   - `src/content/post/**/*.{md,mdx}`
+- textlint で再有効化した主要ルール:
+  - `ja-no-mixed-period`
+  - `no-mix-dearu-desumasu`
+  - `max-kanji-continuous-len`
+  - `ja-no-redundant-expression`
+  - `max-comma`
+- 句点ポリシー:
+  - 標準は `。`
+  - 既存互換として `．` も許容（`allowPeriodMarks`）
+- 文体ポリシー:
+  - 本文・箇条書きとも `ですます` 基準
+- 例外ポリシー:
+  - `max-kanji-continuous-len` の `allow` 追加は固有名詞で分割不能な場合のみに限定
+  - 既存記事の文体保持が必要な場合は、該当ブロックに `textlint-disable` / `textlint-enable` を局所適用する
 
 ### Stage 2（予定）
 - CI を `npm run content:lint:strict` に切り替えます。
 - 判定:
   - `ERROR` または `WARN` で fail
-- CI の textlint を `npm run textlint`（blocking）へ切り替えます。
+- textlint は blocking を維持します。
 
 ### strict 移行条件
 - warning 件数が 0 になり、1リリースサイクル以上安定した時点で strict に移行します。

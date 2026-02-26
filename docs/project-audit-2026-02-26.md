@@ -117,7 +117,7 @@
   - `blog`: 5
   - `Elixir`: 3
   - `Rive`: 2
-- 大文字小文字揺れ:
+- 大文字・小文字の揺れ:
   - `blog` と `Blog` が同時存在
 - 影響:
   - `/tags/index.html` に `/tags/blog` へのリンクが重複出力
@@ -148,7 +148,7 @@
 | High | `BaseHead` のアイコン参照が相対パス | `src/components/BaseHead.astro:17` | 下層URLでアイコン404の可能性（ブラウザ実装依存） | ルート相対 (`/mask-icon.svg`, `/apple-touch-icon.png`) に統一 | 0.5日未満 |
 | High | 投稿単位 `description/image` 未整備 | `src/content/config.ts:7`, `src/layouts/Post.astro:36` | SEO/OGが記事固有情報を持てず、SNS展開品質が低下 | frontmatter 段階導入（推奨→必須化）と fallback 方針整備 | 1〜2日 |
 | Medium | slug 規約の非一貫 | `src/content/post/20180524.md:5`, `src/content/post/20181010.md:5` | 将来のURL運用・リダイレクト対応の複雑化 | slug命名規約を定義し、既存差分は互換リダイレクトで収束 | 1〜2日 |
-| Medium | 未使用コードと未完了TODO | `src/components/SocialAccountLinks.astro`, `src/components/HomeHeader.astro:6` | 実装意図が不透明で保守コスト増 | 未使用コードの削除/再利用方針決定、TODOをIssue化 | 0.5〜1日 |
+| Medium | 未使用コードと未完了TODO | `src/components/SocialAccountLinks.astro`, `src/components/HomeHeader.astro:6` | 実装意図が不透明で保守コスト増 | 未使用コードの削除/再利用方針の決定、TODOをIssue化 | 0.5〜1日 |
 | Medium | `prev/next` 算出済みだが未使用 | `src/pages/post/[slug].astro:17`, `src/layouts/Post.astro:22` | 仕様未確定のまま型と処理だけ残り、負債化 | UIで使うか、生成と型から除去するかを明確化 | 0.5日 |
 | Low | 外部スクリプト常時読込（性能/プライバシー） | `src/layouts/Post.astro:182` | 初期読込増加、同意管理観点の監査ポイント増 | 埋め込みがある記事のみ遅延読込する方針に変更 | 1日 |
 
@@ -164,7 +164,7 @@
 2. slug 規約（ASCII lowercase kebab-case）をドキュメント化し、既存URL互換の移行計画を作成
 3. コンテンツ品質チェック（frontmatter lint）をCIに追加
 
-7.2 実施ステータス（2026-02-26）:
+7.2 実施ステータス（2026-02-26）は以下の通りです。
 - `description` を全32記事に投入（暫定）
 - slug 規約違反4件を修正し、`astro.config.mjs` に互換 redirect を追加
 - `content:lint` を CI（Deploy workflow）に段階導入
@@ -176,7 +176,7 @@
 3. 外部スクリプトの読み込み条件化とパフォーマンス監視
 
 ### 7.4 重要な公開インターフェース変更（文書化方針）
-1. URL仕様: `/tags/{slug}` は小文字正規化済みタグを唯一正とする
+1. URL仕様: `/tags/{slug}` は小文字で正規化済みのタグを唯一正とする
 2. 互換性: 既存URL変更時はリダイレクト方針を必ず定義する
 3. frontmatter契約: `description` 必須化案、`image` 推奨化案を段階導入で示す
 4. 投稿ナビゲーション: `prev/next` は「表示する」か「除去する」かを二択で確定する
