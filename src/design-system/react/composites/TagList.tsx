@@ -1,13 +1,11 @@
-import React from "react";
-
 import Link from "../components/Link";
 import { cn } from "../lib/cn";
+import styles from "./TagList.module.css";
 import {
+  type TagListVariantProps,
   tagLinkVariants,
   tagListVariants,
-  type TagListVariantProps,
 } from "./TagList.styles";
-import styles from "./TagList.module.css";
 
 type TagListVariant = NonNullable<TagListVariantProps["variant"]>;
 

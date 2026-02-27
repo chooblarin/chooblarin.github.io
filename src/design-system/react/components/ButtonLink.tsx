@@ -1,7 +1,10 @@
-import React, { type ReactNode } from "react";
+import type { ReactNode } from "react";
 
 import { cn } from "../lib/cn";
-import { buttonLinkVariants, type ButtonLinkVariantProps } from "./ButtonLink.styles";
+import {
+  type ButtonLinkVariantProps,
+  buttonLinkVariants,
+} from "./ButtonLink.styles";
 
 type ButtonLinkIntent = NonNullable<ButtonLinkVariantProps["intent"]>;
 type ButtonLinkAppearance = NonNullable<ButtonLinkVariantProps["appearance"]>;
@@ -31,7 +34,10 @@ export default function ButtonLink({
       href={href}
       target={external ? "_blank" : undefined}
       rel={external ? "noopener noreferrer" : undefined}
-      className={cn(buttonLinkVariants({ intent, appearance, size }), className)}
+      className={cn(
+        buttonLinkVariants({ intent, appearance, size }),
+        className,
+      )}
     >
       {children}
     </a>

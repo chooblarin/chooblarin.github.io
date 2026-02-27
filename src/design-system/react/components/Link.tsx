@@ -1,7 +1,7 @@
-import React, { type ReactNode } from "react";
+import type { ReactNode } from "react";
 
 import { cn } from "../lib/cn";
-import { linkVariants, type LinkVariantProps } from "./Link.styles";
+import { type LinkVariantProps, linkVariants } from "./Link.styles";
 
 type LinkIntent = NonNullable<LinkVariantProps["intent"]>;
 type LinkDecoration = NonNullable<LinkVariantProps["decoration"]>;
@@ -28,7 +28,7 @@ export default function Link({
   target,
 }: LinkProps) {
   const resolvedTarget = external ? "_blank" : target;
-  const resolvedRel = external ? rel ?? "noopener noreferrer" : rel;
+  const resolvedRel = external ? (rel ?? "noopener noreferrer") : rel;
 
   return (
     <a

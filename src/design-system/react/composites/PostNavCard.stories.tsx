@@ -1,10 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import PostNavCard from "./PostNavCard";
-import {
-  compositeStoryParameters,
-  withNarrowPageFrame,
-} from "./storybook";
+import { compositeStoryParameters, withNarrowPageFrame } from "./storybook";
 
 const meta: Meta<typeof PostNavCard> = {
   title: "Design System/Composites/PostNavCard",

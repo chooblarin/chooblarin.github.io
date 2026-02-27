@@ -59,7 +59,7 @@ const checkRedirectKeyDuplicates = () => {
   const redirectBlock = src.match(/redirects:\s*\{([\s\S]*?)\n\s*\},/u);
   if (!redirectBlock) return;
   const keys = [...redirectBlock[1].matchAll(/"([^"]+)"\s*:/gu)].map(
-    (item) => item[1]
+    (item) => item[1],
   );
   const seen = new Set();
   for (const key of keys) {
@@ -104,7 +104,9 @@ for (const file of files) {
   }
 
   const data =
-    parsed.data && typeof parsed.data === "object" && !Array.isArray(parsed.data)
+    parsed.data &&
+    typeof parsed.data === "object" &&
+    !Array.isArray(parsed.data)
       ? parsed.data
       : {};
 
@@ -149,20 +151,24 @@ for (const file of files) {
   } else if (typeof data.image !== "string") {
     errors.push(`${file}: image must be a string`);
   } else if (!imageRule.test(data.image)) {
-    errors.push(`${file}: image "${data.image}" must match ${imageRule.toString()}`);
+    errors.push(
+      `${file}: image "${data.image}" must match ${imageRule.toString()}`,
+    );
   }
 
   if (typeof data.slug !== "string" || data.slug.trim().length === 0) {
     errors.push(`${file}: slug must be a non-empty string`);
   } else {
     if (!slugRule.test(data.slug)) {
-      errors.push(`${file}: slug "${data.slug}" must match ${slugRule.toString()}`);
+      errors.push(
+        `${file}: slug "${data.slug}" must match ${slugRule.toString()}`,
+      );
     }
     if (slugToFile.has(data.slug)) {
       errors.push(
         `${file}: duplicate slug "${data.slug}" (already used in ${slugToFile.get(
-          data.slug
-        )})`
+          data.slug,
+        )})`,
       );
     } else {
       slugToFile.set(data.slug, file);
@@ -185,7 +191,7 @@ for (const file of files) {
           errors.push(
             `${file}: tag "${tag}" is not in the approved tag list (${[
               ...canonicalTags,
-            ].join(", ")})`
+            ].join(", ")})`,
           );
         }
       }
@@ -203,7 +209,7 @@ for (const file of files) {
     for (const embedType of data.embeds) {
       if (typeof embedType !== "string" || !allowedEmbeds.has(embedType)) {
         errors.push(
-          `${file}: embeds contains unsupported type "${embedType}" (allowed: twitter, codepen)`
+          `${file}: embeds contains unsupported type "${embedType}" (allowed: twitter, codepen)`,
         );
       }
     }
@@ -211,15 +217,17 @@ for (const file of files) {
 
   if (!isArchiveFile(file)) {
     const detectedEmbeds = detectEmbedsInBody(parsed.content);
-    const embeds = Array.isArray(data.embeds) ? new Set(data.embeds) : new Set();
+    const embeds = Array.isArray(data.embeds)
+      ? new Set(data.embeds)
+      : new Set();
     if (detectedEmbeds.twitter && !embeds.has("twitter")) {
       warnings.push(
-        `${file}: twitter embed detected in body; add embeds: ["twitter"]`
+        `${file}: twitter embed detected in body; add embeds: ["twitter"]`,
       );
     }
     if (detectedEmbeds.codepen && !embeds.has("codepen")) {
       warnings.push(
-        `${file}: codepen embed detected in body; add embeds: ["codepen"]`
+        `${file}: codepen embed detected in body; add embeds: ["codepen"]`,
       );
     }
   }
@@ -231,7 +239,7 @@ for (const warning of warnings) console.log(`WARN  ${warning}`);
 for (const error of errors) console.log(`ERROR ${error}`);
 
 console.log(
-  `\nSummary: files=${files.length} warnings=${warnings.length} errors=${errors.length} strict=${strict}`
+  `\nSummary: files=${files.length} warnings=${warnings.length} errors=${errors.length} strict=${strict}`,
 );
 
 if (errors.length > 0 || (strict && warnings.length > 0)) {

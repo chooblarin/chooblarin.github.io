@@ -1,10 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import PaginationNav from "./PaginationNav";
-import {
-  compositeStoryParameters,
-  withNarrowPageFrame,
-} from "./storybook";
+import { compositeStoryParameters, withNarrowPageFrame } from "./storybook";
 
 const meta: Meta<typeof PaginationNav> = {
   title: "Design System/Composites/PaginationNav",

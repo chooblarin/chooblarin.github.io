@@ -1,13 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-
+import { compositeStoryParameters, withWidePageFrame } from "./storybook";
 import TableOfContents, {
   type TableOfContentsHeading,
   type TableOfContentsProps,
 } from "./TableOfContents";
-import {
-  compositeStoryParameters,
-  withWidePageFrame,
-} from "./storybook";
 
 const basicHeadings: TableOfContentsHeading[] = [
   { id: "intro", text: "はじめに", depth: 2 },

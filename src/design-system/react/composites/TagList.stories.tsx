@@ -1,10 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-
+import { compositeStoryParameters, withNarrowPageFrame } from "./storybook";
 import TagList from "./TagList";
-import {
-  compositeStoryParameters,
-  withNarrowPageFrame,
-} from "./storybook";
 
 const sampleItems = [
   { label: "#Astro", href: "/tags/astro" },

@@ -105,7 +105,7 @@ for (const file of files) {
 
   const nextFrontmatter = parsed.frontmatter.replace(
     /^title:\s*"([^"]+)"$/m,
-    (line) => `${line}\ndescription: "${escaped}"`
+    (line) => `${line}\ndescription: "${escaped}"`,
   );
 
   const nextContent = src.replace(parsed.frontmatter, nextFrontmatter);

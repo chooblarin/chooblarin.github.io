@@ -1,67 +1,68 @@
 <script lang="ts">
-  import * as rive from "@rive-app/canvas";
-  import { onMount } from "svelte";
+import * as rive from "@rive-app/canvas";
+import { onMount } from "svelte";
 
-  type Props = {
-    src: string;
-    width?: number;
-    height?: number;
-    maxWidth?: number;
+type Props = {
+  src: string;
+  width?: number;
+  height?: number;
+  maxWidth?: number;
+};
+
+let { src, width = 500, height = 500, maxWidth = 640 }: Props = $props();
+
+let canvas: HTMLCanvasElement;
+let root: HTMLDivElement;
+
+onMount(() => {
+  const syncCanvasSize = (r?: rive.Rive) => {
+    if (!root || !canvas) {
+      return;
+    }
+
+    const rect = root.getBoundingClientRect();
+    const cssWidth = Math.max(1, Math.round(rect.width));
+    const cssHeight = Math.max(1, Math.round(rect.height));
+    const dpr = window.devicePixelRatio || 1;
+    const nextWidth = Math.max(1, Math.round(cssWidth * dpr));
+    const nextHeight = Math.max(1, Math.round(cssHeight * dpr));
+
+    canvas.style.width = `${cssWidth}px`;
+    canvas.style.height = `${cssHeight}px`;
+
+    if (canvas.width !== nextWidth || canvas.height !== nextHeight) {
+      canvas.width = nextWidth;
+      canvas.height = nextHeight;
+      r?.resizeDrawingSurfaceToCanvas();
+    }
   };
 
-  let { src, width = 500, height = 500, maxWidth = 640 }: Props = $props();
-
-  let canvas: HTMLCanvasElement;
-  let root: HTMLDivElement;
-  const rootStyle = `--rive-max-width: ${maxWidth}px; --rive-aspect-ratio: ${width} / ${height};`;
-
-  onMount(() => {
-    const syncCanvasSize = (r?: rive.Rive) => {
-      if (!root || !canvas) {
-        return;
-      }
-
-      const rect = root.getBoundingClientRect();
-      const cssWidth = Math.max(1, Math.round(rect.width));
-      const cssHeight = Math.max(1, Math.round(rect.height));
-      const dpr = window.devicePixelRatio || 1;
-      const nextWidth = Math.max(1, Math.round(cssWidth * dpr));
-      const nextHeight = Math.max(1, Math.round(cssHeight * dpr));
-
-      canvas.style.width = `${cssWidth}px`;
-      canvas.style.height = `${cssHeight}px`;
-
-      if (canvas.width !== nextWidth || canvas.height !== nextHeight) {
-        canvas.width = nextWidth;
-        canvas.height = nextHeight;
-        r?.resizeDrawingSurfaceToCanvas();
-      }
-    };
-
-    const r = new rive.Rive({
-      src,
-      canvas,
-      autoplay: true,
-      onLoad: () => {
-        syncCanvasSize(r);
-      },
-    });
-
-    const resizeObserver = new ResizeObserver(() => {
+  const r = new rive.Rive({
+    src,
+    canvas,
+    autoplay: true,
+    onLoad: () => {
       syncCanvasSize(r);
-    });
-
-    syncCanvasSize(r);
-    resizeObserver.observe(root);
-
-    return () => {
-      resizeObserver.disconnect();
-      r.cleanup();
-    };
+    },
   });
+
+  const resizeObserver = new ResizeObserver(() => {
+    syncCanvasSize(r);
+  });
+
+  syncCanvasSize(r);
+  root.style.setProperty("--rive-max-width", `${maxWidth}px`);
+  root.style.setProperty("--rive-aspect-ratio", `${width} / ${height}`);
+  resizeObserver.observe(root);
+
+  return () => {
+    resizeObserver.disconnect();
+    r.cleanup();
+  };
+});
 </script>
 
-<div class="rive-root" style={rootStyle} bind:this={root}>
+<div class="rive-root" bind:this={root}>
   <canvas bind:this={canvas}></canvas>
 </div>
 

@@ -11,13 +11,16 @@
   --ds-color-focus-ring: var(--ds-color-primary);
   --ds-focus-ring-width: 1px;
   --ds-focus-ring-offset: 2px;
-  --ds-shadow-1: 0 1px 2px rgb(15 23 42 / 0.08), 0 4px 12px rgb(15 23 42 / 0.06);
+  --ds-shadow-1:
+    0 1px 2px rgb(15 23 42 / 0.08), 0 4px 12px rgb(15 23 42 / 0.06);
   --ds-shadow-2: 0 8px 22px rgb(15 23 42 / 0.16);
 
-  --ds-font-sans-ja: "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo,
-    "Helvetica Neue", Arial, sans-serif;
-  --ds-font-sans-en: "Helvetica Neue", Arial, "Hiragino Sans",
-    "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  --ds-font-sans-ja:
+    "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, "Helvetica Neue",
+    Arial, sans-serif;
+  --ds-font-sans-en:
+    "Helvetica Neue", Arial, "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+    Meiryo, sans-serif;
 
   --ds-leading-body-ja: 1.85;
   --ds-leading-body-en: 1.7;

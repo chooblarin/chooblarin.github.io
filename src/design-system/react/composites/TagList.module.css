@@ -24,7 +24,9 @@
   align-items: center;
   border-radius: 999px;
   text-decoration: none;
-  transition: border-color 0.16s ease, background-color 0.16s ease,
+  transition:
+    border-color 0.16s ease,
+    background-color 0.16s ease,
     color 0.16s ease;
 }
 

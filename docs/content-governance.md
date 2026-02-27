@@ -123,6 +123,7 @@
   - 指摘は本文修正で解消し、やむを得ない例外はルール設定側で最小化して管理します。
 
 ### strict運用
+- CI は `npm run biome:check` を実行します。
 - CI は `npm run content:lint:strict` を維持します。
 - 判定:
   - `ERROR` または `WARN` で fail
@@ -130,8 +131,10 @@
 - textlint は blocking を維持します。
 
 ## ローカル実行手順
-1. `npm run textlint`
-2. 必要に応じて `npm run textlint:fix`
-3. `npm run content:fix:description`
-4. `npm run content:lint`
-5. `npm run build`
+1. `npm run biome:check`
+2. 必要に応じて `npm run biome:fix`
+3. `npm run textlint`
+4. 必要に応じて `npm run textlint:fix`
+5. `npm run content:fix:description`
+6. `npm run content:lint`
+7. `npm run build`

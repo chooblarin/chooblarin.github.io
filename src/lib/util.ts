@@ -2,8 +2,8 @@ export const slugify = (tagName: string) =>
   tagName
     .toLowerCase()
     .replace(/\s+/g, "-") // Replace spaces with -
-    .replace(/[^\w\-]+/g, "") // Remove all non-word chars
-    .replace(/\-\-+/g, "-") // Replace multiple - with single -
+    .replace(/[^\w-]+/g, "") // Remove all non-word chars
+    .replace(/--+/g, "-") // Replace multiple - with single -
     .replace(/^-+/, "") // Trim - from start of text
     .replace(/-+$/, ""); // Trim - from end of text
 
@@ -22,11 +22,11 @@ export type NormalizedTagGroup = {
 
 const pickRepresentativeLabel = (labelCounts: Map<string, number>) =>
   [...labelCounts.entries()].sort(
-    (a, b) => b[1] - a[1] || a[0].localeCompare(b[0])
+    (a, b) => b[1] - a[1] || a[0].localeCompare(b[0]),
   )[0]?.[0] ?? "";
 
 export const buildNormalizedTagGroups = (
-  posts: PostWithTags[]
+  posts: PostWithTags[],
 ): NormalizedTagGroup[] => {
   const grouped = new Map<
     string,

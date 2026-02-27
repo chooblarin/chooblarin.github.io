@@ -19,7 +19,7 @@ const post = defineCollection({
       .string()
       .regex(
         postImagePattern,
-        "image must start with /images/posts/ and end with png/jpg/jpeg/webp/avif"
+        "image must start with /images/posts/ and end with png/jpg/jpeg/webp/avif",
       )
       .optional(),
     date: z.coerce.date(),

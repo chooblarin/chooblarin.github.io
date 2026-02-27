@@ -1,8 +1,8 @@
 import { Button as BaseButton } from "@base-ui/react/button";
-import React, { type ReactNode } from "react";
+import type { ReactNode } from "react";
 
 import { cn } from "../lib/cn";
-import { buttonVariants, type ButtonVariantProps } from "./Button.styles";
+import { type ButtonVariantProps, buttonVariants } from "./Button.styles";
 
 type ButtonIntent = NonNullable<ButtonVariantProps["intent"]>;
 type ButtonAppearance = NonNullable<ButtonVariantProps["appearance"]>;

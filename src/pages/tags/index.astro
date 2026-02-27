@@ -5,8 +5,8 @@ import HomeHeader from "../../components/HomeHeader.astro";
 import LinkIsland from "../../components/islands/LinkIsland.astro";
 import MaxWidthContainer from "../../components/MaxWidthContainer.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
-import { buildNormalizedTagGroups } from "../../lib/util";
 import { getPublishedPosts } from "../../lib/posts";
+import { buildNormalizedTagGroups } from "../../lib/util";
 
 const allPosts = await getPublishedPosts();
 const tagItems = buildNormalizedTagGroups(allPosts);

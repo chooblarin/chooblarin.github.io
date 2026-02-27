@@ -1,10 +1,8 @@
-import React from "react";
-
 import Link from "../components/Link";
 import { cn } from "../lib/cn";
 import { formatDisplayDate } from "./date";
-import { postNavCardStyles } from "./PostNavCard.styles";
 import styles from "./PostNavCard.module.css";
+import { postNavCardStyles } from "./PostNavCard.styles";
 
 export type PostNavCardProps = {
   href: string;

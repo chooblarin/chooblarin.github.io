@@ -27,6 +27,7 @@ jobs:
       - name: Install and Build
         run: |
           npm ci
+          npm run biome:check
           npm run textlint
           npm run content:lint:strict
           npm run build

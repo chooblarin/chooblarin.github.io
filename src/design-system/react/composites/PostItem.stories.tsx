@@ -1,10 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import PostItem from "./PostItem";
-import {
-  compositeStoryParameters,
-  withNarrowPageFrame,
-} from "./storybook";
+import { compositeStoryParameters, withNarrowPageFrame } from "./storybook";
 
 const meta: Meta<typeof PostItem> = {
   title: "Design System/Composites/PostItem",
