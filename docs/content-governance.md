@@ -21,6 +21,8 @@
 
 ### 推奨（7.2）
 - `image`
+- 対象は新規記事（`src/content/post/` 直下など）です。
+- `archive` 記事は移行コスト抑制のため、`image` 未設定警告の対象外とします。
 
 ### image の運用ルール
 - 主用途: 記事詳細ページのサムネイル表示 + OG/Twitter 画像
@@ -55,12 +57,12 @@
 ## CI の段階導入ポリシー
 
 ### 現在（7.3）
-- CI で `npm run content:lint` を実行します。
+- CI で `npm run content:lint:strict` を実行します。
 - 判定:
-  - `ERROR` は fail
-  - `WARN` は pass（ログに表示）
+  - `ERROR` または `WARN` で fail
 - 補足:
-  - `image` 未設定は `WARN`
+  - `image` 未設定は非archive記事で `WARN`
+  - `archive` 記事の `image` 未設定は警告対象外
   - `image` の形式不正（パス/拡張子）は `ERROR`
 - CI で `npm run textlint` を実行します（blocking）。
 - textlint の対象:
@@ -74,14 +76,12 @@
   - ルール無効化コメント（`textlint-disable` / `textlint-enable`）は原則使用しません。
   - 指摘は本文修正で解消し、やむを得ない例外はルール設定側で最小化して管理します。
 
-### Stage 2（予定）
-- CI を `npm run content:lint:strict` に切り替えます。
+### strict運用
+- CI は `npm run content:lint:strict` を維持します。
 - 判定:
   - `ERROR` または `WARN` で fail
+- ただし `image` 未設定警告の対象範囲は非archive記事のみです。
 - textlint は blocking を維持します。
-
-### strict 移行条件
-- warning 件数が 0 になり、1リリースサイクル以上安定した時点で strict に移行します。
 
 ## ローカル実行手順
 1. `npm run textlint`

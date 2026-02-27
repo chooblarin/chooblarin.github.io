@@ -11,6 +11,7 @@ const requiredFields = ["title", "date", "tags", "slug"];
 
 const warnings = [];
 const errors = [];
+const isArchiveFile = (file) => file.startsWith("archive/");
 
 const readPostFiles = (dir = postDir, prefix = "") =>
   fs
@@ -95,7 +96,9 @@ for (const file of files) {
   }
 
   if (!hasField(frontmatter, "image")) {
-    warnings.push(`${file}: missing recommended field "image"`);
+    if (!isArchiveFile(file)) {
+      warnings.push(`${file}: missing recommended field "image"`);
+    }
   } else {
     const image = readQuotedValue(frontmatter, "image");
     if (!imageRule.test(image)) {

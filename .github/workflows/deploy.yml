@@ -28,7 +28,7 @@ jobs:
         run: |
           npm ci
           npm run textlint
-          npm run content:lint
+          npm run content:lint:strict
           npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
