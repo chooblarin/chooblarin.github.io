@@ -1,12 +1,14 @@
 ---
 import MaxWidthContainer from "./MaxWidthContainer.astro";
+
+const currentYear = new Date().getFullYear();
 ---
 
 <footer>
   <MaxWidthContainer>
     <div class="footer-content">
       <p class="copyright">
-        &copy; 2015-2025 <a href="https://www.sotahatakeyama.com/" class="me"
+        &copy; 2015-{currentYear} <a href="https://www.sotahatakeyama.com/" class="me"
           >sotahatakeyama.</a
         >
       </p>

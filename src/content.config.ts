@@ -4,6 +4,7 @@ import { z } from "astro/zod";
 
 const postImagePattern = /^\/images\/posts\/.+\.(png|jpg|jpeg|webp|avif)$/;
 const postSlugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const embedType = z.enum(["twitter", "codepen"]);
 
 const post = defineCollection({
   loader: glob({
@@ -22,7 +23,9 @@ const post = defineCollection({
       )
       .optional(),
     date: z.coerce.date(),
+    updatedAt: z.coerce.date().optional(),
     tags: z.array(z.string()),
+    embeds: z.array(embedType).optional(),
     draft: z.boolean().optional(),
     slug: z
       .string()

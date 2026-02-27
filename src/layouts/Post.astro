@@ -23,8 +23,11 @@ type Props = {
 };
 
 const { post, headings, previousPost } = Astro.props;
-const { title, date, tags, image } = post.data;
-const formattedDate = format(date, "MMMM dd, yyyy");
+const { title, date, tags, image, description, embeds, updatedAt } = post.data;
+const formattedDate = format(date, "yyyy-MM-dd");
+const metaDescription = description || SITE_DESCRIPTION;
+const hasTwitterEmbed = embeds?.includes("twitter") ?? false;
+const hasCodePenEmbed = embeds?.includes("codepen") ?? false;
 
 const tagItems = tags.map((name) => ({
   name,
@@ -36,8 +39,11 @@ const tagItems = tags.map((name) => ({
   <head>
     <BaseHead
       title={`${title} | ${SITE_TITLE}`}
-      description={SITE_DESCRIPTION}
+      description={metaDescription}
       image={image}
+      ogType="article"
+      publishedTime={date.toISOString()}
+      modifiedTime={(updatedAt ?? date).toISOString()}
     />
     <style is:inline>
       header {
@@ -215,15 +221,23 @@ const tagItems = tags.map((name) => ({
       }
     </style>
 
-    <!-- Twitter widget -->
-    <script is:inline async src="https://platform.twitter.com/widgets.js"
-    ></script>
-
-    <!-- CodePen -->
-    <script
-      is:inline
-      async
-      src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+    {
+      hasTwitterEmbed && (
+        <script
+          is:inline
+          async
+          src="https://platform.twitter.com/widgets.js"
+        ></script>
+      )
+    }
+    {
+      hasCodePenEmbed && (
+        <script
+          is:inline
+          async
+          src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+      )
+    }
 
     <!-- KaTeX styles -->
     <link rel="stylesheet" href="/styles/katex/katex.min.css" rel="preload" />
@@ -267,7 +281,7 @@ const tagItems = tags.map((name) => ({
                     <span class="post-nav-label">前の記事</span>
                     <p class="post-nav-title">{previousPost.title}</p>
                     <p class="post-nav-date">
-                      {format(previousPost.date, "MMMM dd, yyyy")}
+                      {format(previousPost.date, "yyyy-MM-dd")}
                     </p>
                   </a>
                 </nav>

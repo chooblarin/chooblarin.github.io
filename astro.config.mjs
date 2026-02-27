@@ -10,6 +10,7 @@ import svelte from "@astrojs/svelte";
 export default defineConfig({
   redirects: {
     "/page": "/page/1",
+    "/tags/machine-leaning": "/tags/machine-learning",
     // slug 正規化前の旧URLを維持するための互換リダイレクト
     "/post/job‐change": "/post/job-change",
     "/post/forkJoin-in-rxjs-is-promiss-all":

@@ -1,16 +1,16 @@
 ---
 import type { GetStaticPaths } from "astro";
-import { getCollection } from "astro:content";
 import BaseHead from "../../components/BaseHead.astro";
 import Footer from "../../components/Footer.astro";
 import HomeHeader from "../../components/HomeHeader.astro";
 import MaxWidthContainer from "../../components/MaxWidthContainer.astro";
 import PostItem from "../../components/PostItem.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+import { getPublishedPosts } from "../../lib/posts";
 import { buildNormalizedTagGroups, hasNormalizedTag } from "../../lib/util";
 
 export const getStaticPaths = (async () => {
-  const posts = await getCollection("post");
+  const posts = await getPublishedPosts();
   const tagGroups = buildNormalizedTagGroups(posts);
 
   return tagGroups.map((group) => ({
@@ -58,10 +58,5 @@ const { tag, posts } = Astro.props;
       </main>
     </MaxWidthContainer>
     <Footer />
-    <style>
-      .posts {
-        /* min-height: 9rem; */
-      }
-    </style>
   </body>
 </html>

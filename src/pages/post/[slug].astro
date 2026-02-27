@@ -1,12 +1,11 @@
 ---
 import type { GetStaticPaths } from "astro";
-import { getCollection, render } from "astro:content";
+import { render } from "astro:content";
 import Post from "../../layouts/Post.astro";
+import { getPublishedPosts } from "../../lib/posts";
 
 export const getStaticPaths = (async () => {
-  const posts = (await getCollection("post"))
-    .filter((post) => post.data.draft !== true)
-    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+  const posts = await getPublishedPosts();
 
   return posts.map((post, index) => {
     const previousPost = posts[index + 1];
@@ -33,9 +32,3 @@ const { Content, headings } = await render(post);
 <Post {...{ post, headings, previousPost }}>
   <Content />
 </Post>
-
-<style>
-  .toc {
-    border: 1px solid #e2e8f0;
-  }
-</style>
