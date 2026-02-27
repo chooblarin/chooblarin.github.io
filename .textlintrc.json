@@ -8,28 +8,11 @@
   },
   "rules": {
     "preset-ja-technical-writing": {
-      "ja-no-mixed-period": {
-        "periodMark": "。",
-        "allowPeriodMarks": ["．"]
-      },
-      "no-doubled-joshi": false,
-      "ja-no-weak-phrase": false,
-      "no-exclamation-question-mark": false,
       "no-mix-dearu-desumasu": {
         "preferInHeader": "",
         "preferInBody": "ですます",
         "preferInList": "ですます",
         "strict": false
-      },
-      "ja-no-successive-word": false,
-      "max-kanji-continuous-len": {
-        "max": 6,
-        "allow": []
-      },
-      "sentence-length": false,
-      "ja-no-redundant-expression": true,
-      "max-comma": {
-        "max": 3
       }
     },
     "common-misspellings": true

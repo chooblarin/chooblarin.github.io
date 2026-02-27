@@ -12,11 +12,17 @@ const requiredFields = ["title", "date", "tags", "slug"];
 const warnings = [];
 const errors = [];
 
-const readPostFiles = () =>
+const readPostFiles = (dir = postDir, prefix = "") =>
   fs
-    .readdirSync(postDir)
-    .filter((name) => /\.(md|mdx)$/.test(name))
-    .sort();
+    .readdirSync(dir, { withFileTypes: true })
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .flatMap((entry) => {
+      const rel = prefix ? `${prefix}/${entry.name}` : entry.name;
+      const fullPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) return readPostFiles(fullPath, rel);
+      if (/\.(md|mdx)$/.test(entry.name)) return [rel];
+      return [];
+    });
 
 const parseFrontmatter = (content) => {
   const matched = content.match(/^---\n([\s\S]*?)\n---\n?/);

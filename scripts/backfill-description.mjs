@@ -4,10 +4,19 @@ import path from "node:path";
 const postDir = path.join(process.cwd(), "src", "content", "post");
 const maxLen = 120;
 
-const files = fs
-  .readdirSync(postDir)
-  .filter((name) => /\.(md|mdx)$/.test(name))
-  .sort();
+const readPostFiles = (dir = postDir, prefix = "") =>
+  fs
+    .readdirSync(dir, { withFileTypes: true })
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .flatMap((entry) => {
+      const rel = prefix ? `${prefix}/${entry.name}` : entry.name;
+      const fullPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) return readPostFiles(fullPath, rel);
+      if (/\.(md|mdx)$/.test(entry.name)) return [rel];
+      return [];
+    });
+
+const files = readPostFiles();
 
 const parseFrontmatter = (content) => {
   const matched = content.match(/^---\n([\s\S]*?)\n---\n?/);

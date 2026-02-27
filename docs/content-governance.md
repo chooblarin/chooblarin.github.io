@@ -1,7 +1,12 @@
 # コンテンツ運用ルール
 
 ## 対象範囲
-この文書は `src/content/post` 配下の記事と、関連する CI チェックの品質ルールを定義します。
+この文書は `src/content/post` 配下の記事（`archive` 含む）と、関連する CI チェックの品質ルールを定義します。
+
+## 記事配置ポリシー
+- 既存記事は `src/content/post/archive/` で管理します。
+- 新規記事は `src/content/post/` 直下に追加します。
+- archive 記事も公開対象です。URL と slug は変更しません。
 
 ## Frontmatter ポリシー
 
@@ -61,20 +66,13 @@
 - textlint の対象:
   - `docs/**/*.md`
   - `src/content/post/**/*.{md,mdx}`
-- textlint で再有効化した主要ルール:
-  - `ja-no-mixed-period`
-  - `no-mix-dearu-desumasu`
-  - `max-kanji-continuous-len`
-  - `ja-no-redundant-expression`
-  - `max-comma`
-- 句点ポリシー:
-  - 標準は `。`
-  - 既存互換として `．` も許容（`allowPeriodMarks`）
+- textlint は `.textlintignore` で `src/content/post/archive/` を除外します。
+- textlint ルールは `preset-ja-technical-writing` を基準に運用します。
 - 文体ポリシー:
   - 本文・箇条書きとも `ですます` 基準
 - 例外ポリシー:
-  - `max-kanji-continuous-len` の `allow` 追加は固有名詞で分割不能な場合のみに限定
-  - 既存記事の文体保持が必要な場合は、該当ブロックに `textlint-disable` / `textlint-enable` を局所適用する
+  - ルール無効化コメント（`textlint-disable` / `textlint-enable`）は原則使用しません。
+  - 指摘は本文修正で解消し、やむを得ない例外はルール設定側で最小化して管理します。
 
 ### Stage 2（予定）
 - CI を `npm run content:lint:strict` に切り替えます。
