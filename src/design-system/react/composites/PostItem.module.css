@@ -1,0 +1,53 @@
+.root {
+  display: block;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 0.35rem;
+  transition: color 0.2s linear, border-color 0.2s linear;
+}
+
+.root:focus {
+  outline: none;
+}
+
+.root:focus-visible {
+  outline: 2px solid rgb(var(--ds-color-focus-ring));
+  outline-offset: 2px;
+}
+
+.emphasisDefault,
+.emphasisSubtle {
+  background: transparent;
+}
+
+.body {
+  display: grid;
+  gap: 0;
+  padding: 8px 0;
+}
+
+.title {
+  margin: 12px 0 8px;
+  color: rgb(var(--ds-color-text));
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.45;
+  transition: color 0.2s linear;
+}
+
+.root:hover .title {
+  color: rgb(var(--ds-color-primary));
+}
+
+.description {
+  margin: 0 0 8px;
+  color: rgb(var(--ds-color-text-muted));
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.date {
+  margin: 8px 0;
+  color: rgb(107 114 128);
+  font-size: 0.875rem;
+}

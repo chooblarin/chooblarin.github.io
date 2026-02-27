@@ -1,0 +1,8 @@
+---
+import PaginationNav from "../../design-system/react/composites/PaginationNav";
+import type { PaginationNavProps } from "../../design-system/react/composites/PaginationNav";
+
+const props = Astro.props as PaginationNavProps;
+---
+
+<PaginationNav client:idle {...props} />

@@ -27,16 +27,27 @@
 - `--ds-tracking-heading`
 
 ## コンポーネント
+### Primitives
 - `Button`
 - `ButtonLink`
 - `Link`
 - `Menu`
 - `Dialog`
 
+### Composites
+- `PostItem`
+- `TableOfContents`
+- `PaginationNav`
+- `PostNavCard`
+- `TagList`
+
 実装ディレクトリ:
 - `src/design-system/react/components/`
 - `src/design-system/react/components/*.module.css`
 - `src/design-system/react/components/*.styles.ts`
+- `src/design-system/react/composites/`
+- `src/design-system/react/composites/*.module.css`
+- `src/design-system/react/composites/*.styles.ts`
 - `src/design-system/react/lib/cn.ts`
 
 Astro ラッパー:
@@ -44,6 +55,11 @@ Astro ラッパー:
 - `src/components/islands/LinkIsland.astro`
 - `src/components/islands/MenuIsland.astro`
 - `src/components/islands/DialogIsland.astro`
+- `src/components/islands/PostItemIsland.astro`
+- `src/components/islands/TableOfContentsIsland.astro`
+- `src/components/islands/PaginationNavIsland.astro`
+- `src/components/islands/PostNavCardIsland.astro`
+- `src/components/islands/TagListIsland.astro`
 
 ## Semantic API
 - `ButtonProps`
@@ -65,6 +81,29 @@ Astro ラッパー:
 - `MenuProps` / `DialogProps`
   - 外部APIは互換維持（内部スタイルだけ `cva` 化）
 
+## Composites API
+- `PostItemProps`
+  - `href`, `title`, `date`, `description?`
+  - `emphasis`: `default | subtle`
+  - `className`
+- `TableOfContentsProps`
+  - `headings: Array<{ id; text; depth: 2 | 3 }>`
+  - `activeTracking?: boolean`（default: `true`）
+  - `maxDepth?: 2 | 3`（default: `3`）
+  - `stickyTop?: number`（default: `128`）
+  - `className`
+- `PaginationNavProps`
+  - `prevHref?`, `nextHref?`
+  - `prevLabel?`, `nextLabel?`
+  - `className`
+- `PostNavCardProps`
+  - `href`, `label?`, `title`, `date`
+  - `className`
+- `TagListProps`
+  - `items: Array<{ label; href }>`
+  - `variant`: `chip | plain`
+  - `className`
+
 ## cva運用ルール
 - 各コンポーネントに `*.styles.ts` を持ち、`VariantProps` をexportします。
 - JSX側は `className={cn(componentVariants({...}), className)}` で統一します。
@@ -76,6 +115,25 @@ Astro ラッパー:
 
 Story ファイル:
 - `src/design-system/react/components/*.stories.tsx`
+- `src/design-system/react/composites/*.stories.tsx`
+
+## Composites本番接続状況
+- 本番接続済み:
+  - `PostItem`（Home/List/Tag）
+  - `TableOfContents`（Post）
+  - `PostNavCard`（Post）
+- Storybook管理のみ（現時点）:
+  - `PaginationNav`
+  - `TagList`
+
+## Hydration方針
+- 非対話Composites（`PostItem` / `PostNavCard`）はSSRのみで描画します。
+- 対話・追従系（`TableOfContents`）のみ `client:idle` でhydrateします。
+
+## 旧トーン回帰メモ
+- 対象は `PostItem` / `TableOfContents` / `PostNavCard` の3コンポーネントのみ。
+- 旧Astroの色・余白・ボーダー密度を優先して見た目を合わせます。
+- ただし `:focus-visible` と `TableOfContents` のactive追従は維持します。
 
 ## 実運用ルール
 - ページ遷移導線: `Link` または `ButtonLink`
@@ -85,3 +143,9 @@ Story ファイル:
 ## 警告運用方針
 - `npm run build-storybook` の警告は抑制せず、原因を修正して減らします。
 - `Some chunks are larger than 500 kB` が出た場合は、分割・依存見直しを検討します。
+
+## 次フェーズ候補
+- `TagIndexList`
+- `SiteHeaderBar`
+- `PostListSection`
+- `ArticleMetaHeader`

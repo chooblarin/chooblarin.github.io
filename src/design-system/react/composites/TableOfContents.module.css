@@ -1,0 +1,81 @@
+.root {
+  --toc-sticky-top: 128px;
+  display: none;
+  position: sticky;
+  max-width: 280px;
+  top: var(--toc-sticky-top);
+  max-height: calc(100vh - var(--toc-sticky-top));
+  overflow: auto;
+  margin-top: 8px;
+  margin-left: auto;
+}
+
+.panel {
+  height: fit-content;
+  border-left: 1px solid rgb(var(--ds-color-text));
+  padding-left: 14px;
+}
+
+.heading {
+  margin: 0 0 12px;
+  color: rgb(var(--ds-color-text));
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  margin: 0;
+}
+
+.depth2 {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.depth3 {
+  margin-top: 0.25rem;
+  padding-left: 0.25rem;
+  font-size: 0.75rem;
+}
+
+.itemActive {
+  position: relative;
+}
+
+.itemActive::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 0.2em;
+  bottom: 0.2em;
+  width: 2px;
+  background: rgb(var(--ds-color-primary));
+  border-radius: 999px;
+}
+
+.itemInactive::before {
+  content: none;
+}
+
+.link {
+  display: inline-block;
+  color: rgb(var(--ds-color-text));
+  line-height: 1.45;
+  text-decoration: none;
+}
+
+.linkActive {
+  color: rgb(var(--ds-color-primary));
+}
+
+@media (min-width: 68.75rem) {
+  .root {
+    display: block;
+  }
+}

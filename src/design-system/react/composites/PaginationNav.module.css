@@ -1,0 +1,39 @@
+.root {
+  margin-top: 2.4rem;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.72rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  margin: 0;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.25rem;
+  padding: 0.44rem 0.84rem;
+  border-radius: 0.65rem;
+  border: 1px solid rgb(var(--ds-color-border));
+  background: rgb(var(--ds-color-surface));
+  color: rgb(var(--ds-color-text));
+  font-size: 0.88rem;
+  font-weight: 580;
+  text-decoration: none;
+  transition: border-color 0.16s ease, background-color 0.16s ease,
+    transform 0.16s ease;
+}
+
+.link:hover {
+  border-color: rgb(var(--ds-color-primary));
+  background: rgb(var(--ds-color-surface-muted));
+  transform: translateY(-1px);
+}

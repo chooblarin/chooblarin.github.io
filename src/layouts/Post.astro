@@ -3,13 +3,15 @@ import "@fontsource-variable/jetbrains-mono";
 import type { MarkdownHeading } from "astro";
 import type { CollectionEntry } from "astro:content";
 import { format } from "date-fns";
+import type { TableOfContentsHeading } from "../design-system/react/composites/TableOfContents";
 
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import LinkIsland from "../components/islands/LinkIsland.astro";
+import PostNavCardIsland from "../components/islands/PostNavCardIsland.astro";
+import TableOfContentsIsland from "../components/islands/TableOfContentsIsland.astro";
 import Logo from "../components/Logo.astro";
 import MaxWidthContainer from "../components/MaxWidthContainer.astro";
-import TableOfContents from "../components/TableOfContents.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import { slugify } from "../lib/util";
 
@@ -34,6 +36,20 @@ const tagItems = tags.map((name) => ({
   name,
   slug: slugify(name),
 }));
+
+const tableOfContentsHeadings: TableOfContentsHeading[] = headings.flatMap(
+  (heading) =>
+    heading.depth === 2 || heading.depth === 3
+      ? [
+          {
+            id: heading.slug,
+            text: heading.text,
+            depth: heading.depth,
+          },
+        ]
+      : []
+);
+const hasTableOfContents = tableOfContentsHeadings.length > 0;
 ---
 
 <html lang="ja">
@@ -141,35 +157,6 @@ const tagItems = tags.map((name) => ({
       .post-nav {
         margin-top: 48px;
       }
-      .post-nav-card {
-        display: block;
-        text-decoration: none;
-        border: 1px solid rgb(209 213 219);
-        border-radius: 12px;
-        padding: 16px;
-        background: rgb(249 250 251);
-        transition: border-color 0.2s linear;
-      }
-      .post-nav-card:hover {
-        border-color: rgb(var(--color-primary));
-      }
-      .post-nav-label {
-        display: block;
-        font-size: 0.75rem;
-        color: rgb(107 114 128);
-        margin-bottom: 8px;
-      }
-      .post-nav-title {
-        color: rgb(var(--color-text));
-        font-size: 1rem;
-        font-weight: 600;
-        margin: 0;
-      }
-      .post-nav-date {
-        color: rgb(107 114 128);
-        font-size: 0.875rem;
-        margin: 8px 0 0;
-      }
     </style>
 
     {
@@ -202,7 +189,14 @@ const tagItems = tags.map((name) => ({
           </div>
         </header>
         <div class="container">
-          <TableOfContents headings={headings} />
+          {
+            hasTableOfContents && (
+              <TableOfContentsIsland
+                headings={tableOfContentsHeadings}
+                stickyTop={128}
+              />
+            )
+          }
           <article>
             <h1 class="title">{title}</h1>
             {
@@ -230,17 +224,12 @@ const tagItems = tags.map((name) => ({
             {
               previousPost && (
                 <nav class="post-nav" aria-label="前の記事">
-                  <LinkIsland
+                  <PostNavCardIsland
                     href={`/post/${previousPost.slug}`}
-                    className="post-nav-card"
-                    decoration="none"
-                  >
-                    <span class="post-nav-label">前の記事</span>
-                    <p class="post-nav-title">{previousPost.title}</p>
-                    <p class="post-nav-date">
-                      {format(previousPost.date, "yyyy-MM-dd")}
-                    </p>
-                  </LinkIsland>
+                    label="前の記事"
+                    title={previousPost.title}
+                    date={previousPost.date}
+                  />
                 </nav>
               )
             }
