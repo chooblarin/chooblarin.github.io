@@ -3,8 +3,6 @@ import "@fontsource-variable/jetbrains-mono";
 import type { MarkdownHeading } from "astro";
 import type { CollectionEntry } from "astro:content";
 import { format } from "date-fns";
-import type { TableOfContentsHeading } from "../design-system/react/composites/TableOfContents";
-
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import LinkIsland from "../components/islands/LinkIsland.astro";
@@ -13,6 +11,7 @@ import TableOfContentsIsland from "../components/islands/TableOfContentsIsland.a
 import Logo from "../components/Logo.astro";
 import MaxWidthContainer from "../components/MaxWidthContainer.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import type { TableOfContentsHeading } from "../design-system/react/composites/TableOfContents";
 import { slugify } from "../lib/util";
 
 type Props = {
@@ -47,7 +46,7 @@ const tableOfContentsHeadings: TableOfContentsHeading[] = headings.flatMap(
             depth: heading.depth,
           },
         ]
-      : []
+      : [],
 );
 const hasTableOfContents = tableOfContentsHeadings.length > 0;
 ---
@@ -73,10 +72,8 @@ const hasTableOfContents = tableOfContentsHeadings.length > 0;
         padding: 0 16px 44px;
       }
       article {
-        --base-width: 740px;
-        flex: 1 1 auto;
-        width: min(var(--base-width), 100%);
-        max-width: min(var(--base-width), 100%);
+        width: 100%;
+        max-width: 100%;
         min-width: 0;
       }
       .logo {
@@ -85,6 +82,8 @@ const hasTableOfContents = tableOfContentsHeadings.length > 0;
         padding: 8px;
       }
       .post-content {
+        padding-bottom: 64px;
+
         code {
           font-family: "JetBrains Mono Variable", "Menlo", "Courier", monospace;
           font-size: 0.875em;
@@ -107,12 +106,14 @@ const hasTableOfContents = tableOfContentsHeadings.length > 0;
         }
       }
       .post-layout {
-        display: flex;
-        flex-direction: row-reverse;
-        justify-content: center;
+        width: 100%;
+        max-width: 740px;
+        margin-inline: auto;
       }
       .post-toc {
         display: none;
+        width: 100%;
+        max-width: 280px;
       }
       .title {
         display: inline-block;
@@ -163,7 +164,20 @@ const hasTableOfContents = tableOfContentsHeadings.length > 0;
         margin-top: 48px;
       }
       @media (min-width: 68.75rem) {
-        .post-toc {
+        .post-layout--with-toc {
+          display: grid;
+          grid-template-columns: minmax(0, 740px) minmax(0, 280px);
+          grid-template-areas: "article toc";
+          column-gap: 48px;
+          justify-content: center;
+          align-items: start;
+          max-width: min(calc(740px + 280px + 24px), 100%);
+        }
+        .post-layout--with-toc article {
+          grid-area: article;
+        }
+        .post-layout--with-toc .post-toc {
+          grid-area: toc;
           display: block;
         }
       }
@@ -171,11 +185,7 @@ const hasTableOfContents = tableOfContentsHeadings.length > 0;
 
     {
       hasTwitterEmbed && (
-        <script
-          is:inline
-          async
-          src="https://platform.twitter.com/widgets.js"
-        ></script>
+        <script is:inline async src="https://platform.twitter.com/widgets.js" />
       )
     }
     {
@@ -183,7 +193,8 @@ const hasTableOfContents = tableOfContentsHeadings.length > 0;
         <script
           is:inline
           async
-          src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+          src="https://cpwebassets.codepen.io/assets/embed/ei.js"
+        />
       )
     }
 
@@ -198,7 +209,9 @@ const hasTableOfContents = tableOfContentsHeadings.length > 0;
             <Logo />
           </div>
         </header>
-        <div class="post-layout">
+        <div
+          class={`post-layout${hasTableOfContents ? " post-layout--with-toc" : ""}`}
+        >
           {
             hasTableOfContents && (
               <TableOfContentsIsland

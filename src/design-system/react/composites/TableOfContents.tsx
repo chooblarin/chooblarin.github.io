@@ -1,17 +1,12 @@
-import React, {
-  useEffect,
-  useMemo,
-  useState,
-  type CSSProperties,
-} from "react";
+import { type CSSProperties, useEffect, useMemo, useState } from "react";
 
 import Link from "../components/Link";
 import { cn } from "../lib/cn";
+import styles from "./TableOfContents.module.css";
 import {
   tableOfContentsItemVariants,
   tableOfContentsStyles,
 } from "./TableOfContents.styles";
-import styles from "./TableOfContents.module.css";
 
 export type TableOfContentsHeading = {
   id: string;
@@ -44,7 +39,7 @@ export default function TableOfContents({
 }: TableOfContentsProps) {
   const filteredHeadings = useMemo(
     () => headings.filter((heading) => heading.depth <= maxDepth),
-    [headings, maxDepth]
+    [headings, maxDepth],
   );
 
   const [activeId, setActiveId] = useState<string>(() => getHashId());
@@ -86,7 +81,18 @@ export default function TableOfContents({
         return filteredHeadings[0].id;
       }
 
-      const pivot = stickyTop + 16;
+      const activationOffset = 48;
+      const pivot = stickyTop + activationOffset;
+      const lastElement = observedElements[observedElements.length - 1];
+      const isNearPageBottom =
+        window.scrollY + window.innerHeight >=
+        document.documentElement.scrollHeight - 2;
+
+      // Ensure the last heading becomes active even when it cannot reach the pivot.
+      if (isNearPageBottom) {
+        return lastElement.id;
+      }
+
       let currentId = observedElements[0].id;
 
       for (const element of observedElements) {
@@ -120,10 +126,12 @@ export default function TableOfContents({
         root: null,
         rootMargin: `-${stickyTop + 8}px 0px -70% 0px`,
         threshold: [0, 0.2, 0.5, 1],
-      }
+      },
     );
 
-    observedElements.forEach((element) => observer.observe(element));
+    observedElements.forEach((element) => {
+      observer.observe(element);
+    });
 
     window.addEventListener("hashchange", syncFromHash);
     window.addEventListener("resize", updateActiveId);
@@ -167,7 +175,7 @@ export default function TableOfContents({
                   tableOfContentsItemVariants({
                     depth: String(heading.depth) as "2" | "3",
                     active: isActive,
-                  })
+                  }),
                 )}
               >
                 <Link
