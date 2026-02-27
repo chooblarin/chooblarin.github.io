@@ -1,29 +1,28 @@
 import React, { type ReactNode } from "react";
 
-import "../styles.css";
+import { cn } from "../lib/cn";
+import { linkVariants, type LinkVariantProps } from "./Link.styles";
 
-type LinkTone = "default" | "muted";
+type LinkIntent = NonNullable<LinkVariantProps["intent"]>;
+type LinkDecoration = NonNullable<LinkVariantProps["decoration"]>;
 
 export type LinkProps = {
   href: string;
   children?: ReactNode;
+  intent?: LinkIntent;
+  decoration?: LinkDecoration;
   external?: boolean;
-  underline?: boolean;
-  tone?: LinkTone;
   className?: string;
   rel?: string;
   target?: "_blank" | "_self" | "_parent" | "_top";
 };
 
-const joinClassNames = (...classNames: Array<string | undefined>) =>
-  classNames.filter(Boolean).join(" ");
-
 export default function Link({
   href,
   children,
+  intent = "brand",
+  decoration = "always",
   external = false,
-  underline = true,
-  tone = "default",
   className,
   rel,
   target,
@@ -36,9 +35,7 @@ export default function Link({
       href={href}
       target={resolvedTarget}
       rel={resolvedRel}
-      className={joinClassNames("ds-link", className)}
-      data-tone={tone}
-      data-underline={underline ? "true" : "false"}
+      className={cn(linkVariants({ intent, decoration }), className)}
     >
       {children}
     </a>

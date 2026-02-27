@@ -6,6 +6,7 @@ import { format } from "date-fns";
 
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
+import LinkIsland from "../components/islands/LinkIsland.astro";
 import Logo from "../components/Logo.astro";
 import MaxWidthContainer from "../components/MaxWidthContainer.astro";
 import TableOfContents from "../components/TableOfContents.astro";
@@ -216,7 +217,9 @@ const tagItems = tags.map((name) => ({
               {
                 tagItems.map((tag) => (
                   <li class="tag">
-                    <a href={`/tags/${tag.slug}`}>{`#${tag.name}`}</a>
+                    <LinkIsland href={`/tags/${tag.slug}`} decoration="none">
+                      {`#${tag.name}`}
+                    </LinkIsland>
                   </li>
                 ))
               }
@@ -227,13 +230,17 @@ const tagItems = tags.map((name) => ({
             {
               previousPost && (
                 <nav class="post-nav" aria-label="前の記事">
-                  <a href={`/post/${previousPost.slug}`} class="post-nav-card">
+                  <LinkIsland
+                    href={`/post/${previousPost.slug}`}
+                    className="post-nav-card"
+                    decoration="none"
+                  >
                     <span class="post-nav-label">前の記事</span>
                     <p class="post-nav-title">{previousPost.title}</p>
                     <p class="post-nav-date">
                       {format(previousPost.date, "yyyy-MM-dd")}
                     </p>
-                  </a>
+                  </LinkIsland>
                 </nav>
               )
             }

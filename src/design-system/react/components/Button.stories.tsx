@@ -7,8 +7,9 @@ const meta: Meta<typeof Button> = {
   component: Button,
   tags: ["autodocs"],
   args: {
-    children: "Button",
-    variant: "solid",
+    children: "Publish",
+    intent: "brand",
+    appearance: "solid",
     size: "md",
     disabled: false,
   },
@@ -18,19 +19,28 @@ export default meta;
 
 type Story = StoryObj<typeof Button>;
 
-export const Solid: Story = {};
+export const BrandSolid: Story = {};
 
-export const Outline: Story = {
+export const BrandOutline: Story = {
   args: {
-    variant: "outline",
-    children: "Outline",
+    appearance: "outline",
+    children: "Preview",
   },
 };
 
-export const Ghost: Story = {
+export const NeutralGhost: Story = {
   args: {
-    variant: "ghost",
-    children: "Ghost",
+    intent: "neutral",
+    appearance: "ghost",
+    children: "More",
+  },
+};
+
+export const DangerSolid: Story = {
+  args: {
+    intent: "danger",
+    appearance: "solid",
+    children: "Delete",
   },
 };
 

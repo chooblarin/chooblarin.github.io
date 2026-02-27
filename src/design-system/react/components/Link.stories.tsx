@@ -9,8 +9,8 @@ const meta: Meta<typeof Link> = {
   args: {
     href: "/",
     children: "Read more",
-    tone: "default",
-    underline: true,
+    intent: "brand",
+    decoration: "always",
   },
 };
 
@@ -18,19 +18,27 @@ export default meta;
 
 type Story = StoryObj<typeof Link>;
 
-export const Default: Story = {};
+export const Brand: Story = {};
 
-export const Muted: Story = {
+export const MutedHover: Story = {
   args: {
-    tone: "muted",
-    children: "Muted link",
+    intent: "muted",
+    decoration: "hover",
+    children: "Muted hover link",
   },
 };
 
-export const NoUnderline: Story = {
+export const Danger: Story = {
   args: {
-    underline: false,
-    children: "No underline",
+    intent: "danger",
+    children: "Danger link",
+  },
+};
+
+export const NoDecoration: Story = {
+  args: {
+    decoration: "none",
+    children: "No decoration",
   },
 };
 

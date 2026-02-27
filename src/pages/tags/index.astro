@@ -33,7 +33,7 @@ const tagItems = buildNormalizedTagGroups(allPosts);
           {
             tagItems.map((item) => (
               <li>
-                <LinkIsland href={`/tags/${item.slug}`} underline={false}>
+                <LinkIsland href={`/tags/${item.slug}`} decoration="none">
                   {item.label} ({item.count})
                 </LinkIsland>
               </li>

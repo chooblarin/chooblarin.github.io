@@ -2,8 +2,15 @@
   --ds-color-primary: 147 42 181;
   --ds-color-primary-inverted: 255 255 255;
   --ds-color-text: 35 35 35;
+  --ds-color-text-muted: 97 105 117;
   --ds-color-background: 255 255 255;
+  --ds-color-surface: 255 255 255;
+  --ds-color-surface-muted: 248 249 251;
+  --ds-color-border: 221 223 229;
+  --ds-color-danger: 186 26 46;
   --ds-color-focus-ring: 59 130 246;
+  --ds-shadow-1: 0 1px 2px rgb(15 23 42 / 0.08), 0 4px 12px rgb(15 23 42 / 0.06);
+  --ds-shadow-2: 0 8px 22px rgb(15 23 42 / 0.16);
 
   --ds-font-sans-ja: "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo,
     "Helvetica Neue", Arial, sans-serif;
@@ -19,5 +26,10 @@
   --color-primary: var(--ds-color-primary);
   --color-primary-inverted: var(--ds-color-primary-inverted);
   --color-text: var(--ds-color-text);
+  --color-text-muted: var(--ds-color-text-muted);
   --color-background: var(--ds-color-background);
+  --color-surface: var(--ds-color-surface);
+  --color-surface-muted: var(--ds-color-surface-muted);
+  --color-border: var(--ds-color-border);
+  --color-danger: var(--ds-color-danger);
 }

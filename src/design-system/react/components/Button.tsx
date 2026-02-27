@@ -1,14 +1,17 @@
 import { Button as BaseButton } from "@base-ui/react/button";
 import React, { type ReactNode } from "react";
 
-import "../styles.css";
+import { cn } from "../lib/cn";
+import { buttonVariants, type ButtonVariantProps } from "./Button.styles";
 
-type ButtonVariant = "solid" | "outline" | "ghost";
-type ButtonSize = "sm" | "md";
+type ButtonIntent = NonNullable<ButtonVariantProps["intent"]>;
+type ButtonAppearance = NonNullable<ButtonVariantProps["appearance"]>;
+type ButtonSize = NonNullable<ButtonVariantProps["size"]>;
 
 export type ButtonProps = {
   children?: ReactNode;
-  variant?: ButtonVariant;
+  intent?: ButtonIntent;
+  appearance?: ButtonAppearance;
   size?: ButtonSize;
   disabled?: boolean;
   type?: "button" | "submit" | "reset";
@@ -16,12 +19,10 @@ export type ButtonProps = {
   className?: string;
 };
 
-const joinClassNames = (...classNames: Array<string | undefined>) =>
-  classNames.filter(Boolean).join(" ");
-
 export default function Button({
   children,
-  variant = "solid",
+  intent = "brand",
+  appearance = "solid",
   size = "md",
   disabled = false,
   type = "button",
@@ -33,9 +34,7 @@ export default function Button({
       type={type}
       disabled={disabled}
       onClick={onClick}
-      className={joinClassNames("ds-button", className)}
-      data-variant={variant}
-      data-size={size}
+      className={cn(buttonVariants({ intent, appearance, size }), className)}
     >
       {children}
     </BaseButton>

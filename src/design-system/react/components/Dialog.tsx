@@ -1,7 +1,17 @@
 import { Dialog as BaseDialog } from "@base-ui/react/dialog";
 import React, { type ReactNode } from "react";
 
-import "../styles.css";
+import { cn } from "../lib/cn";
+import {
+  dialogActionsStyles,
+  dialogBackdropStyles,
+  dialogCloseStyles,
+  dialogContentStyles,
+  dialogDescriptionStyles,
+  dialogPopupStyles,
+  dialogTitleStyles,
+  dialogTriggerStyles,
+} from "./Dialog.styles";
 
 export type DialogProps = {
   title: string;
@@ -30,21 +40,23 @@ export default function Dialog({
       defaultOpen={defaultOpen}
       onOpenChange={(nextOpen) => onOpenChange?.(nextOpen)}
     >
-      <BaseDialog.Trigger className="ds-dialog-trigger">
+      <BaseDialog.Trigger className={cn(dialogTriggerStyles())}>
         {triggerLabel}
       </BaseDialog.Trigger>
       <BaseDialog.Portal>
-        <BaseDialog.Backdrop className="ds-dialog-backdrop" />
-        <BaseDialog.Popup className="ds-dialog-popup">
-          <BaseDialog.Title className="ds-dialog-title">{title}</BaseDialog.Title>
+        <BaseDialog.Backdrop className={cn(dialogBackdropStyles())} />
+        <BaseDialog.Popup className={cn(dialogPopupStyles())}>
+          <BaseDialog.Title className={cn(dialogTitleStyles())}>
+            {title}
+          </BaseDialog.Title>
           {description && (
-            <BaseDialog.Description className="ds-dialog-description">
+            <BaseDialog.Description className={cn(dialogDescriptionStyles())}>
               {description}
             </BaseDialog.Description>
           )}
-          <div className="ds-dialog-content">{children}</div>
-          <div className="ds-dialog-actions">
-            <BaseDialog.Close className="ds-dialog-close">
+          <div className={cn(dialogContentStyles())}>{children}</div>
+          <div className={cn(dialogActionsStyles())}>
+            <BaseDialog.Close className={cn(dialogCloseStyles())}>
               {closeLabel}
             </BaseDialog.Close>
           </div>

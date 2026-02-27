@@ -1,7 +1,13 @@
 import { Menu as BaseMenu } from "@base-ui/react/menu";
 import React from "react";
 
-import "../styles.css";
+import { cn } from "../lib/cn";
+import {
+  menuItemStyles,
+  menuPopupStyles,
+  menuPositionerStyles,
+  menuTriggerStyles,
+} from "./Menu.styles";
 
 export type MenuItem = {
   key: string;
@@ -26,10 +32,15 @@ export default function Menu({
 
   return (
     <BaseMenu.Root>
-      <BaseMenu.Trigger className="ds-menu-trigger">{triggerLabel}</BaseMenu.Trigger>
+      <BaseMenu.Trigger className={cn(menuTriggerStyles())}>
+        {triggerLabel}
+      </BaseMenu.Trigger>
       <BaseMenu.Portal>
-        <BaseMenu.Positioner sideOffset={8} className="ds-menu-positioner">
-          <BaseMenu.Popup className="ds-menu-popup">
+        <BaseMenu.Positioner
+          sideOffset={8}
+          className={cn(menuPositionerStyles())}
+        >
+          <BaseMenu.Popup className={cn(menuPopupStyles())}>
             {items.map((item) => {
               const disabled = item.disabled || disabledKeySet.has(item.key);
 
@@ -37,7 +48,7 @@ export default function Menu({
                 <BaseMenu.Item
                   key={item.key}
                   disabled={disabled}
-                  className="ds-menu-item"
+                  className={cn(menuItemStyles())}
                   onClick={() => {
                     if (!disabled) {
                       onSelect?.(item.key);

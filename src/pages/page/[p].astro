@@ -76,12 +76,12 @@ const { chunk, hasNext, hasPrev, page } = Astro.props;
           (hasPrev || hasNext) && (
             <div class="links">
               {hasPrev && (
-                <LinkIsland href={`/page/${page - 1}`} className="link" underline={false}>
+                <LinkIsland href={`/page/${page - 1}`} className="link" decoration="none">
                   前へ
                 </LinkIsland>
               )}
               {hasNext && (
-                <LinkIsland href={`/page/${page + 1}`} className="link" underline={false}>
+                <LinkIsland href={`/page/${page + 1}`} className="link" decoration="none">
                   次へ
                 </LinkIsland>
               )}

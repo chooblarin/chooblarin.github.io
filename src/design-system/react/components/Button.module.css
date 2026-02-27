@@ -1,0 +1,171 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  border-radius: 0.65rem;
+  border: 1px solid rgb(var(--ds-color-border));
+  background: rgb(var(--ds-color-surface));
+  color: rgb(var(--ds-color-text));
+  box-shadow: var(--ds-shadow-1);
+  font-size: 0.95rem;
+  font-weight: 620;
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.16s ease, border-color 0.16s ease,
+    background-color 0.16s ease, color 0.16s ease, box-shadow 0.2s ease;
+}
+
+.root:focus {
+  outline: none;
+}
+
+.root:focus-visible {
+  outline: 2px solid rgb(var(--ds-color-focus-ring));
+  outline-offset: 2px;
+}
+
+.root:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--ds-shadow-2);
+}
+
+.root:active {
+  transform: translateY(0);
+}
+
+.root:disabled,
+.root[data-disabled] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.sizeSm {
+  min-height: 2rem;
+  padding: 0.38rem 0.72rem;
+  font-size: 0.84rem;
+}
+
+.sizeMd {
+  min-height: 2.4rem;
+  padding: 0.56rem 0.98rem;
+  font-size: 0.94rem;
+}
+
+.intentBrand {
+  --button-accent: var(--ds-color-primary);
+  --button-on-accent: var(--ds-color-primary-inverted);
+}
+
+.intentNeutral {
+  --button-accent: var(--ds-color-text);
+  --button-on-accent: var(--ds-color-background);
+}
+
+.intentDanger {
+  --button-accent: var(--ds-color-danger);
+  --button-on-accent: var(--ds-color-primary-inverted);
+}
+
+.appearanceSolid {
+  border-color: rgb(var(--button-accent));
+}
+
+.appearanceOutline {
+  border-width: 1px;
+  box-shadow: none;
+}
+
+.appearanceGhost {
+  border-color: transparent;
+  box-shadow: none;
+  background: transparent;
+}
+
+.brandSolid {
+  color: rgb(var(--button-on-accent));
+  background: rgb(var(--button-accent));
+}
+
+.brandSolid:hover {
+  border-color: rgb(122 35 150);
+  background: rgb(122 35 150);
+}
+
+.brandOutline {
+  color: rgb(var(--ds-color-primary));
+  border-color: rgb(var(--ds-color-primary));
+  background: rgb(var(--ds-color-surface));
+}
+
+.brandOutline:hover {
+  background: rgb(var(--ds-color-surface-muted));
+}
+
+.brandGhost {
+  color: rgb(var(--ds-color-primary));
+}
+
+.brandGhost:hover {
+  background: rgb(var(--ds-color-surface-muted));
+}
+
+.neutralSolid {
+  color: rgb(var(--button-on-accent));
+  background: rgb(var(--button-accent));
+}
+
+.neutralSolid:hover {
+  border-color: rgb(12 15 22);
+  background: rgb(12 15 22);
+}
+
+.neutralOutline {
+  color: rgb(var(--ds-color-text));
+  border-color: rgb(var(--ds-color-border));
+  background: rgb(var(--ds-color-surface));
+}
+
+.neutralOutline:hover {
+  background: rgb(var(--ds-color-surface-muted));
+}
+
+.neutralGhost {
+  color: rgb(var(--ds-color-text));
+}
+
+.neutralGhost:hover {
+  background: rgb(var(--ds-color-surface-muted));
+}
+
+.dangerSolid {
+  color: rgb(var(--button-on-accent));
+  background: rgb(var(--button-accent));
+}
+
+.dangerSolid:hover {
+  border-color: rgb(151 21 37);
+  background: rgb(151 21 37);
+}
+
+.dangerOutline {
+  color: rgb(var(--ds-color-danger));
+  border-color: rgb(var(--ds-color-danger));
+  background: rgb(var(--ds-color-surface));
+}
+
+.dangerOutline:hover {
+  background: rgb(var(--ds-color-surface-muted));
+}
+
+.dangerGhost {
+  color: rgb(var(--ds-color-danger));
+}
+
+.dangerGhost:hover {
+  background: rgb(var(--ds-color-surface-muted));
+}
