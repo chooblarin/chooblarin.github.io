@@ -1,9 +1,16 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro/content/config";
+import { glob } from "astro/loaders";
+import { z } from "astro/zod";
 
 const postImagePattern = /^\/images\/posts\/.+\.(png|jpg|jpeg|webp|avif)$/;
+const postSlugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 const post = defineCollection({
-  type: "content",
+  loader: glob({
+    base: "./src/content/post",
+    pattern: "**/*.{md,mdx}",
+    generateId: ({ entry }) => entry.replace(/\.(md|mdx)$/u, ""),
+  }),
   schema: z.object({
     title: z.string(),
     description: z.string().optional(),
@@ -17,6 +24,9 @@ const post = defineCollection({
     date: z.coerce.date(),
     tags: z.array(z.string()),
     draft: z.boolean().optional(),
+    slug: z
+      .string()
+      .regex(postSlugPattern, "slug must be lowercase kebab-case"),
   }),
 });
 

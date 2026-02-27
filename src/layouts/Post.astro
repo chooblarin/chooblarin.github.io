@@ -15,9 +15,14 @@ import { slugify } from "../lib/util";
 type Props = {
   post: CollectionEntry<"post">;
   headings: MarkdownHeading[];
+  previousPost: {
+    slug: string;
+    title: string;
+    date: Date;
+  } | null;
 };
 
-const { post, headings } = Astro.props;
+const { post, headings, previousPost } = Astro.props;
 const { title, date, tags, image } = post.data;
 const formattedDate = format(date, "MMMM dd, yyyy");
 
@@ -176,13 +181,37 @@ const tagItems = tags.map((name) => ({
       .content {
         margin-top: 64px;
       }
-      .links {
-        display: flex;
-        justify-content: space-between;
+      .post-nav {
+        margin-top: 48px;
+      }
+      .post-nav-card {
+        display: block;
+        text-decoration: none;
         border: 1px solid rgb(209 213 219);
-        border-radius: 4px;
-        margin-bottom: 44px;
+        border-radius: 12px;
         padding: 16px;
+        background: rgb(249 250 251);
+        transition: border-color 0.2s linear;
+      }
+      .post-nav-card:hover {
+        border-color: rgb(var(--color-primary));
+      }
+      .post-nav-label {
+        display: block;
+        font-size: 0.75rem;
+        color: rgb(107 114 128);
+        margin-bottom: 8px;
+      }
+      .post-nav-title {
+        color: rgb(var(--color-text));
+        font-size: 1rem;
+        font-weight: 600;
+        margin: 0;
+      }
+      .post-nav-date {
+        color: rgb(107 114 128);
+        font-size: 0.875rem;
+        margin: 8px 0 0;
       }
     </style>
 
@@ -231,6 +260,19 @@ const tagItems = tags.map((name) => ({
             <div class="post-content">
               <slot />
             </div>
+            {
+              previousPost && (
+                <nav class="post-nav" aria-label="前の記事">
+                  <a href={`/post/${previousPost.slug}`} class="post-nav-card">
+                    <span class="post-nav-label">前の記事</span>
+                    <p class="post-nav-title">{previousPost.title}</p>
+                    <p class="post-nav-date">
+                      {format(previousPost.date, "MMMM dd, yyyy")}
+                    </p>
+                  </a>
+                </nav>
+              )
+            }
           </article>
         </div>
       </main>
