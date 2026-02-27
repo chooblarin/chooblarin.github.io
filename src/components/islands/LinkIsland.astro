@@ -1,0 +1,10 @@
+---
+import Link from "../../design-system/react/components/Link";
+import type { LinkProps } from "../../design-system/react/components/Link";
+
+const props = Astro.props as LinkProps;
+---
+
+<Link client:idle {...props}>
+  <slot />
+</Link>

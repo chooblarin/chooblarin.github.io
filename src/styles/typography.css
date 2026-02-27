@@ -1,0 +1,145 @@
+html {
+  font-family: var(--ds-font-sans-ja);
+  line-height: var(--ds-leading-body-ja);
+  -webkit-text-size-adjust: 100%;
+  -moz-tab-size: 4;
+  tab-size: 4;
+  height: 100%;
+  font-kerning: auto;
+}
+
+body {
+  line-height: inherit;
+  text-rendering: optimizeLegibility;
+}
+
+:lang(ja) {
+  line-height: var(--ds-leading-body-ja);
+  font-feature-settings: "palt" 1;
+}
+
+:lang(en) {
+  font-family: var(--ds-font-sans-en);
+  line-height: var(--ds-leading-body-en);
+  font-feature-settings: "kern" 1;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: var(--ds-leading-heading);
+  letter-spacing: var(--ds-tracking-heading);
+  font-kerning: auto;
+}
+
+@supports (text-wrap: balance) {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .u-balance {
+    text-wrap: balance;
+  }
+}
+
+@supports (text-wrap: pretty) {
+  p,
+  li,
+  blockquote,
+  .u-pretty {
+    text-wrap: pretty;
+  }
+}
+
+@supports (text-autospace: normal) {
+  :lang(ja) {
+    text-autospace: normal;
+  }
+}
+
+@supports (text-spacing-trim: trim-start) {
+  :lang(ja) {
+    text-spacing-trim: trim-start;
+  }
+}
+
+/* Utilities for selective typographic tuning */
+.u-kerning {
+  font-kerning: auto;
+}
+
+.u-text-center-fix {
+  text-align: center;
+}
+
+@supports (hanging-punctuation: first) {
+  .u-text-center-fix {
+    hanging-punctuation: first allow-end;
+  }
+}
+
+/* Post prose typography */
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+  font-weight: 600;
+  margin: 2rem 0 1rem;
+  padding-top: 0.875rem;
+}
+
+.post-content h1 {
+  font-size: 1.875rem;
+}
+
+.post-content h2 {
+  font-size: 1.75rem;
+}
+
+.post-content h3 {
+  font-size: 1.5rem;
+}
+
+.post-content h4 {
+  font-size: 1.25rem;
+}
+
+.post-content h5 {
+  font-size: 1rem;
+}
+
+.post-content h6 {
+  font-size: 0.875rem;
+}
+
+.post-content p {
+  margin: 1.5rem 0;
+}
+
+.post-content ul {
+  margin-block: 0.75rem;
+  margin-inline: 0;
+  padding-inline-start: 1.5rem;
+}
+
+.post-content li::marker {
+  color: rgb(107 114 128);
+}
+
+.post-content blockquote {
+  color: rgb(31 41 55);
+  background: rgb(243 244 246);
+  padding: 1rem 0.875em;
+  border-radius: 8px;
+}
+
+.post-content blockquote p {
+  margin: 0;
+}

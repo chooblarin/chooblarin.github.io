@@ -1,0 +1,10 @@
+---
+import Dialog from "../../design-system/react/components/Dialog";
+import type { DialogProps } from "../../design-system/react/components/Dialog";
+
+const props = Astro.props as DialogProps;
+---
+
+<Dialog client:load {...props}>
+  <slot />
+</Dialog>

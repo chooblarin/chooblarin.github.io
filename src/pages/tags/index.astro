@@ -2,6 +2,7 @@
 import BaseHead from "../../components/BaseHead.astro";
 import Footer from "../../components/Footer.astro";
 import HomeHeader from "../../components/HomeHeader.astro";
+import LinkIsland from "../../components/islands/LinkIsland.astro";
 import MaxWidthContainer from "../../components/MaxWidthContainer.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 import { buildNormalizedTagGroups } from "../../lib/util";
@@ -32,9 +33,9 @@ const tagItems = buildNormalizedTagGroups(allPosts);
           {
             tagItems.map((item) => (
               <li>
-                <a href={`/tags/${item.slug}`}>
+                <LinkIsland href={`/tags/${item.slug}`} underline={false}>
                   {item.label} ({item.count})
-                </a>
+                </LinkIsland>
               </li>
             ))
           }
