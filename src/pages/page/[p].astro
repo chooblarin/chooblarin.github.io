@@ -3,7 +3,7 @@ import type { GetStaticPaths } from "astro";
 import BaseHead from "../../components/BaseHead.astro";
 import Footer from "../../components/Footer.astro";
 import HomeHeader from "../../components/HomeHeader.astro";
-import LinkIsland from "../../components/islands/LinkIsland.astro";
+import ButtonLinkIsland from "../../components/islands/ButtonLinkIsland.astro";
 import PostItemIsland from "../../components/islands/PostItemIsland.astro";
 import MaxWidthContainer from "../../components/MaxWidthContainer.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
@@ -14,7 +14,7 @@ export const getStaticPaths = (async () => {
   const countPerPage = 10;
   const pageSize = Math.ceil(posts.length / countPerPage);
   const chunked = Array.from({ length: pageSize }, (_, i) =>
-    posts.slice(i * countPerPage, i * countPerPage + countPerPage)
+    posts.slice(i * countPerPage, i * countPerPage + countPerPage),
   );
 
   return chunked.map((chunk, index) => ({
@@ -46,15 +46,6 @@ const { chunk, hasNext, hasPrev, page } = Astro.props;
         gap: 12px;
         margin: 48px 0;
       }
-      .link {
-        text-decoration: none;
-        border: 1px solid rgb(229 231 235);
-        padding: 8px 16px;
-        transition: border-color 0.2s linear;
-      }
-      .link:hover {
-        border-color: rgb(209 213 219);
-      }
     </style>
   </head>
   <body>
@@ -77,14 +68,22 @@ const { chunk, hasNext, hasPrev, page } = Astro.props;
           (hasPrev || hasNext) && (
             <div class="links">
               {hasPrev && (
-                <LinkIsland href={`/page/${page - 1}`} className="link" decoration="none">
+                <ButtonLinkIsland
+                  href={`/page/${page - 1}`}
+                  intent="neutral"
+                  appearance="outline"
+                >
                   前へ
-                </LinkIsland>
+                </ButtonLinkIsland>
               )}
               {hasNext && (
-                <LinkIsland href={`/page/${page + 1}`} className="link" decoration="none">
+                <ButtonLinkIsland
+                  href={`/page/${page + 1}`}
+                  intent="neutral"
+                  appearance="outline"
+                >
                   次へ
-                </LinkIsland>
+                </ButtonLinkIsland>
               )}
             </div>
           )

@@ -6,7 +6,6 @@
 - Reactコンポーネントのクラス合成は `clsx`（`cn` ヘルパー）で統一します。
 - バリアント管理は `class-variance-authority`（`cva`）で統一します。
 - フォーカスリングは `:focus-visible` のときだけ表示します。
-- `Menu` / `Dialog` は現時点では Storybook 管理のみで、本番ページには導入しません。
 
 ## 主要トークン
 - `--ds-color-primary`
@@ -31,8 +30,6 @@
 - `Button`
 - `ButtonLink`
 - `Link`
-- `Menu`
-- `Dialog`
 
 ### Composites
 - `PostItem`
@@ -52,9 +49,8 @@
 
 Astro ラッパー:
 - `src/components/islands/ButtonIsland.astro`
+- `src/components/islands/ButtonLinkIsland.astro`
 - `src/components/islands/LinkIsland.astro`
-- `src/components/islands/MenuIsland.astro`
-- `src/components/islands/DialogIsland.astro`
 - `src/components/islands/PostItemIsland.astro`
 - `src/components/islands/TableOfContentsIsland.astro`
 - `src/components/islands/PaginationNavIsland.astro`
@@ -78,8 +74,6 @@ Astro ラッパー:
   - `intent`: `brand | muted | danger`
   - `decoration`: `always | hover | none`
   - `className`
-- `MenuProps` / `DialogProps`
-  - 外部APIは互換維持（内部スタイルだけ `cva` 化）
 
 ## Composites API
 - `PostItemProps`
@@ -138,7 +132,7 @@ Story ファイル:
 ## 実運用ルール
 - ページ遷移導線: `Link` または `ButtonLink`
 - フォーム送信・明示アクション: `Button`
-- 既存ページへの段階導入では、まず `LinkIsland` でリンク見た目を統一します。
+- CTA導線の段階導入では、`ButtonLinkIsland` を優先して適用します。
 
 ## 警告運用方針
 - `npm run build-storybook` の警告は抑制せず、原因を修正して減らします。

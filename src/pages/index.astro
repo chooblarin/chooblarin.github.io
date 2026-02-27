@@ -1,8 +1,8 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
+import ButtonLinkIsland from "../components/islands/ButtonLinkIsland.astro";
 import Footer from "../components/Footer.astro";
 import HomeHeader from "../components/HomeHeader.astro";
-import LinkIsland from "../components/islands/LinkIsland.astro";
 import PostItemIsland from "../components/islands/PostItemIsland.astro";
 import MaxWidthContainer from "../components/MaxWidthContainer.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
@@ -40,7 +40,9 @@ const latestPosts = (await getPublishedPosts()).slice(0, 5);
           }
         </section>
 
-        <LinkIsland href="/page/1">View all</LinkIsland>
+        <ButtonLinkIsland href="/page/1" intent="brand" appearance="solid" size="md">
+          View all
+        </ButtonLinkIsland>
       </main>
     </MaxWidthContainer>
     <Footer />
