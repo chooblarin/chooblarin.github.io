@@ -41,6 +41,10 @@ const { chunk, hasNext, hasPrev, page } = Astro.props;
       main {
         padding: 0 16px 96px;
       }
+      .posts {
+        display: grid;
+        gap: 12px;
+      }
       .links {
         display: flex;
         gap: 12px;
@@ -52,14 +56,13 @@ const { chunk, hasNext, hasPrev, page } = Astro.props;
     <HomeHeader />
     <MaxWidthContainer>
       <main>
-        <section>
+        <section class="posts">
           {
             chunk.map((post) => (
               <PostItemIsland
                 href={`/post/${post.data.slug}`}
                 title={post.data.title}
                 date={post.data.date}
-                description={post.data.description}
               />
             ))
           }

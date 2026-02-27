@@ -8,6 +8,16 @@ import logo from "@/assets/images/logo.svg?raw";
 
 <style>
   a {
+    border-radius: 4px;
     color: inherit;
+  }
+
+  a:focus {
+    outline: none;
+  }
+
+  a:focus-visible {
+    outline: var(--ds-focus-ring-width) solid rgb(var(--ds-color-focus-ring));
+    outline-offset: var(--ds-focus-ring-offset);
   }
 </style>

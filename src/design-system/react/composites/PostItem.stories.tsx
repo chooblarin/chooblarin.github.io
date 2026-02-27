@@ -33,13 +33,6 @@ export const LongTitle: Story = {
   },
 };
 
-export const WithDescription: Story = {
-  args: {
-    description:
-      "Primitivesを土台にした構成へ移し、レイアウト責務を分離しながら再利用性を高めました。",
-  },
-};
-
 export const Subtle: Story = {
   args: {
     emphasis: "subtle",
@@ -48,7 +41,6 @@ export const Subtle: Story = {
 
 export const BeforeLike: Story = {
   args: {
-    description: undefined,
     emphasis: "default",
   },
 };

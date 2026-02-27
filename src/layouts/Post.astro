@@ -75,7 +75,9 @@ const hasTableOfContents = tableOfContentsHeadings.length > 0;
       article {
         --base-width: 740px;
         flex: 1 1 auto;
+        width: min(var(--base-width), 100%);
         max-width: min(var(--base-width), 100%);
+        min-width: 0;
       }
       .logo {
         width: fit-content;
@@ -104,10 +106,13 @@ const hasTableOfContents = tableOfContentsHeadings.length > 0;
           }
         }
       }
-      .container {
+      .post-layout {
         display: flex;
         flex-direction: row-reverse;
         justify-content: center;
+      }
+      .post-toc {
+        display: none;
       }
       .title {
         display: inline-block;
@@ -157,6 +162,11 @@ const hasTableOfContents = tableOfContentsHeadings.length > 0;
       .post-nav {
         margin-top: 48px;
       }
+      @media (min-width: 68.75rem) {
+        .post-toc {
+          display: block;
+        }
+      }
     </style>
 
     {
@@ -188,12 +198,13 @@ const hasTableOfContents = tableOfContentsHeadings.length > 0;
             <Logo />
           </div>
         </header>
-        <div class="container">
+        <div class="post-layout">
           {
             hasTableOfContents && (
               <TableOfContentsIsland
                 headings={tableOfContentsHeadings}
                 stickyTop={128}
+                className="post-toc"
               />
             )
           }

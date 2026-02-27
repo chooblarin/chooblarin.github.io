@@ -6,31 +6,76 @@
     src: string;
     width?: number;
     height?: number;
+    maxWidth?: number;
   };
 
-  let { src, width = 500, height = 500 }: Props = $props();
+  let { src, width = 500, height = 500, maxWidth = 640 }: Props = $props();
 
   let canvas: HTMLCanvasElement;
+  let root: HTMLDivElement;
+  const rootStyle = `--rive-max-width: ${maxWidth}px; --rive-aspect-ratio: ${width} / ${height};`;
 
   onMount(() => {
+    const syncCanvasSize = (r?: rive.Rive) => {
+      if (!root || !canvas) {
+        return;
+      }
+
+      const rect = root.getBoundingClientRect();
+      const cssWidth = Math.max(1, Math.round(rect.width));
+      const cssHeight = Math.max(1, Math.round(rect.height));
+      const dpr = window.devicePixelRatio || 1;
+      const nextWidth = Math.max(1, Math.round(cssWidth * dpr));
+      const nextHeight = Math.max(1, Math.round(cssHeight * dpr));
+
+      canvas.style.width = `${cssWidth}px`;
+      canvas.style.height = `${cssHeight}px`;
+
+      if (canvas.width !== nextWidth || canvas.height !== nextHeight) {
+        canvas.width = nextWidth;
+        canvas.height = nextHeight;
+        r?.resizeDrawingSurfaceToCanvas();
+      }
+    };
+
     const r = new rive.Rive({
       src,
       canvas,
       autoplay: true,
       onLoad: () => {
-        r.resizeDrawingSurfaceToCanvas();
+        syncCanvasSize(r);
       },
     });
-    return () => r.cleanup();
+
+    const resizeObserver = new ResizeObserver(() => {
+      syncCanvasSize(r);
+    });
+
+    syncCanvasSize(r);
+    resizeObserver.observe(root);
+
+    return () => {
+      resizeObserver.disconnect();
+      r.cleanup();
+    };
   });
 </script>
 
-<canvas {width} {height} bind:this={canvas}></canvas>
+<div class="rive-root" style={rootStyle} bind:this={root}>
+  <canvas bind:this={canvas}></canvas>
+</div>
 
 <style>
-  canvas {
+  .rive-root {
+    width: min(100%, var(--rive-max-width));
+    max-width: 100%;
+    aspect-ratio: var(--rive-aspect-ratio);
+  }
+
+  .rive-root canvas {
+    display: block;
     width: 100%;
-    max-width: 640px;
-    height: auto;
+    max-width: 100%;
+    height: 100%;
   }
 </style>

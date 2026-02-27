@@ -8,7 +8,9 @@
   --ds-color-surface-muted: 248 249 251;
   --ds-color-border: 221 223 229;
   --ds-color-danger: 186 26 46;
-  --ds-color-focus-ring: 59 130 246;
+  --ds-color-focus-ring: var(--ds-color-primary);
+  --ds-focus-ring-width: 1px;
+  --ds-focus-ring-offset: 2px;
   --ds-shadow-1: 0 1px 2px rgb(15 23 42 / 0.08), 0 4px 12px rgb(15 23 42 / 0.06);
   --ds-shadow-2: 0 8px 22px rgb(15 23 42 / 0.16);
 

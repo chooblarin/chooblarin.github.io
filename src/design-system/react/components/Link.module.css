@@ -15,8 +15,8 @@
 }
 
 .root:focus-visible {
-  outline: 2px solid rgb(var(--ds-color-focus-ring));
-  outline-offset: 2px;
+  outline: var(--ds-focus-ring-width) solid rgb(var(--ds-color-focus-ring));
+  outline-offset: var(--ds-focus-ring-offset);
 }
 
 .intentBrand {

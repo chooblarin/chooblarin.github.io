@@ -33,8 +33,16 @@ const currentYear = new Date().getFullYear();
   .me {
     letter-spacing: 0.1rem;
     color: inherit;
+    border-radius: 4px;
     text-decoration: none;
     transition: color 0.2s;
+  }
+  .me:focus {
+    outline: none;
+  }
+  .me:focus-visible {
+    outline: var(--ds-focus-ring-width) solid rgb(var(--ds-color-focus-ring));
+    outline-offset: var(--ds-focus-ring-offset);
   }
   .me:hover {
     color: revert;

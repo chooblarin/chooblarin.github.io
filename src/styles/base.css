@@ -78,6 +78,37 @@ a {
   text-decoration: underline;
 }
 
+:where(
+    a[href],
+    area[href],
+    button,
+    input:not([type="hidden"]),
+    select,
+    textarea,
+    summary,
+    iframe,
+    [tabindex]:not([tabindex="-1"]),
+    [contenteditable="true"]
+  ):focus {
+  outline: none;
+}
+
+:where(
+    a[href],
+    area[href],
+    button,
+    input:not([type="hidden"]),
+    select,
+    textarea,
+    summary,
+    iframe,
+    [tabindex]:not([tabindex="-1"]),
+    [contenteditable="true"]
+  ):focus-visible {
+  outline: var(--ds-focus-ring-width) solid rgb(var(--ds-color-focus-ring));
+  outline-offset: var(--ds-focus-ring-offset);
+}
+
 /* Remove all animations and transitions for people that prefer not to see them */
 @media (prefers-reduced-motion: reduce) {
   * {

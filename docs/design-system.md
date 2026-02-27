@@ -6,6 +6,7 @@
 - Reactコンポーネントのクラス合成は `clsx`（`cn` ヘルパー）で統一します。
 - バリアント管理は `class-variance-authority`（`cva`）で統一します。
 - フォーカスリングは `:focus-visible` のときだけ表示します。
+- フォーカスリングはアクセント紫・`1px`・`2px`オフセットを標準とします。
 
 ## 主要トークン
 - `--ds-color-primary`
@@ -18,6 +19,8 @@
 - `--ds-color-border`
 - `--ds-color-danger`
 - `--ds-color-focus-ring`
+- `--ds-focus-ring-width`
+- `--ds-focus-ring-offset`
 - `--ds-shadow-1`
 - `--ds-shadow-2`
 - `--ds-leading-body-ja`
@@ -77,7 +80,7 @@ Astro ラッパー:
 
 ## Composites API
 - `PostItemProps`
-  - `href`, `title`, `date`, `description?`
+  - `href`, `title`, `date`
   - `emphasis`: `default | subtle`
   - `className`
 - `TableOfContentsProps`

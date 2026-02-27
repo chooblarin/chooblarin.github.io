@@ -5,7 +5,15 @@ html {
   -moz-tab-size: 4;
   tab-size: 4;
   height: 100%;
+  overflow-y: scroll;
   font-kerning: auto;
+}
+
+@supports (scrollbar-gutter: stable) {
+  html {
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+  }
 }
 
 body {

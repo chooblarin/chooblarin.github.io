@@ -1,10 +1,8 @@
-import React from "react";
-
 import Link from "../components/Link";
 import { cn } from "../lib/cn";
 import { formatDisplayDate } from "./date";
-import { postItemVariants, type PostItemVariantProps } from "./PostItem.styles";
 import styles from "./PostItem.module.css";
+import { type PostItemVariantProps, postItemVariants } from "./PostItem.styles";
 
 type PostItemEmphasis = NonNullable<PostItemVariantProps["emphasis"]>;
 
@@ -12,7 +10,6 @@ export type PostItemProps = {
   href: string;
   title: string;
   date: Date | string;
-  description?: string;
   emphasis?: PostItemEmphasis;
   className?: string;
 };
@@ -21,7 +18,6 @@ export default function PostItem({
   href,
   title,
   date,
-  description,
   emphasis = "default",
   className,
 }: PostItemProps) {
@@ -33,9 +29,8 @@ export default function PostItem({
       className={cn(postItemVariants({ emphasis }), className)}
     >
       <article className={styles.body}>
-        <p className={styles.title}>{title}</p>
-        {description && <p className={styles.description}>{description}</p>}
-        <p className={styles.date}>{formatDisplayDate(date)}</p>
+        <div className={styles.title}>{title}</div>
+        <div className={styles.date}>{formatDisplayDate(date)}</div>
       </article>
     </Link>
   );
