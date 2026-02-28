@@ -1,4 +1,5 @@
 import type { StorybookConfig } from "@storybook/react-vite";
+import { mergeConfig } from "vite";
 
 const config: StorybookConfig = {
   framework: {
@@ -10,6 +11,20 @@ const config: StorybookConfig = {
   docs: {
     autodocs: "tag",
   },
+  viteFinal: async (baseConfig) =>
+    mergeConfig(baseConfig, {
+      // Force automatic JSX runtime for Storybook transforms.
+      esbuild: {
+        jsx: "automatic",
+        jsxImportSource: "react",
+      },
+      optimizeDeps: {
+        esbuildOptions: {
+          jsx: "automatic",
+          jsxImportSource: "react",
+        },
+      },
+    }),
 };
 
 export default config;
