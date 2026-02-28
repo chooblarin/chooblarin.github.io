@@ -30,6 +30,126 @@ const {
 <meta charset="utf-8" />
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#1e2127" media="(prefers-color-scheme: dark)" />
+<script is:inline>
+  (() => {
+    const storageKey = "theme-preference";
+    const selectEventName = "theme:select";
+    const changedEventName = "theme:changed";
+    const allowedThemes = new Set(["light", "dark"]);
+    const root = document.documentElement;
+    const mql = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const isAllowedTheme = (value) => allowedThemes.has(value);
+    const normalizeTheme = (value) => (isAllowedTheme(value) ? value : null);
+
+    const getStoredTheme = () => {
+      try {
+        const stored = window.localStorage.getItem(storageKey);
+        return normalizeTheme(stored);
+      } catch {
+        return null;
+      }
+    };
+
+    const getExplicitTheme = () => {
+      const theme = root.dataset.theme;
+      return normalizeTheme(theme);
+    };
+
+    const getResolvedTheme = () => getExplicitTheme() ?? (mql.matches ? "dark" : "light");
+
+    const getThemeColor = (theme) => (theme === "dark" ? "#1e2127" : "#ffffff");
+
+    const applyManualThemeColorMeta = (theme) => {
+      const selector = "meta[name='theme-color'][data-theme-color-manual]";
+      const existing = document.head.querySelector(selector);
+
+      if (theme === "light" || theme === "dark") {
+        const meta =
+          existing ??
+          (() => {
+            const node = document.createElement("meta");
+            node.setAttribute("name", "theme-color");
+            node.setAttribute("data-theme-color-manual", "");
+            document.head.appendChild(node);
+            return node;
+          })();
+
+        meta.setAttribute("content", getThemeColor(theme));
+      } else {
+        existing?.remove();
+      }
+    };
+
+    const dispatchThemeChanged = (source) => {
+      window.dispatchEvent(
+        new CustomEvent(changedEventName, {
+          detail: {
+            source,
+            theme: getExplicitTheme(),
+            resolvedTheme: getResolvedTheme(),
+          },
+        })
+      );
+    };
+
+    const applyTheme = (theme, options = {}) => {
+      const { persist = false, source = "runtime" } = options;
+      const explicitTheme = normalizeTheme(theme);
+
+      if (explicitTheme) {
+        root.dataset.theme = explicitTheme;
+        applyManualThemeColorMeta(explicitTheme);
+      } else {
+        delete root.dataset.theme;
+        applyManualThemeColorMeta(null);
+      }
+
+      if (persist) {
+        try {
+          if (explicitTheme) {
+            window.localStorage.setItem(storageKey, explicitTheme);
+          } else {
+            window.localStorage.removeItem(storageKey);
+          }
+        } catch {
+          // Ignore storage write failures.
+        }
+      }
+
+      dispatchThemeChanged(source);
+    };
+
+    const initialTheme = normalizeTheme(root.dataset.theme) ?? getStoredTheme();
+    applyTheme(initialTheme, { source: "init" });
+
+    window.addEventListener(selectEventName, (event) => {
+      const selectedTheme = normalizeTheme(event?.detail?.theme);
+
+      if (!selectedTheme) {
+        return;
+      }
+
+      applyTheme(selectedTheme, { persist: true, source: "select" });
+    });
+
+    window.addEventListener("storage", (event) => {
+      if (event.key !== storageKey) {
+        return;
+      }
+
+      applyTheme(getStoredTheme(), { source: "storage" });
+    });
+
+    mql.addEventListener("change", () => {
+      if (getExplicitTheme()) {
+        return;
+      }
+
+      dispatchThemeChanged("system");
+    });
+  })();
+</script>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="mask-icon" href="/mask-icon.svg" color="#000000" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

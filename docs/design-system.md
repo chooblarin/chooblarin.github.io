@@ -58,5 +58,8 @@
 - Pattern 追加時は runtime 接続先（どのページ/レイアウトで使うか）を明記します。
 - トークン追加時は `src/styles/tokens.css` を source of truth とします。
 - `tokens.css` の配色更新は `--ds-color-*-light` / `--ds-color-*-dark` source token を編集し、公開トークン（`--ds-color-*`）は `light-dark(...)` を介して参照します。
-- テーマ切り替えは `:root[data-theme="light" | "dark"]` を契約とします（UIトグルは任意実装）。
+- テーマ切り替えは `:root[data-theme="light" | "dark"]` を契約とし、未指定時はシステム設定（`color-scheme: light dark`）をデフォルトとして使用します。
+- テーマ設定の永続化キーは `localStorage["theme-preference"]` を使用します（保存値は `"light" | "dark"`）。
+- テーマランタイム（`data-theme` 反映、`localStorage` 永続化、`theme-color` メタ更新、`storage` 同期）は `BaseHead` が単独で担当します。
+- `ThemeSwitcher` は UI 入力専用とし、`theme:select` 発火と `theme:changed` 反映のみを担当します。
 - `--color-*` alias は廃止済みです。利用は禁止です。

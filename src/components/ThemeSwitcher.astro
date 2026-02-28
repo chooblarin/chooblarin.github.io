@@ -1,0 +1,163 @@
+---
+---
+
+<div class="theme-switcher" data-theme-switcher>
+  <fieldset class="theme-switcher-fieldset">
+    <legend class="sr-only">カラーテーマ</legend>
+
+    <label class="theme-switcher-option">
+      <input type="radio" name="theme-preference" value="light" />
+      <span>Light</span>
+    </label>
+
+    <label class="theme-switcher-option">
+      <input type="radio" name="theme-preference" value="dark" />
+      <span>Dark</span>
+    </label>
+  </fieldset>
+</div>
+
+<script is:inline>
+  (() => {
+    const selectEventName = "theme:select";
+    const changedEventName = "theme:changed";
+    const allowedThemes = new Set(["light", "dark"]);
+    const root = document.documentElement;
+    const currentScript = document.currentScript;
+    const switcher =
+      currentScript?.previousElementSibling instanceof HTMLElement &&
+      currentScript.previousElementSibling.hasAttribute("data-theme-switcher")
+        ? currentScript.previousElementSibling
+        : null;
+
+    if (!switcher) {
+      return;
+    }
+
+    const mql = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const getResolvedSystemTheme = () => (mql.matches ? "dark" : "light");
+
+    const getExplicitTheme = () => {
+      const theme = root.dataset.theme;
+      return allowedThemes.has(theme) ? theme : null;
+    };
+
+    const getActiveTheme = () => getExplicitTheme() ?? getResolvedSystemTheme();
+
+    const syncSwitcher = (current = getActiveTheme()) => {
+      switcher.querySelectorAll("input[name='theme-preference']").forEach((input) => {
+        input.checked = input.value === current;
+      });
+    };
+
+    switcher.querySelectorAll("input[name='theme-preference']").forEach((input) => {
+      input.addEventListener("change", () => {
+        if (!input.checked || !allowedThemes.has(input.value)) {
+          return;
+        }
+
+        window.dispatchEvent(
+          new CustomEvent(selectEventName, {
+            detail: { theme: input.value },
+          })
+        );
+        syncSwitcher(input.value);
+      });
+    });
+
+    window.addEventListener(changedEventName, (event) => {
+      const nextTheme = event?.detail?.resolvedTheme;
+      syncSwitcher(allowedThemes.has(nextTheme) ? nextTheme : getActiveTheme());
+    });
+
+    mql.addEventListener("change", () => {
+      if (getExplicitTheme()) {
+        return;
+      }
+
+      syncSwitcher();
+    });
+
+    syncSwitcher();
+  })();
+</script>
+
+<style>
+  .theme-switcher {
+    display: inline-flex;
+    border-radius: 999px;
+    border: 1px solid var(--ds-color-border-light);
+    border: 1px solid var(--ds-color-border);
+    background: var(--ds-color-surface-light);
+    background: var(--ds-color-surface);
+    padding: 2px;
+  }
+
+  .theme-switcher-fieldset {
+    display: inline-flex;
+    gap: 2px;
+    border: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .theme-switcher-option {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .theme-switcher-option input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .theme-switcher-option span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 1.7rem;
+    min-width: 4rem;
+    border-radius: 999px;
+    color: var(--ds-color-text-muted-light);
+    color: var(--ds-color-text-muted);
+    font-size: 0.76rem;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    padding: 0 0.72rem;
+    user-select: none;
+    transition:
+      background-color 0.16s ease,
+      color 0.16s ease,
+      border-color 0.16s ease;
+  }
+
+  .theme-switcher-option input:checked + span {
+    background: var(--ds-color-surface-muted-light);
+    background: var(--ds-color-surface-muted);
+    color: var(--ds-color-text-light);
+    color: var(--ds-color-text);
+  }
+
+  .theme-switcher-option input:focus-visible + span {
+    outline: var(--ds-focus-ring-width) solid var(--ds-color-focus-ring);
+    outline-offset: var(--ds-focus-ring-offset);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
