@@ -4,7 +4,7 @@ import PostNavCard from "./PostNavCard";
 import { compositeStoryParameters, withNarrowPageFrame } from "./storybook";
 
 const meta: Meta<typeof PostNavCard> = {
-  title: "Design System/Composites/PostNavCard",
+  title: "Design System/Patterns/PostNavCard",
   component: PostNavCard,
   tags: ["autodocs"],
   parameters: compositeStoryParameters,

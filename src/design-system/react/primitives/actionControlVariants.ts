@@ -1,8 +1,8 @@
 import { cva, type VariantProps } from "class-variance-authority";
 
-import styles from "./ButtonLink.module.css";
+import styles from "./ActionControl.module.css";
 
-export const buttonLinkVariants = cva(styles.root, {
+export const actionControlVariants = cva(styles.root, {
   variants: {
     intent: {
       brand: styles.intentBrand,
@@ -37,4 +37,6 @@ export const buttonLinkVariants = cva(styles.root, {
   },
 });
 
-export type ButtonLinkVariantProps = VariantProps<typeof buttonLinkVariants>;
+export type ActionControlVariantProps = VariantProps<
+  typeof actionControlVariants
+>;

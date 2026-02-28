@@ -2,11 +2,12 @@
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import HomeHeader from "../components/HomeHeader.astro";
-import ButtonLinkIsland from "../components/islands/ButtonLinkIsland.astro";
-import PostItemIsland from "../components/islands/PostItemIsland.astro";
 import MaxWidthContainer from "../components/MaxWidthContainer.astro";
+import ButtonLinkIsland from "../islands/ButtonLinkIsland.astro";
+import PostItemIsland from "../islands/PostItemIsland.astro";
+import "../styles/layout.css";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
-import { getPublishedPosts } from "../lib/posts";
+import { getPublishedPosts } from "../domain/posts/query";
 
 const latestPosts = (await getPublishedPosts()).slice(0, 5);
 ---
@@ -14,25 +15,12 @@ const latestPosts = (await getPublishedPosts()).slice(0, 5);
 <html lang="ja">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-    <style>
-      main {
-        padding: 0 16px 96px;
-      }
-      .posts {
-        display: grid;
-        gap: 12px;
-        margin-bottom: 40px;
-      }
-      .latest-posts {
-        margin: 20px 0 40px;
-      }
-    </style>
   </head>
   <body>
     <HomeHeader />
     <MaxWidthContainer>
-      <main>
-        <section class="posts">
+      <main class="layout-main">
+        <section class="layout-posts layout-posts--spaced">
           {
             latestPosts.map((post) => (
               <PostItemIsland

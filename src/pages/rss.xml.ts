@@ -1,7 +1,7 @@
 import rss from "@astrojs/rss";
 import type { APIContext } from "astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
-import { getPublishedPosts } from "../lib/posts";
+import { getPublishedPosts } from "../domain/posts/query";
 
 export const GET = async (context: APIContext) => {
   const posts = await getPublishedPosts();

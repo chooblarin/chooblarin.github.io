@@ -1,5 +1,5 @@
-import Link from "../components/Link";
 import { cn } from "../lib/cn";
+import Link from "../primitives/Link";
 import { formatDisplayDate } from "./date";
 import styles from "./PostNavCard.module.css";
 import { postNavCardStyles } from "./PostNavCard.styles";

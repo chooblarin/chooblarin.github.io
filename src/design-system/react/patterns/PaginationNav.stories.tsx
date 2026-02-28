@@ -4,7 +4,7 @@ import PaginationNav from "./PaginationNav";
 import { compositeStoryParameters, withNarrowPageFrame } from "./storybook";
 
 const meta: Meta<typeof PaginationNav> = {
-  title: "Design System/Composites/PaginationNav",
+  title: "Design System/Patterns/PaginationNav",
   component: PaginationNav,
   tags: ["autodocs"],
   parameters: compositeStoryParameters,

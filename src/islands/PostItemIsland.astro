@@ -1,0 +1,8 @@
+---
+import type { PostItemProps } from "../design-system/react/patterns/PostItem";
+import PostItem from "../design-system/react/patterns/PostItem";
+
+const props = Astro.props as PostItemProps;
+---
+
+<PostItem {...props} />

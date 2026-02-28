@@ -60,18 +60,18 @@ select {
 }
 
 ::selection {
-  color: rgb(var(--color-primary-inverted));
-  background: rgb(var(--color-primary));
+  color: rgb(var(--ds-color-primary-inverted));
+  background: rgb(var(--ds-color-primary));
 }
 
 body {
-  color: rgb(var(--color-text));
-  background: rgb(var(--color-background));
+  color: rgb(var(--ds-color-text));
+  background: rgb(var(--ds-color-background));
   transition: background-color 0.3s ease;
 }
 
 a {
-  color: rgb(var(--color-primary));
+  color: rgb(var(--ds-color-primary));
   background-color: transparent;
   overflow-wrap: anywhere;
   word-break: normal;

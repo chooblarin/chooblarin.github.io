@@ -1,7 +1,6 @@
 import { type CSSProperties, useEffect, useMemo, useState } from "react";
-
-import Link from "../components/Link";
 import { cn } from "../lib/cn";
+import Link from "../primitives/Link";
 import styles from "./TableOfContents.module.css";
 import {
   tableOfContentsItemVariants,

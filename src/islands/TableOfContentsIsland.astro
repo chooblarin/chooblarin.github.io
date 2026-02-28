@@ -1,0 +1,8 @@
+---
+import type { TableOfContentsProps } from "../design-system/react/patterns/TableOfContents";
+import TableOfContents from "../design-system/react/patterns/TableOfContents";
+
+const props = Astro.props as TableOfContentsProps;
+---
+
+<TableOfContents client:idle {...props} />

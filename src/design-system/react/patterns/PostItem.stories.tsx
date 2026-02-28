@@ -4,7 +4,7 @@ import PostItem from "./PostItem";
 import { compositeStoryParameters, withNarrowPageFrame } from "./storybook";
 
 const meta: Meta<typeof PostItem> = {
-  title: "Design System/Composites/PostItem",
+  title: "Design System/Patterns/PostItem",
   component: PostItem,
   tags: ["autodocs"],
   parameters: compositeStoryParameters,

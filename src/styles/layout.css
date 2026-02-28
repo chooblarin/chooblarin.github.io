@@ -1,0 +1,20 @@
+.layout-main {
+  padding: 0 16px 96px;
+}
+
+.layout-main--post {
+  padding-bottom: 44px;
+}
+
+.layout-posts {
+  display: grid;
+  gap: 12px;
+}
+
+.layout-posts--spaced {
+  margin-bottom: 40px;
+}
+
+.layout-pagination {
+  margin: 48px 0;
+}

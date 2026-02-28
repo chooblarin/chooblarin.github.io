@@ -1,3 +1,17 @@
+import taxonomy from "./tag-taxonomy.json";
+
+type TagTaxonomy = {
+  canonicalTags: string[];
+  tagAliases: Record<string, string>;
+};
+
+const { canonicalTags, tagAliases } = taxonomy as TagTaxonomy;
+
+export const CANONICAL_TAGS = new Set(canonicalTags);
+export const TAG_ALIASES = new Map(Object.entries(tagAliases));
+
+const normalizeTagLabel = (tag: string) => TAG_ALIASES.get(tag) ?? tag;
+
 export const slugify = (tagName: string) =>
   tagName
     .toLowerCase()
@@ -35,7 +49,8 @@ export const buildNormalizedTagGroups = (
 
   for (const post of posts) {
     for (const tag of post.data.tags) {
-      const slug = slugify(tag);
+      const normalizedTag = normalizeTagLabel(tag);
+      const slug = slugify(normalizedTag);
       if (!slug) continue;
 
       const current = grouped.get(slug) ?? {
@@ -43,7 +58,10 @@ export const buildNormalizedTagGroups = (
         variants: new Set<string>(),
         count: 0,
       };
-      current.labelCounts.set(tag, (current.labelCounts.get(tag) ?? 0) + 1);
+      current.labelCounts.set(
+        normalizedTag,
+        (current.labelCounts.get(normalizedTag) ?? 0) + 1,
+      );
       current.variants.add(tag);
       current.count += 1;
       grouped.set(slug, current);
@@ -61,4 +79,4 @@ export const buildNormalizedTagGroups = (
 };
 
 export const hasNormalizedTag = (tags: string[], slug: string) =>
-  tags.some((tag) => slugify(tag) === slug);
+  tags.some((tag) => slugify(normalizeTagLabel(tag)) === slug);

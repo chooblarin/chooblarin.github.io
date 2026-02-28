@@ -1,0 +1,28 @@
+{
+  "canonicalTags": [
+    "algorithm",
+    "Android",
+    "Blog",
+    "CSS",
+    "D3.js",
+    "Elixir",
+    "GLSL",
+    "Java",
+    "JavaScript",
+    "Machine Learning",
+    "p5.js",
+    "Rive",
+    "RxJava",
+    "RxJS",
+    "RxSwift",
+    "SVG",
+    "Swift",
+    "TensorFlow"
+  ],
+  "tagAliases": {
+    "blog": "Blog",
+    "d3.js": "D3.js",
+    "svg": "SVG",
+    "Machine Leaning": "Machine Learning"
+  }
+}

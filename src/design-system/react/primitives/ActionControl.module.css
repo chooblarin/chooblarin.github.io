@@ -35,6 +35,13 @@
   opacity: 0.92;
 }
 
+.root:disabled,
+.root[data-disabled] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
 .sizeSm {
   min-height: 2rem;
   padding: 0.38rem 0.72rem;
@@ -48,22 +55,22 @@
 }
 
 .intentBrand {
-  --button-link-accent: var(--ds-color-primary);
-  --button-link-on-accent: var(--ds-color-primary-inverted);
+  --button-accent: var(--ds-color-primary);
+  --button-on-accent: var(--ds-color-primary-inverted);
 }
 
 .intentNeutral {
-  --button-link-accent: var(--ds-color-text);
-  --button-link-on-accent: var(--ds-color-background);
+  --button-accent: var(--ds-color-text);
+  --button-on-accent: var(--ds-color-background);
 }
 
 .intentDanger {
-  --button-link-accent: var(--ds-color-danger);
-  --button-link-on-accent: var(--ds-color-primary-inverted);
+  --button-accent: var(--ds-color-danger);
+  --button-on-accent: var(--ds-color-primary-inverted);
 }
 
 .appearanceSolid {
-  border-color: rgb(var(--button-link-accent));
+  border-color: rgb(var(--button-accent));
 }
 
 .appearanceOutline {
@@ -76,8 +83,8 @@
 }
 
 .brandSolid {
-  color: rgb(var(--button-link-on-accent));
-  background: rgb(var(--button-link-accent));
+  color: rgb(var(--button-on-accent));
+  background: rgb(var(--button-accent));
 }
 
 .brandSolid:hover {
@@ -104,8 +111,8 @@
 }
 
 .neutralSolid {
-  color: rgb(var(--button-link-on-accent));
-  background: rgb(var(--button-link-accent));
+  color: rgb(var(--button-on-accent));
+  background: rgb(var(--button-accent));
 }
 
 .neutralSolid:hover {
@@ -132,8 +139,8 @@
 }
 
 .dangerSolid {
-  color: rgb(var(--button-link-on-accent));
-  background: rgb(var(--button-link-accent));
+  color: rgb(var(--button-on-accent));
+  background: rgb(var(--button-accent));
 }
 
 .dangerSolid:hover {

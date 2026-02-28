@@ -3,11 +3,12 @@ import type { GetStaticPaths } from "astro";
 import BaseHead from "../../components/BaseHead.astro";
 import Footer from "../../components/Footer.astro";
 import HomeHeader from "../../components/HomeHeader.astro";
-import ButtonLinkIsland from "../../components/islands/ButtonLinkIsland.astro";
-import PostItemIsland from "../../components/islands/PostItemIsland.astro";
 import MaxWidthContainer from "../../components/MaxWidthContainer.astro";
+import PaginationNavIsland from "../../islands/PaginationNavIsland.astro";
+import PostItemIsland from "../../islands/PostItemIsland.astro";
+import "../../styles/layout.css";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
-import { getPublishedPosts } from "../../lib/posts";
+import { getPublishedPosts } from "../../domain/posts/query";
 
 export const getStaticPaths = (async () => {
   const posts = await getPublishedPosts();
@@ -37,26 +38,12 @@ const { chunk, hasNext, hasPrev, page } = Astro.props;
       title={`記事一覧 ${page}ページ目 | ${SITE_TITLE}`}
       description={SITE_DESCRIPTION}
     />
-    <style>
-      main {
-        padding: 0 16px 96px;
-      }
-      .posts {
-        display: grid;
-        gap: 12px;
-      }
-      .links {
-        display: flex;
-        gap: 12px;
-        margin: 48px 0;
-      }
-    </style>
   </head>
   <body>
     <HomeHeader />
     <MaxWidthContainer>
-      <main>
-        <section class="posts">
+      <main class="layout-main">
+        <section class="layout-posts">
           {
             chunk.map((post) => (
               <PostItemIsland
@@ -67,30 +54,14 @@ const { chunk, hasNext, hasPrev, page } = Astro.props;
             ))
           }
         </section>
-        {
-          (hasPrev || hasNext) && (
-            <div class="links">
-              {hasPrev && (
-                <ButtonLinkIsland
-                  href={`/page/${page - 1}`}
-                  intent="neutral"
-                  appearance="outline"
-                >
-                  前へ
-                </ButtonLinkIsland>
-              )}
-              {hasNext && (
-                <ButtonLinkIsland
-                  href={`/page/${page + 1}`}
-                  intent="neutral"
-                  appearance="outline"
-                >
-                  次へ
-                </ButtonLinkIsland>
-              )}
-            </div>
-          )
-        }
+        <div class="layout-pagination">
+          <PaginationNavIsland
+            prevHref={hasPrev ? `/page/${page - 1}` : undefined}
+            nextHref={hasNext ? `/page/${page + 1}` : undefined}
+            prevLabel="前へ"
+            nextLabel="次へ"
+          />
+        </div>
       </main>
     </MaxWidthContainer>
     <Footer />

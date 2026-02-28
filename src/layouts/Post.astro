@@ -5,14 +5,16 @@ import type { MarkdownHeading } from "astro";
 import { format } from "date-fns";
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
-import LinkIsland from "../components/islands/LinkIsland.astro";
-import PostNavCardIsland from "../components/islands/PostNavCardIsland.astro";
-import TableOfContentsIsland from "../components/islands/TableOfContentsIsland.astro";
-import Logo from "../components/Logo.astro";
+import HomeHeader from "../components/HomeHeader.astro";
 import MaxWidthContainer from "../components/MaxWidthContainer.astro";
+import PostNavCardIsland from "../islands/PostNavCardIsland.astro";
+import TableOfContentsIsland from "../islands/TableOfContentsIsland.astro";
+import TagListIsland from "../islands/TagListIsland.astro";
+import "../styles/layout.css";
+import "../styles/layouts/post.css";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
-import type { TableOfContentsHeading } from "../design-system/react/composites/TableOfContents";
-import { slugify } from "../lib/util";
+import type { TableOfContentsHeading } from "../design-system/react/patterns/TableOfContents";
+import { slugify } from "../domain/posts/tag";
 
 type Props = {
   post: CollectionEntry<"post">;
@@ -31,9 +33,9 @@ const metaDescription = description || SITE_DESCRIPTION;
 const hasTwitterEmbed = embeds?.includes("twitter") ?? false;
 const hasCodePenEmbed = embeds?.includes("codepen") ?? false;
 
-const tagItems = tags.map((name) => ({
-  name,
-  slug: slugify(name),
+const tagItems = tags.map((tag) => ({
+  label: `#${tag}`,
+  href: `/tags/${slugify(tag)}`,
 }));
 
 const tableOfContentsHeadings: TableOfContentsHeading[] = headings.flatMap(
@@ -61,128 +63,6 @@ const hasTableOfContents = tableOfContentsHeadings.length > 0;
       publishedTime={date.toISOString()}
       modifiedTime={(updatedAt ?? date).toISOString()}
     />
-    <style is:inline>
-      header {
-        display: flex;
-        justify-content: center;
-        margin-top: 44px;
-        margin-bottom: 64px;
-      }
-      main {
-        padding: 0 16px 44px;
-      }
-      article {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-      }
-      .logo {
-        width: fit-content;
-        border-bottom: 1px solid rgb(209 213 219);
-        padding: 8px;
-      }
-      .post-content {
-        padding-bottom: 64px;
-
-        code {
-          font-family: "JetBrains Mono Variable", "Menlo", "Courier", monospace;
-          font-size: 0.875em;
-        }
-
-        /* Code hightlight */
-        :not(pre) > code {
-          background: #f3f4f6;
-          border-radius: 4px;
-          padding: 2px 6px;
-        }
-        pre:has(code) {
-          padding: 0.8rem;
-          border: 2px solid #aaa;
-          border-radius: 4px;
-          scrollbar-width: none; /* Firefox */
-          &::-webkit-scrollbar {
-            display: none; /* Safari and Chrome */
-          }
-        }
-      }
-      .post-layout {
-        width: 100%;
-        max-width: 740px;
-        margin-inline: auto;
-      }
-      .post-toc {
-        display: none;
-        width: 100%;
-        max-width: 280px;
-      }
-      .title {
-        display: inline-block;
-        background: linear-gradient(
-          90deg,
-          rgb(59, 154, 201),
-          rgb(152, 59, 201)
-        );
-        background-clip: text;
-        -webkit-background-clip: text;
-        font-size: 2rem;
-        font-weight: 600;
-        color: transparent;
-      }
-      .date {
-        font-size: 0.875rem;
-        margin: 48px 0 24px;
-        color: rgb(75 85 99);
-      }
-      .thumbnail {
-        margin: 32px 0 24px;
-      }
-      .thumbnail img {
-        width: 100%;
-        max-width: 100%;
-        height: auto;
-        border-radius: 10px;
-      }
-      .tags {
-        margin: 24px 0;
-      }
-      .tag {
-        display: inline-block;
-        margin: 8px 8px 8px 0;
-      }
-      .tag a {
-        font-size: 0.75rem;
-        color: rgb(75 85 99);
-        background-color: rgb(243 244 246);
-        text-decoration: none;
-        border-radius: 4px;
-        padding: 6px 12px;
-      }
-      .content {
-        margin-top: 64px;
-      }
-      .post-nav {
-        margin-top: 48px;
-      }
-      @media (min-width: 68.75rem) {
-        .post-layout--with-toc {
-          display: grid;
-          grid-template-columns: minmax(0, 740px) minmax(0, 280px);
-          grid-template-areas: "article toc";
-          column-gap: 48px;
-          justify-content: center;
-          align-items: start;
-          max-width: min(calc(740px + 280px + 24px), 100%);
-        }
-        .post-layout--with-toc article {
-          grid-area: article;
-        }
-        .post-layout--with-toc .post-toc {
-          grid-area: toc;
-          display: block;
-        }
-      }
-    </style>
-
     {
       hasTwitterEmbed && (
         <script is:inline async src="https://platform.twitter.com/widgets.js" />
@@ -203,12 +83,8 @@ const hasTableOfContents = tableOfContentsHeadings.length > 0;
   </head>
   <body>
     <MaxWidthContainer width="68.75rem">
-      <main>
-        <header>
-          <div class="logo">
-            <Logo />
-          </div>
-        </header>
+      <main class="layout-main layout-main--post">
+        <HomeHeader />
         <div
           class={`post-layout${hasTableOfContents ? " post-layout--with-toc" : ""}`}
         >
@@ -221,27 +97,17 @@ const hasTableOfContents = tableOfContentsHeadings.length > 0;
               />
             )
           }
-          <article>
-            <h1 class="title">{title}</h1>
+          <article class="post-article">
+            <h1 class="post-title">{title}</h1>
             {
               image && (
-                <figure class="thumbnail">
+                <figure class="post-thumbnail">
                   <img src={image} alt={`${title} thumbnail`} />
                 </figure>
               )
             }
-            <p class="date">{formattedDate}</p>
-            <ul class="tags">
-              {
-                tagItems.map((tag) => (
-                  <li class="tag">
-                    <LinkIsland href={`/tags/${tag.slug}`} decoration="none">
-                      {`#${tag.name}`}
-                    </LinkIsland>
-                  </li>
-                ))
-              }
-            </ul>
+            <p class="post-date">{formattedDate}</p>
+            <TagListIsland items={tagItems} variant="chip" className="post-tags" />
             <div class="post-content">
               <slot />
             </div>

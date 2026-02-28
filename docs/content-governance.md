@@ -5,7 +5,8 @@
 
 ## 記事配置ポリシー
 - 既存記事は `src/content/post/archive/` で管理します。
-- 新規記事は `src/content/post/` 直下に追加します。
+- 現在の公開記事はすべて `archive` 配下にあります。
+- 新規記事は `src/content/post/` 直下に追加します（`archive` 直下へ直接追加しません）。
 - archive 記事も公開対象です。URL と slug は変更しません。
 
 ## Frontmatter ポリシー
@@ -90,6 +91,9 @@
 - `Swift`
 - `TensorFlow`
 
+辞書ソースは `src/domain/posts/tag-taxonomy.json` に一本化します。
+`runtime`（`src/domain/posts/tag.ts`）と `scripts`（`scripts/content-lint.mjs`）の両方はこのファイルを参照します。
+
 ### 非推奨（lintで検出）
 - `blog` → `Blog`
 - `d3.js` → `D3.js`
@@ -129,6 +133,11 @@
   - `ERROR` または `WARN` で fail
 - ただし `image` 未設定警告の対象範囲は非archive記事のみです。
 - textlint は blocking を維持します。
+
+## lint 責務分離
+
+- スキーマ検証（型・必須項目・slug 形式など）は `src/content.config.ts` と `astro check` に委譲します。
+- `scripts/content-lint.mjs` は運用ルール（description/image 推奨、タグ辞書、embed 運用、redirect 重複）に集中します。
 
 ## ローカル実行手順
 1. `npm run biome:check`

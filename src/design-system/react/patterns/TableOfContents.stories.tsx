@@ -60,7 +60,7 @@ const DemoArticle = ({
 );
 
 const meta: Meta<typeof TableOfContents> = {
-  title: "Design System/Composites/TableOfContents",
+  title: "Design System/Patterns/TableOfContents",
   component: TableOfContents,
   tags: ["autodocs"],
   parameters: compositeStoryParameters,

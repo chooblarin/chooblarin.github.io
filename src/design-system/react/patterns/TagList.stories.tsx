@@ -10,7 +10,7 @@ const sampleItems = [
 ];
 
 const meta: Meta<typeof TagList> = {
-  title: "Design System/Composites/TagList",
+  title: "Design System/Patterns/TagList",
   component: TagList,
   tags: ["autodocs"],
   parameters: compositeStoryParameters,

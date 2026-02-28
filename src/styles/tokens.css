@@ -27,7 +27,7 @@
   --ds-leading-heading: 1.38;
   --ds-tracking-heading: 0.01em;
 
-  /* Compatibility aliases used by existing styles */
+  /* Deprecated compatibility aliases. New styles must use --ds-* tokens. */
   --color-primary: var(--ds-color-primary);
   --color-primary-inverted: var(--ds-color-primary-inverted);
   --color-text: var(--ds-color-text);

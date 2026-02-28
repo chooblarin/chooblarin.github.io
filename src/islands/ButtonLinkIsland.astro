@@ -1,0 +1,10 @@
+---
+import type { ButtonLinkProps } from "../design-system/react/primitives/ButtonLink";
+import ButtonLink from "../design-system/react/primitives/ButtonLink";
+
+const props = Astro.props as ButtonLinkProps;
+---
+
+<ButtonLink {...props}>
+  <slot />
+</ButtonLink>
