@@ -16,7 +16,6 @@
     "content:lint:strict": "node scripts/content-lint.mjs --strict",
     "content:fix:description": "node scripts/backfill-description.mjs",
     "check:unused": "node scripts/check-unused-entries.mjs",
-    "check:deprecated-colors": "node scripts/check-deprecated-colors.mjs",
     "textlint": "textlint \"src/content/post/**/*.{md,mdx}\"",
     "textlint:fix": "textlint --fix \"src/content/post/**/*.{md,mdx}\"",
     "textlint:strict": "npm run textlint",

@@ -112,17 +112,6 @@
   --ds-leading-body-en: 1.7;
   --ds-leading-heading: 1.38;
   --ds-tracking-heading: 0.01em;
-
-  /* @deprecated compatibility aliases. Removal target: 2026 Q3. */
-  --color-primary: var(--ds-color-primary);
-  --color-primary-inverted: var(--ds-color-primary-inverted);
-  --color-text: var(--ds-color-text);
-  --color-text-muted: var(--ds-color-text-muted);
-  --color-background: var(--ds-color-background);
-  --color-surface: var(--ds-color-surface);
-  --color-surface-muted: var(--ds-color-surface-muted);
-  --color-border: var(--ds-color-border);
-  --color-danger: var(--ds-color-danger);
 }
 
 @media (prefers-color-scheme: dark) {
