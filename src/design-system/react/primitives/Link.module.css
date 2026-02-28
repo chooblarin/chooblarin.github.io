@@ -17,20 +17,20 @@
 }
 
 .root:focus-visible {
-  outline: var(--ds-focus-ring-width) solid rgb(var(--ds-color-focus-ring));
+  outline: var(--ds-focus-ring-width) solid var(--ds-color-focus-ring);
   outline-offset: var(--ds-focus-ring-offset);
 }
 
 .intentBrand {
-  color: rgb(var(--ds-color-primary));
+  color: var(--ds-color-primary);
 }
 
 .intentMuted {
-  color: rgb(var(--ds-color-text-muted));
+  color: var(--ds-color-text-muted);
 }
 
 .intentDanger {
-  color: rgb(var(--ds-color-danger));
+  color: var(--ds-color-danger);
 }
 
 .decorationAlways {

@@ -4,6 +4,7 @@
 
 - UI の実装責務は `pages/layouts` → `islands` → `design-system` の3層に分離します。
 - トークンは `--ds-*` を正規とし、`--color-*` は後方互換の非推奨 alias とします。
+- 色値は `oklch(...)` で定義し、利用側は `var(--ds-color-*)` を直接参照します。
 - React の class 合成は `cn`（`clsx`）で統一します。
 - バリアント管理は `cva` で統一します。
 - フォーカスリングは `:focus-visible` のみ表示します。
@@ -56,3 +57,7 @@
 - Primitive 追加時は `*.styles.ts` + `*.module.css` + `*.stories.tsx` をセットで追加します。
 - Pattern 追加時は runtime 接続先（どのページ/レイアウトで使うか）を明記します。
 - トークン追加時は `src/styles/tokens.css` を source of truth とします。
+- `tokens.css` の配色更新は `--ds-color-*-light` / `--ds-color-*-dark` source token を編集し、公開トークン（`--ds-color-*`）は `light-dark(...)` を介して参照します。
+- テーマ切り替えは `:root[data-theme="light" | "dark"]` を契約とします（UIトグルは任意実装）。
+- `--color-*` alias は段階廃止です。削除目標は 2026 Q3 とし、新規実装では利用禁止です。
+- `check:deprecated-colors` は実装ファイル（`.astro/.css/.js/.jsx/.mjs/.ts/.tsx`）のみを検査対象とし、記事本文やサンプルコード（Markdown/MDX）は対象外です。

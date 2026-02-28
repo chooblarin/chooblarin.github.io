@@ -1,13 +1,99 @@
-:root {
-  --ds-color-primary: 147 42 181;
-  --ds-color-primary-inverted: 255 255 255;
-  --ds-color-text: 35 35 35;
-  --ds-color-text-muted: 97 105 117;
-  --ds-color-background: 255 255 255;
-  --ds-color-surface: 255 255 255;
-  --ds-color-surface-muted: 248 249 251;
-  --ds-color-border: 221 223 229;
-  --ds-color-danger: 186 26 46;
+:root,
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --ds-color-primary-light: oklch(0.54 0.2 316);
+  --ds-color-primary-hover-light: oklch(0.47 0.2 316);
+  --ds-color-primary-inverted-light: oklch(0.99 0 0);
+  --ds-color-text-light: oklch(0.27 0.01 286);
+  --ds-color-text-muted-light: oklch(0.55 0.02 264);
+  --ds-color-background-light: oklch(0.995 0.002 270);
+  --ds-color-surface-light: oklch(1 0 0);
+  --ds-color-surface-muted-light: oklch(0.972 0.005 264);
+  --ds-color-border-light: oklch(0.9 0.01 272);
+  --ds-color-border-strong-light: oklch(0.74 0.01 272);
+  --ds-color-danger-light: oklch(0.55 0.19 23);
+  --ds-color-danger-hover-light: oklch(0.47 0.19 23);
+  --ds-color-neutral-hover-light: oklch(0.2 0.01 270);
+  --ds-color-accent-cyan-light: oklch(0.7 0.12 235);
+  --ds-color-accent-violet-light: oklch(0.58 0.17 316);
+
+  --ds-color-primary-dark: oklch(0.72 0.16 316);
+  --ds-color-primary-hover-dark: oklch(0.78 0.17 316);
+  --ds-color-primary-inverted-dark: oklch(0.2 0.02 285);
+  --ds-color-text-dark: oklch(0.92 0.01 270);
+  --ds-color-text-muted-dark: oklch(0.74 0.03 265);
+  --ds-color-background-dark: oklch(0.18 0.01 270);
+  --ds-color-surface-dark: oklch(0.22 0.01 270);
+  --ds-color-surface-muted-dark: oklch(0.28 0.015 270);
+  --ds-color-border-dark: oklch(0.38 0.02 270);
+  --ds-color-border-strong-dark: oklch(0.5 0.02 270);
+  --ds-color-danger-dark: oklch(0.68 0.16 23);
+  --ds-color-danger-hover-dark: oklch(0.73 0.17 23);
+  --ds-color-neutral-hover-dark: oklch(0.82 0.02 270);
+  --ds-color-accent-cyan-dark: oklch(0.76 0.1 235);
+  --ds-color-accent-violet-dark: oklch(0.74 0.14 316);
+
+  --ds-color-primary: light-dark(
+    var(--ds-color-primary-light),
+    var(--ds-color-primary-dark)
+  );
+  --ds-color-primary-hover: light-dark(
+    var(--ds-color-primary-hover-light),
+    var(--ds-color-primary-hover-dark)
+  );
+  --ds-color-primary-inverted: light-dark(
+    var(--ds-color-primary-inverted-light),
+    var(--ds-color-primary-inverted-dark)
+  );
+  --ds-color-text: light-dark(
+    var(--ds-color-text-light),
+    var(--ds-color-text-dark)
+  );
+  --ds-color-text-muted: light-dark(
+    var(--ds-color-text-muted-light),
+    var(--ds-color-text-muted-dark)
+  );
+  --ds-color-background: light-dark(
+    var(--ds-color-background-light),
+    var(--ds-color-background-dark)
+  );
+  --ds-color-surface: light-dark(
+    var(--ds-color-surface-light),
+    var(--ds-color-surface-dark)
+  );
+  --ds-color-surface-muted: light-dark(
+    var(--ds-color-surface-muted-light),
+    var(--ds-color-surface-muted-dark)
+  );
+  --ds-color-border: light-dark(
+    var(--ds-color-border-light),
+    var(--ds-color-border-dark)
+  );
+  --ds-color-border-strong: light-dark(
+    var(--ds-color-border-strong-light),
+    var(--ds-color-border-strong-dark)
+  );
+  --ds-color-danger: light-dark(
+    var(--ds-color-danger-light),
+    var(--ds-color-danger-dark)
+  );
+  --ds-color-danger-hover: light-dark(
+    var(--ds-color-danger-hover-light),
+    var(--ds-color-danger-hover-dark)
+  );
+  --ds-color-neutral-hover: light-dark(
+    var(--ds-color-neutral-hover-light),
+    var(--ds-color-neutral-hover-dark)
+  );
+  --ds-color-accent-cyan: light-dark(
+    var(--ds-color-accent-cyan-light),
+    var(--ds-color-accent-cyan-dark)
+  );
+  --ds-color-accent-violet: light-dark(
+    var(--ds-color-accent-violet-light),
+    var(--ds-color-accent-violet-dark)
+  );
   --ds-color-focus-ring: var(--ds-color-primary);
   --ds-focus-ring-width: 1px;
   --ds-focus-ring-offset: 2px;
@@ -27,7 +113,7 @@
   --ds-leading-heading: 1.38;
   --ds-tracking-heading: 0.01em;
 
-  /* Deprecated compatibility aliases. New styles must use --ds-* tokens. */
+  /* @deprecated compatibility aliases. Removal target: 2026 Q3. */
   --color-primary: var(--ds-color-primary);
   --color-primary-inverted: var(--ds-color-primary-inverted);
   --color-text: var(--ds-color-text);
@@ -37,4 +123,14 @@
   --color-surface-muted: var(--ds-color-surface-muted);
   --color-border: var(--ds-color-border);
   --color-danger: var(--ds-color-danger);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
 }

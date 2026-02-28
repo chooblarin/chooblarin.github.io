@@ -33,25 +33,25 @@
 .linkChip {
   min-height: 1.8rem;
   padding: 0.24rem 0.66rem;
-  border: 1px solid rgb(var(--ds-color-border));
-  background: rgb(var(--ds-color-surface-muted));
-  color: rgb(var(--ds-color-text-muted));
+  border: 1px solid var(--ds-color-border);
+  background: var(--ds-color-surface-muted);
+  color: var(--ds-color-text-muted);
   font-size: 0.76rem;
 }
 
 .linkChip:hover {
-  border-color: rgb(var(--ds-color-primary));
-  color: rgb(var(--ds-color-primary));
-  background: rgb(var(--ds-color-surface));
+  border-color: var(--ds-color-primary);
+  color: var(--ds-color-primary);
+  background: var(--ds-color-surface);
 }
 
 .linkPlain {
   border: 1px solid transparent;
-  color: rgb(var(--ds-color-text-muted));
+  color: var(--ds-color-text-muted);
   font-size: 0.82rem;
   line-height: 1.4;
 }
 
 .linkPlain:hover {
-  color: rgb(var(--ds-color-primary));
+  color: var(--ds-color-primary);
 }

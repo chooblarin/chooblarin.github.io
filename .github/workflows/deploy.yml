@@ -31,6 +31,7 @@ jobs:
           npm run textlint
           npm run content:lint:strict
           npm run check:unused
+          npm run check:deprecated-colors
           npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

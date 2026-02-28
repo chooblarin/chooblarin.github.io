@@ -12,13 +12,13 @@
 
 .panel {
   height: fit-content;
-  border-left: 1px solid rgb(var(--ds-color-border));
+  border-left: 1px solid var(--ds-color-border);
   padding-left: 12px;
 }
 
 .heading {
   margin: 0 0 12px;
-  color: rgb(var(--ds-color-text));
+  color: var(--ds-color-text);
   font-size: 1.25rem;
   font-weight: 600;
 }
@@ -59,7 +59,7 @@
   top: 0.2em;
   bottom: 0.2em;
   width: 4px;
-  background: rgb(var(--ds-color-primary));
+  background: var(--ds-color-primary);
   border-radius: 999px;
 }
 
@@ -69,13 +69,13 @@
 
 .link {
   display: inline-block;
-  color: rgb(var(--ds-color-text));
+  color: var(--ds-color-text);
   line-height: 1.45;
   text-decoration: none;
 }
 
 .linkActive {
-  color: rgb(var(--ds-color-primary));
+  color: var(--ds-color-primary);
 }
 
 @media (min-width: 68.75rem) {

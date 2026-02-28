@@ -1,10 +1,10 @@
 .root {
   display: block;
   text-decoration: none;
-  border: 1px solid rgb(209 213 219);
+  border: 1px solid var(--ds-color-border);
   border-radius: 12px;
   padding: 16px;
-  background: rgb(249 250 251);
+  background: var(--ds-color-surface-muted);
   transition: border-color 0.2s linear;
 }
 
@@ -13,30 +13,30 @@
 }
 
 .root:focus-visible {
-  outline: var(--ds-focus-ring-width) solid rgb(var(--ds-color-focus-ring));
+  outline: var(--ds-focus-ring-width) solid var(--ds-color-focus-ring);
   outline-offset: var(--ds-focus-ring-offset);
 }
 
 .root:hover {
-  border-color: rgb(var(--ds-color-primary));
+  border-color: var(--ds-color-primary);
 }
 
 .label {
   display: block;
   margin: 0 0 8px;
-  color: rgb(107 114 128);
+  color: var(--ds-color-text-muted);
   font-size: 0.75rem;
 }
 
 .title {
   margin: 0;
-  color: rgb(var(--ds-color-text));
+  color: var(--ds-color-text);
   font-size: 1rem;
   font-weight: 600;
 }
 
 .date {
   margin: 8px 0 0;
-  color: rgb(107 114 128);
+  color: var(--ds-color-text-muted);
   font-size: 0.875rem;
 }
