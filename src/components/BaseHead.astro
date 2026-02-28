@@ -28,6 +28,7 @@ const {
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" data-theme-favicon />
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#1e2127" media="(prefers-color-scheme: dark)" />
 <script is:inline>
@@ -57,6 +58,8 @@ const {
     };
 
     const getResolvedTheme = () => getExplicitTheme() ?? (mql.matches ? "dark" : "light");
+    const getFaviconHref = (resolvedTheme) =>
+      resolvedTheme === "dark" ? "/favicon-dark.svg" : "/favicon-light.svg";
 
     const getThemeColor = (theme) => (theme === "dark" ? "#1e2127" : "#ffffff");
 
@@ -93,6 +96,23 @@ const {
       );
     };
 
+    const applyFavicon = (resolvedTheme) => {
+      const link =
+        document.head.querySelector("link[rel='icon'][data-theme-favicon]") ??
+        document.head.querySelector("link[rel='icon'][type='image/svg+xml']");
+
+      if (!link) {
+        return;
+      }
+
+      link.setAttribute("data-theme-favicon", "");
+      const nextHref = getFaviconHref(resolvedTheme);
+
+      if (link.getAttribute("href") !== nextHref) {
+        link.setAttribute("href", nextHref);
+      }
+    };
+
     const applyTheme = (theme, options = {}) => {
       const { persist = false, source = "runtime" } = options;
       const explicitTheme = normalizeTheme(theme);
@@ -117,6 +137,7 @@ const {
         }
       }
 
+      applyFavicon(getResolvedTheme());
       dispatchThemeChanged(source);
     };
 
@@ -146,11 +167,11 @@ const {
         return;
       }
 
+      applyFavicon(getResolvedTheme());
       dispatchThemeChanged("system");
     });
   })();
 </script>
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="mask-icon" href="/mask-icon.svg" color="#000000" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
