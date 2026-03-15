@@ -34,80 +34,20 @@
   --ds-color-accent-violet-dark: oklch(0.74 0.14 316);
 
   --ds-color-primary: var(--ds-color-primary-light);
-  --ds-color-primary: light-dark(
-    var(--ds-color-primary-light),
-    var(--ds-color-primary-dark)
-  );
   --ds-color-primary-hover: var(--ds-color-primary-hover-light);
-  --ds-color-primary-hover: light-dark(
-    var(--ds-color-primary-hover-light),
-    var(--ds-color-primary-hover-dark)
-  );
   --ds-color-primary-inverted: var(--ds-color-primary-inverted-light);
-  --ds-color-primary-inverted: light-dark(
-    var(--ds-color-primary-inverted-light),
-    var(--ds-color-primary-inverted-dark)
-  );
   --ds-color-text: var(--ds-color-text-light);
-  --ds-color-text: light-dark(
-    var(--ds-color-text-light),
-    var(--ds-color-text-dark)
-  );
   --ds-color-text-muted: var(--ds-color-text-muted-light);
-  --ds-color-text-muted: light-dark(
-    var(--ds-color-text-muted-light),
-    var(--ds-color-text-muted-dark)
-  );
   --ds-color-background: var(--ds-color-background-light);
-  --ds-color-background: light-dark(
-    var(--ds-color-background-light),
-    var(--ds-color-background-dark)
-  );
   --ds-color-surface: var(--ds-color-surface-light);
-  --ds-color-surface: light-dark(
-    var(--ds-color-surface-light),
-    var(--ds-color-surface-dark)
-  );
   --ds-color-surface-muted: var(--ds-color-surface-muted-light);
-  --ds-color-surface-muted: light-dark(
-    var(--ds-color-surface-muted-light),
-    var(--ds-color-surface-muted-dark)
-  );
   --ds-color-border: var(--ds-color-border-light);
-  --ds-color-border: light-dark(
-    var(--ds-color-border-light),
-    var(--ds-color-border-dark)
-  );
   --ds-color-border-strong: var(--ds-color-border-strong-light);
-  --ds-color-border-strong: light-dark(
-    var(--ds-color-border-strong-light),
-    var(--ds-color-border-strong-dark)
-  );
   --ds-color-danger: var(--ds-color-danger-light);
-  --ds-color-danger: light-dark(
-    var(--ds-color-danger-light),
-    var(--ds-color-danger-dark)
-  );
   --ds-color-danger-hover: var(--ds-color-danger-hover-light);
-  --ds-color-danger-hover: light-dark(
-    var(--ds-color-danger-hover-light),
-    var(--ds-color-danger-hover-dark)
-  );
   --ds-color-neutral-hover: var(--ds-color-neutral-hover-light);
-  --ds-color-neutral-hover: light-dark(
-    var(--ds-color-neutral-hover-light),
-    var(--ds-color-neutral-hover-dark)
-  );
   --ds-color-accent-cyan: var(--ds-color-accent-cyan-light);
-  --ds-color-accent-cyan: light-dark(
-    var(--ds-color-accent-cyan-light),
-    var(--ds-color-accent-cyan-dark)
-  );
   --ds-color-accent-violet: var(--ds-color-accent-violet-light);
-  --ds-color-accent-violet: light-dark(
-    var(--ds-color-accent-violet-light),
-    var(--ds-color-accent-violet-dark)
-  );
   --ds-color-focus-ring: var(--ds-color-primary);
   --ds-focus-ring-width: 1px;
   --ds-focus-ring-offset: 2px;
@@ -134,4 +74,69 @@
 
 :root[data-theme="dark"] {
   color-scheme: dark;
+}
+
+@supports (color: light-dark(white, black)) {
+  :root {
+    --ds-color-primary: light-dark(
+      var(--ds-color-primary-light),
+      var(--ds-color-primary-dark)
+    );
+    --ds-color-primary-hover: light-dark(
+      var(--ds-color-primary-hover-light),
+      var(--ds-color-primary-hover-dark)
+    );
+    --ds-color-primary-inverted: light-dark(
+      var(--ds-color-primary-inverted-light),
+      var(--ds-color-primary-inverted-dark)
+    );
+    --ds-color-text: light-dark(
+      var(--ds-color-text-light),
+      var(--ds-color-text-dark)
+    );
+    --ds-color-text-muted: light-dark(
+      var(--ds-color-text-muted-light),
+      var(--ds-color-text-muted-dark)
+    );
+    --ds-color-background: light-dark(
+      var(--ds-color-background-light),
+      var(--ds-color-background-dark)
+    );
+    --ds-color-surface: light-dark(
+      var(--ds-color-surface-light),
+      var(--ds-color-surface-dark)
+    );
+    --ds-color-surface-muted: light-dark(
+      var(--ds-color-surface-muted-light),
+      var(--ds-color-surface-muted-dark)
+    );
+    --ds-color-border: light-dark(
+      var(--ds-color-border-light),
+      var(--ds-color-border-dark)
+    );
+    --ds-color-border-strong: light-dark(
+      var(--ds-color-border-strong-light),
+      var(--ds-color-border-strong-dark)
+    );
+    --ds-color-danger: light-dark(
+      var(--ds-color-danger-light),
+      var(--ds-color-danger-dark)
+    );
+    --ds-color-danger-hover: light-dark(
+      var(--ds-color-danger-hover-light),
+      var(--ds-color-danger-hover-dark)
+    );
+    --ds-color-neutral-hover: light-dark(
+      var(--ds-color-neutral-hover-light),
+      var(--ds-color-neutral-hover-dark)
+    );
+    --ds-color-accent-cyan: light-dark(
+      var(--ds-color-accent-cyan-light),
+      var(--ds-color-accent-cyan-dark)
+    );
+    --ds-color-accent-violet: light-dark(
+      var(--ds-color-accent-violet-light),
+      var(--ds-color-accent-violet-dark)
+    );
+  }
 }
