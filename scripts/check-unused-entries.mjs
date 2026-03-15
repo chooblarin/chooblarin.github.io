@@ -16,8 +16,7 @@ const readFiles = (dir, matcher) =>
 
 const sourceFiles = readFiles(
   srcDir,
-  (file) =>
-    /\.(astro|ts|tsx|svelte|mdx)$/u.test(file) && !file.endsWith(".d.ts"),
+  (file) => /\.(astro|ts|tsx|mdx)$/u.test(file) && !file.endsWith(".d.ts"),
 );
 
 const sourceTexts = sourceFiles.map((file) => ({

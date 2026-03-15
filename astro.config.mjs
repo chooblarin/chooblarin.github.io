@@ -1,7 +1,6 @@
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
-import svelte from "@astrojs/svelte";
 import { defineConfig } from "astro/config";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
@@ -26,5 +25,5 @@ export default defineConfig({
       theme: "houston",
     },
   },
-  integrations: [mdx(), sitemap(), react(), svelte()],
+  integrations: [mdx(), sitemap(), react()],
 });
