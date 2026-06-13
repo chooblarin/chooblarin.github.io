@@ -1,0 +1,8 @@
+# pnpm 11 reads project settings from here (the package.json "pnpm" field is
+# no longer honored). Allow these dependencies to run their install/build
+# scripts (Astro needs sharp for image processing; esbuild needs its binary).
+allowBuilds:
+  esbuild: true
+  sharp: true
+minimumReleaseAgeExclude:
+  - '@rive-app/canvas@2.38.1'

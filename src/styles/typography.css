@@ -53,7 +53,13 @@
     text-wrap: pretty;
   }
 
-  :where(pre, time, input:not([type="button" i], [type="submit" i], [type="reset" i]), textarea, [contenteditable]) {
+  :where(
+    pre,
+    time,
+    input:not([type="button" i], [type="submit" i], [type="reset" i]),
+    textarea,
+    [contenteditable]
+  ) {
     text-autospace: no-autospace;
   }
 

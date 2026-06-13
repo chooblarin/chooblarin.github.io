@@ -4,10 +4,14 @@ This file provides guidance to Codex (Codex.ai/code) when working with code in t
 
 ## Development Commands
 
-- **Development server**: `npm run dev` or `npm start`
-- **Build**: `npm run build` (includes type checking with `astro check`)
-- **Preview build**: `npm run preview`
-- **Type checking only**: `astro check`
+This project uses **pnpm** (pinned via `packageManager` in `package.json`).
+Enable it with `corepack enable` if `pnpm` is not on your PATH.
+
+- **Install**: `pnpm install`
+- **Development server**: `pnpm dev` or `pnpm start`
+- **Build**: `pnpm build` (includes type checking with `astro check`)
+- **Preview build**: `pnpm preview`
+- **Type checking only**: `pnpm astro check`
 
 ## Architecture
 

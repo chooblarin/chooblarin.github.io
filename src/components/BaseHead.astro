@@ -1,4 +1,5 @@
 ---
+import "../styles/color.css";
 import "../styles/spacing.css";
 import "../styles/typography.css";
 import { SITE_TITLE } from "../consts";
@@ -26,7 +27,7 @@ const imageURL = new URL(image, Astro.site ?? Astro.url);
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
-<meta name="theme-color" content="#ffffff" />
+<meta name="theme-color" content="#fafcff" />
 
 <!-- Resolve the color theme before first paint to avoid a flash. -->
 <script is:inline>
@@ -42,7 +43,7 @@ const imageURL = new URL(image, Astro.site ?? Astro.url);
       document.documentElement.dataset.theme = theme;
       var meta = document.querySelector('meta[name="theme-color"]');
       if (meta)
-        meta.setAttribute("content", theme === "dark" ? "#18181b" : "#ffffff");
+        meta.setAttribute("content", theme === "dark" ? "#0c111d" : "#fafcff");
     } catch (e) {}
   })();
 </script>
@@ -122,31 +123,8 @@ const imageURL = new URL(image, Astro.site ?? Astro.url);
   @layer reset, base, components;
 
   @layer base {
-    /*
-     * Single source of truth for the palette. Each token resolves with
-     * light-dark() based on the used `color-scheme`, so there is no separate
-     * dark block to keep in sync.
-     */
-    :root {
-      color-scheme: light dark;
-
-      --color-primary: light-dark(rgb(147 42 181), rgb(199 146 234));
-      --color-primary-inverted: light-dark(rgb(255 255 255), rgb(24 24 27));
-      --color-text: light-dark(rgb(35 35 35), rgb(228 228 231));
-      --color-text-muted: light-dark(rgb(75 85 99), rgb(161 161 170));
-      --color-background: light-dark(rgb(255 255 255), rgb(24 24 27));
-      --color-surface: light-dark(rgb(243 244 246), rgb(39 39 42));
-      --color-border: light-dark(rgb(209 213 219), rgb(63 63 70));
-      --color-focus-ring: var(--color-primary);
-    }
-
-    /* An explicit user choice pins color-scheme; otherwise the OS decides. */
-    :root[data-theme="light"] {
-      color-scheme: light;
-    }
-    :root[data-theme="dark"] {
-      color-scheme: dark;
-    }
+    /* Color tokens + theme scheme live in src/styles/color.css (the color
+       single source of truth). */
 
     /* Base document */
     html {
@@ -176,14 +154,14 @@ const imageURL = new URL(image, Astro.site ?? Astro.url);
 
     /* Keyboard focus ring (keyboard only, not on mouse click). */
     :where(
-        a,
-        button,
-        input,
-        textarea,
-        select,
-        summary,
-        [tabindex]
-      ):focus-visible {
+      a,
+      button,
+      input,
+      textarea,
+      select,
+      summary,
+      [tabindex]
+    ):focus-visible {
       outline: 2px solid var(--color-focus-ring);
       outline-offset: 2px;
       border-radius: 0.35rem;

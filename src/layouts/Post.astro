@@ -29,12 +29,13 @@ const tagItems = tags.map((name) => ({
 }));
 
 // Only load heavy third-party assets on the posts that actually need them.
-const body = post.body;
+// Content Layer types `body` as string | undefined.
+const body = post.body ?? "";
 const needsTwitter = /twitter-tweet/i.test(body);
 const needsCodePen = /codepen\.io|class="codepen/i.test(body);
 const needsKatex = /\$\$[\s\S]+\$\$|(?<!\\)\$[^$\n]+\$/.test(body);
 
-const canonicalURL = new URL(`/post/${post.slug}/`, Astro.site);
+const canonicalURL = new URL(`/post/${post.id}/`, Astro.site);
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
@@ -87,8 +88,9 @@ const jsonLd = {
         display: inline-block;
         background: linear-gradient(
           90deg,
-          rgb(59, 154, 201),
-          rgb(152, 59, 201)
+          var(--color-deep),
+          var(--color-primary) 60%,
+          var(--color-accent)
         );
         background-clip: text;
         -webkit-background-clip: text;
@@ -194,14 +196,14 @@ const jsonLd = {
               (prev || next) && (
                 <nav class="links" aria-label="前後の記事">
                   {prev ? (
-                    <a class="nav-link prev" href={`/post/${prev.slug}`}>
+                    <a class="nav-link prev" href={`/post/${prev.id}`}>
                       ← {prev.data.title}
                     </a>
                   ) : (
                     <span />
                   )}
                   {next ? (
-                    <a class="nav-link next" href={`/post/${next.slug}`}>
+                    <a class="nav-link next" href={`/post/${next.id}`}>
                       {next.data.title} →
                     </a>
                   ) : (

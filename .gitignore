@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # migrating files
 archives/
+
+# storybook build output
+storybook-static/

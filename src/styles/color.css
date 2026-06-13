@@ -1,0 +1,140 @@
+/*
+ * Color system — single source of truth.
+ *
+ * Three tiers (adopted from the backup design-system tokens):
+ *   1. Raw palette          — the four brand colors, oklch primitives.
+ *   2. Source tokens        — semantic roles split into `*-light` / `*-dark`.
+ *   3. Public tokens        — `--color-*`, resolved via light-dark().
+ *
+ * Roles: primary = purple, deep = navy, accent = teal, highlight = yellow.
+ * Neutrals (text / background / surface / border) are low-chroma grays tinted
+ * toward navy (hue ~265) so the whole UI feels cohesive with the palette.
+ *
+ *   navy    #0A1D56  oklch(25.9% 0.106 265.3)
+ *   purple  #492E87  oklch(38.6% 0.141 292.5)
+ *   teal    #37B5B6  oklch(70.7% 0.107 195.8)
+ *   yellow  #F2F597  oklch(94.7% 0.117 110)
+ */
+:root {
+  color-scheme: light dark;
+
+  /* 1. Raw palette ------------------------------------------------------- */
+  --palette-navy: oklch(25.9% 0.106 265.3);
+  --palette-purple: oklch(38.6% 0.141 292.5);
+  --palette-teal: oklch(70.7% 0.107 195.8);
+  --palette-yellow: oklch(94.7% 0.117 110);
+
+  /* 2a. Source tokens — light ------------------------------------------- */
+  --color-text-light: oklch(0.25 0.025 265);
+  --color-text-muted-light: oklch(0.52 0.03 265);
+  --color-background-light: oklch(0.99 0.004 265);
+  --color-surface-light: oklch(0.965 0.006 265);
+  --color-border-light: oklch(0.9 0.012 265);
+  --color-border-strong-light: oklch(0.78 0.018 265);
+
+  --color-primary-light: var(--palette-purple);
+  --color-primary-hover-light: oklch(0.33 0.15 292.5);
+  --color-primary-inverted-light: oklch(0.99 0 0);
+  --color-deep-light: var(--palette-navy);
+  --color-accent-light: var(--palette-teal);
+  --color-accent-strong-light: oklch(0.5 0.1 195.8);
+  --color-highlight-light: var(--palette-yellow);
+  --color-focus-ring-light: var(--palette-purple);
+
+  /* 2b. Source tokens — dark (navy-based) ------------------------------- */
+  --color-text-dark: oklch(0.93 0.012 265);
+  --color-text-muted-dark: oklch(0.72 0.022 265);
+  --color-background-dark: oklch(0.18 0.025 265);
+  --color-surface-dark: oklch(0.235 0.027 265);
+  --color-border-dark: oklch(0.36 0.025 265);
+  --color-border-strong-dark: oklch(0.5 0.025 265);
+
+  --color-primary-dark: oklch(0.74 0.14 292.5);
+  --color-primary-hover-dark: oklch(0.8 0.15 292.5);
+  --color-primary-inverted-dark: oklch(0.2 0.02 265);
+  --color-deep-dark: oklch(0.72 0.1 265);
+  --color-accent-dark: oklch(0.76 0.1 195.8);
+  --color-accent-strong-dark: oklch(0.82 0.1 195.8);
+  --color-highlight-dark: oklch(0.92 0.12 110);
+  --color-focus-ring-dark: oklch(0.74 0.14 292.5);
+
+  /* 3. Public tokens (default to light; mapped via light-dark below) ---- */
+  --color-text: var(--color-text-light);
+  --color-text-muted: var(--color-text-muted-light);
+  --color-background: var(--color-background-light);
+  --color-surface: var(--color-surface-light);
+  --color-border: var(--color-border-light);
+  --color-border-strong: var(--color-border-strong-light);
+  --color-primary: var(--color-primary-light);
+  --color-primary-hover: var(--color-primary-hover-light);
+  --color-primary-inverted: var(--color-primary-inverted-light);
+  --color-deep: var(--color-deep-light);
+  --color-accent: var(--color-accent-light);
+  --color-accent-strong: var(--color-accent-strong-light);
+  --color-highlight: var(--color-highlight-light);
+  --color-focus-ring: var(--color-focus-ring-light);
+}
+
+/* Explicit user choice pins the scheme; otherwise the OS decides. */
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* Resolve every public token to the active scheme in one place. */
+@supports (color: light-dark(white, black)) {
+  :root {
+    --color-text: light-dark(var(--color-text-light), var(--color-text-dark));
+    --color-text-muted: light-dark(
+      var(--color-text-muted-light),
+      var(--color-text-muted-dark)
+    );
+    --color-background: light-dark(
+      var(--color-background-light),
+      var(--color-background-dark)
+    );
+    --color-surface: light-dark(
+      var(--color-surface-light),
+      var(--color-surface-dark)
+    );
+    --color-border: light-dark(
+      var(--color-border-light),
+      var(--color-border-dark)
+    );
+    --color-border-strong: light-dark(
+      var(--color-border-strong-light),
+      var(--color-border-strong-dark)
+    );
+    --color-primary: light-dark(
+      var(--color-primary-light),
+      var(--color-primary-dark)
+    );
+    --color-primary-hover: light-dark(
+      var(--color-primary-hover-light),
+      var(--color-primary-hover-dark)
+    );
+    --color-primary-inverted: light-dark(
+      var(--color-primary-inverted-light),
+      var(--color-primary-inverted-dark)
+    );
+    --color-deep: light-dark(var(--color-deep-light), var(--color-deep-dark));
+    --color-accent: light-dark(
+      var(--color-accent-light),
+      var(--color-accent-dark)
+    );
+    --color-accent-strong: light-dark(
+      var(--color-accent-strong-light),
+      var(--color-accent-strong-dark)
+    );
+    --color-highlight: light-dark(
+      var(--color-highlight-light),
+      var(--color-highlight-dark)
+    );
+    --color-focus-ring: light-dark(
+      var(--color-focus-ring-light),
+      var(--color-focus-ring-dark)
+    );
+  }
+}

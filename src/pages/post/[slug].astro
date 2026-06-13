@@ -1,5 +1,6 @@
 ---
 import type { GetStaticPaths } from "astro";
+import { render } from "astro:content";
 import Post from "../../layouts/Post.astro";
 import { getPosts } from "../../lib/posts";
 
@@ -7,7 +8,7 @@ export const getStaticPaths = (async () => {
   const posts = await getPosts();
 
   return posts.map((post, i) => ({
-    params: { slug: post.slug },
+    params: { slug: post.id },
     props: {
       post,
       next: i === 0 ? null : posts[i - 1],
@@ -17,7 +18,7 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { post, prev, next } = Astro.props;
-const { Content, headings } = await post.render();
+const { Content, headings } = await render(post);
 ---
 
 <Post {...{ post, prev, next, headings }}>
