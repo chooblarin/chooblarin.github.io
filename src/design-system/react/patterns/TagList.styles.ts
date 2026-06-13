@@ -3,7 +3,9 @@ import { cva, type VariantProps } from "class-variance-authority";
 import styles from "./TagList.module.css";
 
 export const tagListVariants = cva(styles.root, {
-  variants: { variant: { chip: styles.variantChip, plain: styles.variantPlain } },
+  variants: {
+    variant: { chip: styles.variantChip, plain: styles.variantPlain },
+  },
   defaultVariants: { variant: "chip" },
 });
 

@@ -1,0 +1,23 @@
+---
+import type { MarkdownHeading } from "astro";
+
+import TableOfContents, {
+  type TableOfContentsHeading,
+} from "../design-system/react/patterns/TableOfContents";
+
+type Props = {
+  headings: MarkdownHeading[];
+};
+
+const { headings } = Astro.props;
+
+const items: TableOfContentsHeading[] = headings
+  .filter((heading) => heading.depth >= 2 && heading.depth <= 3)
+  .map((heading) => ({
+    id: heading.slug,
+    text: heading.text,
+    depth: heading.depth as 2 | 3,
+  }));
+---
+
+<TableOfContents client:idle headings={items} />

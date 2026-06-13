@@ -8,7 +8,8 @@ import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import Logo from "../components/Logo.astro";
 import MaxWidthContainer from "../components/MaxWidthContainer.astro";
-import TableOfContents from "../components/TableOfContents.astro";
+import PostNavCardIsland from "../islands/PostNavCardIsland.astro";
+import TableOfContentsIsland from "../islands/TableOfContentsIsland.astro";
 import TagListIsland from "../islands/TagListIsland.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import { slugify } from "../lib/util";
@@ -107,31 +108,22 @@ const jsonLd = {
       .tags {
         margin: var(--space-lg) 0;
       }
-      .links {
-        display: flex;
-        justify-content: space-between;
+      .post-nav {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
         gap: var(--space-md);
-        border: 1px solid var(--color-border);
-        border-radius: var(--radius-sm);
         margin: var(--space-3xl) 0 var(--space-section-gap);
-        padding: var(--space-md);
       }
-      .nav-link {
-        font-size: 0.875rem;
-        max-width: 45%;
-        color: var(--color-text-muted);
-        text-decoration: none;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        transition: color 0.2s linear;
+      .post-nav :global(.post-nav-next) {
+        grid-column: 2;
       }
-      .nav-link:hover {
-        color: var(--color-primary);
-      }
-      .nav-link.next {
-        text-align: right;
-        margin-left: auto;
+      @media (max-width: 36rem) {
+        .post-nav {
+          grid-template-columns: 1fr;
+        }
+        .post-nav :global(.post-nav-next) {
+          grid-column: 1;
+        }
       }
     </style>
 
@@ -165,7 +157,7 @@ const jsonLd = {
           </div>
         </header>
         <div class="post-columns">
-          <TableOfContents headings={headings} />
+          <TableOfContentsIsland headings={headings} />
           <article class="post-article">
             <h1 class="title">{title}</h1>
             <p class="date">{formattedDate}</p>
@@ -182,20 +174,23 @@ const jsonLd = {
             </div>
             {
               (prev || next) && (
-                <nav class="links" aria-label="前後の記事">
-                  {prev ? (
-                    <a class="nav-link prev" href={`/post/${prev.id}`}>
-                      ← {prev.data.title}
-                    </a>
-                  ) : (
-                    <span />
+                <nav class="post-nav" aria-label="前後の記事">
+                  {prev && (
+                    <PostNavCardIsland
+                      href={`/post/${prev.id}`}
+                      label="前の記事"
+                      title={prev.data.title}
+                      date={prev.data.date}
+                    />
                   )}
-                  {next ? (
-                    <a class="nav-link next" href={`/post/${next.id}`}>
-                      {next.data.title} →
-                    </a>
-                  ) : (
-                    <span />
+                  {next && (
+                    <PostNavCardIsland
+                      className="post-nav-next"
+                      href={`/post/${next.id}`}
+                      label="次の記事"
+                      title={next.data.title}
+                      date={next.data.date}
+                    />
                   )}
                 </nav>
               )

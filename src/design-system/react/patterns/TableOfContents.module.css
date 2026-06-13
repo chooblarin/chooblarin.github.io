@@ -1,0 +1,95 @@
+/*
+ * Faithful port of the pre-DS Astro TableOfContents look (the restored
+ * design). Coloring: links muted → hover text → active primary, with a
+ * rounded current-position marker on the left track. The global
+ * `:focus-visible` ring (BaseHead) handles focus on <a>.
+ */
+.root {
+  --top-offset: calc(
+    var(--space-header-block-start) + var(--space-header-block-end) +
+      var(--space-lg)
+  );
+  --toc-pad: var(--space-md);
+  display: none;
+  /* align-self keeps the aside its natural height inside the flex row so
+     position: sticky has room to work (stretch would break it). */
+  align-self: flex-start;
+  position: sticky;
+  top: var(--top-offset);
+  /* max-width + padding keep the content width while leaving an inner gutter
+     so focus rings / the marker aren't clipped by `overflow`. */
+  max-width: 18.5rem;
+  max-height: calc(100vh - var(--top-offset) - var(--space-lg));
+  overflow: auto;
+  padding: 0.25rem 0.5rem;
+  margin-top: calc(var(--space-xs) - 0.25rem);
+  margin-left: auto;
+}
+
+.panel {
+  height: fit-content;
+  border-left: 1px solid var(--color-border);
+  padding-left: var(--toc-pad);
+}
+
+.heading {
+  margin: 0 0 var(--space-md);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  position: relative;
+  line-height: 1.45;
+  margin-top: var(--space-sm);
+}
+
+.depth2 {
+  font-size: 1rem;
+}
+
+.depth3 {
+  font-size: 0.875rem;
+  padding-left: var(--space-sm);
+}
+
+.link {
+  display: inline-block;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color 0.15s linear;
+}
+
+.link:hover {
+  color: var(--color-text);
+}
+
+/* Current-position marker: a rounded bar sitting on the left track. */
+.itemActive::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--toc-pad) - 1px);
+  top: 0.2em;
+  bottom: 0.2em;
+  width: 3px;
+  background: var(--color-primary);
+  border-radius: 999px;
+}
+
+.linkActive,
+.linkActive:hover {
+  color: var(--color-primary);
+}
+
+@media (min-width: 68.75rem) {
+  .root {
+    display: block;
+  }
+}

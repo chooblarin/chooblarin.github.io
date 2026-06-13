@@ -50,7 +50,11 @@ function Palette() {
         <h3>Palette (raw)</h3>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 16 }}>
           {PALETTE.map((p) => (
-            <Swatch key={p} name={`--palette-${p}`} varName={`--palette-${p}`} />
+            <Swatch
+              key={p}
+              name={`--palette-${p}`}
+              varName={`--palette-${p}`}
+            />
           ))}
         </div>
       </section>
