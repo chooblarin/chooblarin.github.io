@@ -20,112 +20,63 @@ type Props = {
 };
 
 const { post, prev, next, headings } = Astro.props;
-const { title, date, tags } = post.data;
+const { title, date, tags, description, image } = post.data;
 const formattedDate = format(date, "MMMM dd, yyyy");
 
 const tagItems = tags.map((name) => ({
   name,
   slug: slugify(name),
 }));
+
+// Only load heavy third-party assets on the posts that actually need them.
+const body = post.body;
+const needsTwitter = /twitter-tweet/i.test(body);
+const needsCodePen = /codepen\.io|class="codepen/i.test(body);
+const needsKatex = /\$\$[\s\S]+\$\$|(?<!\\)\$[^$\n]+\$/.test(body);
+
+const canonicalURL = new URL(`/post/${post.slug}/`, Astro.site);
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: title,
+  datePublished: date.toISOString(),
+  description: description ?? SITE_DESCRIPTION,
+  ...(image ? { image: new URL(image, Astro.site).href } : {}),
+  author: { "@type": "Person", name: "Sota Hatakeyama" },
+  keywords: tags.join(", "),
+  mainEntityOfPage: { "@type": "WebPage", "@id": canonicalURL.href },
+  url: canonicalURL.href,
+};
 ---
 
 <html lang="ja">
   <head>
     <BaseHead
       title={`${title} | ${SITE_TITLE}`}
-      description={SITE_DESCRIPTION}
+      description={description ?? SITE_DESCRIPTION}
+      image={image}
+      type="article"
+      publishedTime={date}
+    />
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(jsonLd)}
     />
     <style is:inline>
       header {
         display: flex;
         justify-content: center;
-        margin-top: 44px;
-        margin-bottom: 64px;
+        margin-block: var(--space-header-block-start)
+          var(--space-header-block-end);
       }
       main {
-        padding: 0 16px 44px;
-      }
-      article {
-        --base-width: 740px;
-        flex: 1 1 auto;
-        max-width: min(var(--base-width), 100%);
+        padding: 0 var(--space-page-inline) var(--space-section-gap);
       }
       .logo {
-        width: fit-content;
-        border-bottom: 1px solid rgb(209 213 219);
-        padding: 8px;
-      }
-      .post-content {
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-          font-weight: 600;
-          margin: 2rem 0 1rem;
-          padding-top: 0.875rem;
-        }
-        h1 {
-          font-size: 1.875rem;
-        }
-        h2 {
-          font-size: 1.75rem;
-        }
-        h3 {
-          font-size: 1.5rem;
-        }
-        h4 {
-          font-size: 1.25rem;
-        }
-        h5 {
-          font-size: 1rem;
-        }
-        h6 {
-          font-size: 0.875rem;
-        }
-        p {
-          margin: 1.5rem 0;
-        }
-        ul {
-          margin-block: 0.75rem;
-          margin-inline: 0px;
-          padding-inline-start: 1.5rem;
-        }
-        li::marker {
-          color: rgb(107 114 128);
-        }
-        blockquote {
-          color: rgb(31 41 55);
-          background: rgb(243 244 246);
-          padding: 1rem 0.875em;
-          border-radius: 8px;
-
-          p {
-            margin: 0;
-          }
-        }
-
-        code {
-          font-family: "JetBrains Mono Variable", "Menlo", "Courier", monospace;
-          font-size: 0.875em;
-        }
-
-        /* Code hightlight */
-        :not(pre) > code {
-          background: #f3f4f6;
-          border-radius: 4px;
-          padding: 2px 6px;
-        }
-        pre:has(code) {
-          padding: 0.8rem;
-          border: 2px solid #aaa;
-          border-radius: 4px;
-          scrollbar-width: none; /* Firefox */
-          &::-webkit-scrollbar {
-            display: none; /* Safari and Chrome */
-          }
-        }
+        min-width: 0;
+        border-bottom: 1px solid var(--color-border);
+        padding: var(--space-xs);
       }
       .container {
         display: flex;
@@ -147,49 +98,72 @@ const tagItems = tags.map((name) => ({
       }
       .date {
         font-size: 0.875rem;
-        margin: 48px 0 24px;
-        color: rgb(75 85 99);
+        margin: var(--space-2xl) 0 var(--space-lg);
+        color: var(--color-text-muted);
       }
       .tags {
-        margin: 24px 0;
+        margin: var(--space-lg) 0;
       }
       .tag {
         display: inline-block;
-        margin: 8px 8px 8px 0;
+        margin: var(--space-xs) var(--space-xs) var(--space-xs) 0;
       }
       .tag a {
         font-size: 0.75rem;
-        color: rgb(75 85 99);
-        background-color: rgb(243 244 246);
+        color: var(--color-text-muted);
+        background-color: var(--color-surface);
         text-decoration: none;
-        border-radius: 4px;
-        padding: 6px 12px;
-      }
-      .content {
-        margin-top: 64px;
+        border-radius: var(--radius-sm);
+        padding: var(--space-2xs) var(--space-sm);
       }
       .links {
         display: flex;
         justify-content: space-between;
-        border: 1px solid rgb(209 213 219);
-        border-radius: 4px;
-        margin-bottom: 44px;
-        padding: 16px;
+        gap: var(--space-md);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-sm);
+        margin: var(--space-3xl) 0 var(--space-section-gap);
+        padding: var(--space-md);
+      }
+      .nav-link {
+        font-size: 0.875rem;
+        max-width: 45%;
+        color: var(--color-text-muted);
+        text-decoration: none;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        transition: color 0.2s linear;
+      }
+      .nav-link:hover {
+        color: var(--color-primary);
+      }
+      .nav-link.next {
+        text-align: right;
+        margin-left: auto;
       }
     </style>
 
-    <!-- Twitter widget -->
-    <script is:inline async src="https://platform.twitter.com/widgets.js"
-    ></script>
+    {/* Twitter widget */}
+    {
+      needsTwitter && (
+        <script is:inline async src="https://platform.twitter.com/widgets.js" />
+      )
+    }
 
-    <!-- CodePen -->
-    <script
-      is:inline
-      async
-      src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+    {/* CodePen */}
+    {
+      needsCodePen && (
+        <script
+          is:inline
+          async
+          src="https://cpwebassets.codepen.io/assets/embed/ei.js"
+        />
+      )
+    }
 
-    <!-- KaTeX styles -->
-    <link rel="stylesheet" href="/styles/katex/katex.min.css" rel="preload" />
+    {/* KaTeX styles */}
+    {needsKatex && <link rel="stylesheet" href="/styles/katex/katex.min.css" />}
   </head>
   <body>
     <MaxWidthContainer width="68.75rem">
@@ -201,7 +175,7 @@ const tagItems = tags.map((name) => ({
         </header>
         <div class="container">
           <TableOfContents headings={headings} />
-          <article>
+          <article class="post-article">
             <h1 class="title">{title}</h1>
             <p class="date">{formattedDate}</p>
             <ul class="tags">
@@ -213,9 +187,29 @@ const tagItems = tags.map((name) => ({
                 ))
               }
             </ul>
-            <div class="post-content">
+            <div class="article-prose">
               <slot />
             </div>
+            {
+              (prev || next) && (
+                <nav class="links" aria-label="前後の記事">
+                  {prev ? (
+                    <a class="nav-link prev" href={`/post/${prev.slug}`}>
+                      ← {prev.data.title}
+                    </a>
+                  ) : (
+                    <span />
+                  )}
+                  {next ? (
+                    <a class="nav-link next" href={`/post/${next.slug}`}>
+                      {next.data.title} →
+                    </a>
+                  ) : (
+                    <span />
+                  )}
+                </nav>
+              )
+            }
           </article>
         </div>
       </main>

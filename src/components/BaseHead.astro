@@ -1,23 +1,62 @@
 ---
+import "../styles/spacing.css";
+import "../styles/typography.css";
+import { SITE_TITLE } from "../consts";
+
 type Props = {
   title: string;
   description: string;
   image?: string;
+  type?: "website" | "article";
+  publishedTime?: Date;
 };
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = "/og-default.png" } = Astro.props;
+const {
+  title,
+  description,
+  image = "/og-default.png",
+  type = "website",
+  publishedTime,
+} = Astro.props;
+
+const imageURL = new URL(image, Astro.site ?? Astro.url);
 ---
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="theme-color" content="#ffffff" />
+
+<!-- Resolve the color theme before first paint to avoid a flash. -->
+<script is:inline>
+  (function () {
+    try {
+      var stored = localStorage.getItem("theme");
+      var theme =
+        stored === "dark" || stored === "light"
+          ? stored
+          : window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+      document.documentElement.dataset.theme = theme;
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta)
+        meta.setAttribute("content", theme === "dark" ? "#18181b" : "#ffffff");
+    } catch (e) {}
+  })();
+</script>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="mask-icon" href="mask-icon.svg" color="#000000" />
-<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<link rel="mask-icon" href="/mask-icon.svg" color="#000000" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
 <link rel="sitemap" href="/sitemap-index.xml" />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  title={SITE_TITLE}
+  href="/rss.xml"
+/>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 
 <!-- canonical URL -->
@@ -25,22 +64,31 @@ const { title, description, image = "/og-default.png" } = Astro.props;
 
 <!-- primary meta -->
 <title>{title}</title>
+<meta name="title" content={title} />
 <meta name="description" content={description} />
 
 <!-- open graph -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content={Astro.url} />
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={SITE_TITLE} />
+<meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image, Astro.url)} />
+<meta property="og:image" content={imageURL} />
+{
+  type === "article" && publishedTime && (
+    <meta
+      property="article:published_time"
+      content={publishedTime.toISOString()}
+    />
+  )
+}
 
 <!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={new URL(image, Astro.url)} />
-<meta name="title" content={title} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalURL} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageURL} />
 
 <!-- Google site verification -->
 <meta
@@ -71,103 +119,117 @@ const { title, description, image = "/og-default.png" } = Astro.props;
 
 <!-- Global styles -->
 <style is:global>
-  @layer {
+  @layer reset, base, components;
+
+  @layer base {
+    /*
+     * Single source of truth for the palette. Each token resolves with
+     * light-dark() based on the used `color-scheme`, so there is no separate
+     * dark block to keep in sync.
+     */
     :root {
-      --color-primary: 147 42 181;
-      --color-primary-inverted: 255 255 255;
-      --color-text: 35 35 35;
-      --color-background: 255 255 255;
+      color-scheme: light dark;
+
+      --color-primary: light-dark(rgb(147 42 181), rgb(199 146 234));
+      --color-primary-inverted: light-dark(rgb(255 255 255), rgb(24 24 27));
+      --color-text: light-dark(rgb(35 35 35), rgb(228 228 231));
+      --color-text-muted: light-dark(rgb(75 85 99), rgb(161 161 170));
+      --color-background: light-dark(rgb(255 255 255), rgb(24 24 27));
+      --color-surface: light-dark(rgb(243 244 246), rgb(39 39 42));
+      --color-border: light-dark(rgb(209 213 219), rgb(63 63 70));
+    }
+
+    /* An explicit user choice pins color-scheme; otherwise the OS decides. */
+    :root[data-theme="light"] {
+      color-scheme: light;
+    }
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+    }
+
+    /* Base document */
+    html {
+      -webkit-text-size-adjust: 100%;
+      -moz-tab-size: 4;
+      tab-size: 4;
+      height: 100%;
+    }
+
+    ::selection {
+      color: var(--color-primary-inverted);
+      background: var(--color-primary);
+    }
+
+    body {
+      color: var(--color-text);
+      background: var(--color-background);
+      transition: background-color 0.3s ease;
+    }
+
+    a {
+      color: var(--color-primary);
+      background-color: transparent;
+      overflow-wrap: anywhere;
+      text-decoration: underline;
     }
   }
 
-  /* Box sizing rules */
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
+  @layer reset {
+    /* Box sizing rules */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
 
-  /* Remove default margin */
-  body,
-  h1,
-  h2,
-  h3,
-  h4,
-  p,
-  ul[class],
-  ol[class],
-  li,
-  figure,
-  figcaption,
-  blockquote,
-  dl,
-  dd {
-    margin: 0;
-  }
+    /* Remove default margin */
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    p,
+    ul[class],
+    ol[class],
+    li,
+    figure,
+    figcaption,
+    blockquote,
+    dl,
+    dd {
+      margin: 0;
+    }
 
-  /* Remove default styles for list */
-  ul[class],
-  ol[class] {
-    padding: 0;
-    list-style: none;
-  }
+    /* Remove default styles for list */
+    ul[class],
+    ol[class] {
+      padding: 0;
+      list-style: none;
+    }
 
-  li {
-    margin: 0 0 0.25rem;
-  }
+    li {
+      margin: 0 0 var(--space-2xs);
+    }
 
-  /* A elements that don't have a class get default styles */
-  a:not([class]) {
-    text-decoration-skip-ink: auto;
-  }
+    /* A elements that don't have a class get default styles */
+    a:not([class]) {
+      text-decoration-skip-ink: auto;
+    }
 
-  /* Make images easier to work with */
-  img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-  }
+    /* Make images easier to work with */
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
 
-  /* Natural flow and rhythm in articles by default */
-  article > * + * {
-    margin-top: 1em;
-  }
-
-  /* Inherit fonts for inputs and buttons */
-  input,
-  button,
-  textarea,
-  select {
-    font: inherit;
-  }
-
-  /* Base document */
-  html {
-    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN",
-      "Hiragino Sans", Meiryo, sans-serif;
-    line-height: 1.5;
-    -webkit-text-size-adjust: 100%;
-    -moz-tab-size: 4;
-    tab-size: 4;
-    height: 100%;
-  }
-
-  ::selection {
-    color: rgb(var(--color-primary-inverted));
-    background: rgb(var(--color-primary));
-  }
-
-  body {
-    color: rgb(var(--color-text));
-    background: rgb(var(--color-background));
-    transition: background-color 0.3s ease;
-  }
-
-  a {
-    color: rgb(var(--color-primary));
-    background-color: transparent;
-    word-break: break-all;
-    text-decoration: underline;
+    /* Inherit fonts for inputs and buttons */
+    input,
+    button,
+    textarea,
+    select {
+      font: inherit;
+    }
   }
 
   /* Remove all animations and transitions for people that prefer not to see them */

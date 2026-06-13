@@ -1,16 +1,13 @@
 ---
-import { getCollection } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import HomeHeader from "../components/HomeHeader.astro";
 import MaxWidthContainer from "../components/MaxWidthContainer.astro";
 import PostItem from "../components/PostItem.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts.ts";
+import { getPosts } from "../lib/posts";
 
-const allPosts = await getCollection("post");
-const latestPosts = allPosts
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0, 5);
+const latestPosts = (await getPosts()).slice(0, 5);
 ---
 
 <html lang="ja">
@@ -18,10 +15,10 @@ const latestPosts = allPosts
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
     <style>
       main {
-        padding: 0 16px 96px;
+        padding: 0 var(--space-page-inline) var(--space-page-block-end);
       }
       .latest-posts {
-        margin: 20px 0 40px;
+        margin: var(--space-lg) 0 var(--space-xl);
       }
     </style>
   </head>

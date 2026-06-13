@@ -13,19 +13,19 @@ const mailToLink = "mailto:choo.bla.rin@gmail.com";
 ---
 
 <div class="social-acounts">
-  <a href={twitterLink}>
+  <a href={twitterLink} aria-label="X (Twitter)" rel="me noopener">
     <Fragment set:html={xIcon} />
   </a>
-  <a href={githubLink}>
+  <a href={githubLink} aria-label="GitHub" rel="me noopener">
     <Fragment set:html={githubIcon} />
   </a>
-  <a href={codepenLink}>
+  <a href={codepenLink} aria-label="CodePen" rel="me noopener">
     <Fragment set:html={codepenIcon} />
   </a>
-  <a href={linkedInLink}>
+  <a href={linkedInLink} aria-label="LinkedIn" rel="me noopener">
     <Fragment set:html={linkedinIcon} />
   </a>
-  <a href={mailToLink}>
+  <a href={mailToLink} aria-label="Email">
     <Fragment set:html={emailIcon} />
   </a>
 </div>
@@ -44,7 +44,7 @@ const mailToLink = "mailto:choo.bla.rin@gmail.com";
     width: 32px;
     height: auto;
     transition: color 0.2s linear;
-    margin: 0 8px;
+    margin: 0 var(--space-xs);
   }
   .social-acounts a:hover {
     color: #983bc9;

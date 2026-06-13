@@ -1,6 +1,12 @@
 ---
 import { format } from "date-fns";
 
+type Props = {
+  title: string;
+  date: Date;
+  slug: string;
+};
+
 const { title, date, slug } = Astro.props;
 ---
 
@@ -19,19 +25,19 @@ const { title, date, slug } = Astro.props;
     text-decoration: none;
   }
   .post-content {
-    padding: 8px 0;
+    padding: var(--space-xs) 0;
   }
   .post-title {
     font-size: 1.25rem;
-    margin: 12px 0px 8px;
+    margin: var(--space-sm) 0 var(--space-xs);
     transition: color 0.2s linear;
   }
   .post-date {
     font-size: 0.875rem;
-    color: rgb(107 114 128);
-    margin: 8px 0;
+    color: var(--color-text-muted);
+    margin: var(--space-xs) 0;
   }
   .post-link:hover .post-title {
-    color: rgb(var(--color-primary));
+    color: var(--color-primary);
   }
 </style>

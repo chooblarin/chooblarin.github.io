@@ -1,27 +1,33 @@
 ---
 import type { GetStaticPaths } from "astro";
-import { getCollection } from "astro:content";
 import BaseHead from "../../components/BaseHead.astro";
 import Footer from "../../components/Footer.astro";
 import HomeHeader from "../../components/HomeHeader.astro";
 import MaxWidthContainer from "../../components/MaxWidthContainer.astro";
 import PostItem from "../../components/PostItem.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+import { getPosts, type Post } from "../../lib/posts";
 import { slugify } from "../../lib/util";
 
 export const getStaticPaths = (async () => {
-  const posts = await getCollection("post");
-  const tags = Array.from(
-    new Set(posts.flatMap((post) => post.data.tags.flat()))
-  );
-  return tags.map((tag) => ({
-    params: { tag: slugify(tag) },
-    props: {
-      tag,
-      posts: posts
-        .filter((post) => post.data.tags.includes(tag))
-        .sort((a, b) => b.data.date.getTime() - a.data.date.getTime()),
-    },
+  const posts = await getPosts();
+
+  // Group posts by tag slug so that tags whose names collapse to the same
+  // slug (e.g. "JavaScript" / "javascript") share a single page instead of
+  // producing duplicate build paths.
+  const groups = new Map<string, { tag: string; posts: Post[] }>();
+  for (const post of posts) {
+    for (const tag of post.data.tags) {
+      const slug = slugify(tag);
+      const group = groups.get(slug) ?? { tag, posts: [] };
+      group.posts.push(post);
+      groups.set(slug, group);
+    }
+  }
+
+  return Array.from(groups, ([slug, { tag, posts }]) => ({
+    params: { tag: slug },
+    props: { tag, posts },
   }));
 }) satisfies GetStaticPaths;
 
@@ -36,7 +42,10 @@ const { tag, posts } = Astro.props;
     />
     <style>
       main {
-        padding: 0 16px 96px;
+        padding: 0 var(--space-page-inline) var(--space-page-block-end);
+      }
+      h1 {
+        margin-bottom: var(--space-lg);
       }
     </style>
   </head>

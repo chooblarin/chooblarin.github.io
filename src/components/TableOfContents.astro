@@ -26,36 +26,39 @@ const { headings } = Astro.props;
 
 <style>
   .toc {
-    --top-offset: 128px;
+    --top-offset: calc(
+      var(--space-header-block-start) + var(--space-header-block-end) +
+        var(--space-lg)
+    );
     display: none;
     position: sticky;
     max-width: 280px;
     top: var(--top-offset);
     max-height: calc(100vh - var(--top-offset));
     overflow: auto;
-    margin-top: 8px;
+    margin-top: var(--space-xs);
     margin-left: auto;
   }
   .toc nav {
     height: fit-content;
-    border-left: 1px solid rgb(var(--color-text));
-    padding-left: 14px;
+    border-left: 1px solid var(--color-text);
+    padding-left: var(--space-sm);
   }
   .toc h2 {
     font-size: 1.25rem;
-    margin-bottom: 12px;
+    margin-bottom: var(--space-sm);
   }
   .item.depth-2 {
     font-size: 0.875rem;
-    margin-top: 0.75rem;
+    margin-top: var(--space-sm);
   }
   .item.depth-3 {
     font-size: 0.75rem;
-    margin-top: 0.25rem;
-    padding-left: 0.25rem;
+    margin-top: var(--space-2xs);
+    padding-left: var(--space-2xs);
   }
   .item a {
-    color: rgb(var(--color-text));
+    color: var(--color-text);
     text-decoration: none;
   }
   @media (min-width: 68.75rem) {

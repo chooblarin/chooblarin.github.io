@@ -3,7 +3,6 @@ import Logo from "./Logo.astro";
 ---
 
 <header>
-  <!-- TODO: color theme switch -->
   <div class="logo">
     <Logo />
   </div>
@@ -14,24 +13,12 @@ import Logo from "./Logo.astro";
     display: flex;
     justify-content: center;
     max-width: 740px;
-    margin: 44px auto 64px;
+    margin: var(--space-header-block-start) auto var(--space-header-block-end);
+    padding: 0 var(--space-page-inline);
   }
   .logo {
-    width: fit-content;
-    border-bottom: 1px solid rgb(209 213 219);
-    padding: 8px;
-  }
-
-  .title-logo {
-    width: 207px;
-    margin: 10px 0 20px;
-    color: var(--color-text);
-  }
-  .home-image {
-    width: 64px;
-    height: 64px;
-    color: #4a4a4a;
-    color: var(--color-text);
-    margin-bottom: 20px;
+    min-width: 0;
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-xs);
   }
 </style>

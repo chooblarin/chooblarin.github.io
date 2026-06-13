@@ -1,29 +1,29 @@
 ---
-import { getCollection } from "astro:content";
 import BaseHead from "../../components/BaseHead.astro";
 import Footer from "../../components/Footer.astro";
 import HomeHeader from "../../components/HomeHeader.astro";
 import MaxWidthContainer from "../../components/MaxWidthContainer.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+import { getPosts } from "../../lib/posts";
 import { slugify } from "../../lib/util";
 
-const allPosts = await getCollection("post");
+const allPosts = await getPosts();
 
-const countedTags = allPosts
-  .map((post) => post.data.tags.flat())
-  .flat()
-  .reduce(
-    (acc, tag) => {
-      if (!acc[tag]) {
-        acc[tag] = 0;
-      }
-      acc[tag] += 1;
-      return acc;
-    },
-    {} as Record<string, number>
-  );
-const tagItems = Object.entries(countedTags)
-  .map(([tag, count]) => ({ tag, count }))
+const tagGroups = new Map<string, { tag: string; count: number }>();
+for (const post of allPosts) {
+  for (const tag of post.data.tags) {
+    const slug = slugify(tag);
+    const group = tagGroups.get(slug) ?? { tag, count: 0 };
+    group.count += 1;
+    tagGroups.set(slug, group);
+  }
+}
+
+const tagItems = Array.from(tagGroups, ([slug, { tag, count }]) => ({
+  slug,
+  tag,
+  count,
+}))
   .sort((a, b) => a.tag.localeCompare(b.tag));
 ---
 
@@ -35,7 +35,10 @@ const tagItems = Object.entries(countedTags)
     />
     <style>
       main {
-        padding: 0 16px 96px;
+        padding: 0 var(--space-page-inline) var(--space-page-block-end);
+      }
+      h1 {
+        margin-bottom: var(--space-lg);
       }
     </style>
   </head>
@@ -48,7 +51,7 @@ const tagItems = Object.entries(countedTags)
           {
             tagItems.map((item) => (
               <li>
-                <a href={`/tags/${slugify(item.tag)}`}>
+                <a href={`/tags/${item.slug}`}>
                   {item.tag} ({item.count})
                 </a>
               </li>

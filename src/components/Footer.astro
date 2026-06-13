@@ -1,14 +1,17 @@
 ---
 import MaxWidthContainer from "./MaxWidthContainer.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+
+const currentYear = new Date().getFullYear();
 ---
 
 <footer>
   <MaxWidthContainer>
     <div class="footer-content">
+      <ThemeToggle />
       <p class="copyright">
-        &copy; 2015-2025 <a href="https://www.sotahatakeyama.com/" class="me"
-          >sotahatakeyama.</a
-        >
+        &copy; 2015-{currentYear}
+        <a href="https://www.sotahatakeyama.com/" class="me">sotahatakeyama.</a>
       </p>
     </div>
   </MaxWidthContainer>
@@ -16,16 +19,19 @@ import MaxWidthContainer from "./MaxWidthContainer.astro";
 
 <style>
   footer {
-    border-top: 1px solid rgb(209 213 219);
-    padding: 32px 16px;
+    border-top: 1px solid var(--color-border);
+    padding: var(--space-xl) var(--space-page-inline);
   }
   .footer-content {
-    place-items: center;
-    padding: 0 16px 96px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    padding: 0 var(--space-page-inline) var(--space-page-block-end);
   }
   .copyright {
     font-size: 1rem;
-    color: rgb(75 85 99);
+    color: var(--color-text-muted);
     letter-spacing: 0.05rem;
   }
   .me {

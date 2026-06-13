@@ -1,24 +1,19 @@
 ---
 import type { GetStaticPaths } from "astro";
-import type { CollectionEntry } from "astro:content";
-import { getCollection } from "astro:content";
 import Post from "../../layouts/Post.astro";
-
-type Post = CollectionEntry<"post">;
+import { getPosts } from "../../lib/posts";
 
 export const getStaticPaths = (async () => {
-  const posts = await getCollection("post");
+  const posts = await getPosts();
 
-  return posts
-    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-    .map((post, i) => ({
-      params: { slug: post.slug },
-      props: {
-        post,
-        next: i === 0 ? null : posts[i - 1],
-        prev: i === posts.length - 1 ? null : posts[i + 1],
-      },
-    }));
+  return posts.map((post, i) => ({
+    params: { slug: post.slug },
+    props: {
+      post,
+      next: i === 0 ? null : posts[i - 1],
+      prev: i === posts.length - 1 ? null : posts[i + 1],
+    },
+  }));
 }) satisfies GetStaticPaths;
 
 const { post, prev, next } = Astro.props;

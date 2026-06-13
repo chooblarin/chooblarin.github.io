@@ -9,5 +9,15 @@ import logo from "@/assets/images/logo.svg?raw";
 <style>
   a {
     color: inherit;
+    display: block;
+  }
+  /* Cap at the intrinsic 347px width, but shrink to fit narrow screens. */
+  a :global(svg) {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    /* The face mark touches the viewBox bottom edge (y=56); without this the
+       outermost svg viewport clips the last sub-pixel of the outline. */
+    overflow: visible;
   }
 </style>

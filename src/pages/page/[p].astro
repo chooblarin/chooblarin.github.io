@@ -1,21 +1,19 @@
 ---
 import type { GetStaticPaths } from "astro";
-import { getCollection } from "astro:content";
 import BaseHead from "../../components/BaseHead.astro";
 import Footer from "../../components/Footer.astro";
 import HomeHeader from "../../components/HomeHeader.astro";
 import MaxWidthContainer from "../../components/MaxWidthContainer.astro";
 import PostItem from "../../components/PostItem.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+import { getPosts } from "../../lib/posts";
 
 export const getStaticPaths = (async () => {
-  const posts = await getCollection("post");
+  const posts = await getPosts();
   const countPerPage = 10;
-  const pageSize = Math.ceil(posts.length / countPerPage);
-  const chunked = Array.from({ length: pageSize }, (_, i) =>
-    posts
-      .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-      .slice(i * countPerPage, i * countPerPage + countPerPage)
+  const pageCount = Math.ceil(posts.length / countPerPage);
+  const chunked = Array.from({ length: pageCount }, (_, i) =>
+    posts.slice(i * countPerPage, i * countPerPage + countPerPage),
   );
 
   return chunked.map((chunk, index) => ({
@@ -40,21 +38,21 @@ const { chunk, hasNext, hasPrev, page } = Astro.props;
     />
     <style>
       main {
-        padding: 0 16px 96px;
+        padding: 0 var(--space-page-inline) var(--space-page-block-end);
       }
       .links {
         display: flex;
-        gap: 12px;
-        margin: 48px 0;
+        gap: var(--space-sm);
+        margin: var(--space-2xl) 0;
       }
       .link {
         text-decoration: none;
-        border: 1px solid rgb(229 231 235);
-        padding: 8px 16px;
+        border: 1px solid var(--color-border);
+        padding: var(--space-xs) var(--space-md);
         transition: border-color 0.2s linear;
       }
       .link:hover {
-        border-color: rgb(209 213 219);
+        border-color: var(--color-primary);
       }
     </style>
   </head>
