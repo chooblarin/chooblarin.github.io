@@ -1,7 +1,7 @@
 /* The global `:focus-visible` ring (BaseHead) already applies to <a>, so this
    primitive only defines color + decoration. */
 .root {
-  border-radius: 0.35rem;
+  border-radius: var(--radius-focus);
   line-height: 1.35;
   overflow-wrap: anywhere;
   text-decoration-thickness: 1px;

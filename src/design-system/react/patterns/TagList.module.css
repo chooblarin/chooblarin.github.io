@@ -18,7 +18,7 @@
 .link {
   display: inline-flex;
   align-items: center;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   text-decoration: none;
   transition:
     border-color 0.16s ease,

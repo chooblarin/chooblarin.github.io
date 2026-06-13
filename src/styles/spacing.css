@@ -22,7 +22,16 @@
     --space-control-inline: var(--space-md);
     --space-touch-target: 2.5rem;
 
+    /* Corner radii. `full` = pill (chips, markers); `focus` rounds the
+       focus-visible ring on inline elements. */
     --radius-sm: 0.25rem;
     --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-full: 999px;
+    --radius-focus: 0.35rem;
+
+    /* Focus-ring geometry (color lives in color.css as --color-focus-ring). */
+    --focus-ring-width: 2px;
+    --focus-ring-offset: 2px;
   }
 }
