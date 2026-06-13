@@ -10,19 +10,19 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.4",
-    "@astrojs/mdx": "^4.3.4",
+    "@astrojs/check": "^0.9.9",
+    "@astrojs/mdx": "^6.0.3",
     "@astrojs/rss": "^4.0.18",
-    "@astrojs/sitemap": "^3.5.1",
-    "@astrojs/svelte": "^7.1.0",
-    "@fontsource-variable/jetbrains-mono": "^5.1.2",
-    "@rive-app/canvas": "^2.31.4",
-    "astro": "^5.13.5",
-    "date-fns": "^4.1.0",
-    "rehype-katex": "^7.0.0",
+    "@astrojs/sitemap": "^3.7.3",
+    "@astrojs/svelte": "^8.1.2",
+    "@fontsource-variable/jetbrains-mono": "^5.2.8",
+    "@rive-app/canvas": "^2.38.1",
+    "astro": "^6.4.6",
+    "date-fns": "^4.4.0",
+    "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
     "svelte": "^5.38.6",
-    "typescript": "^5.9.2"
+    "typescript": "^6.0.3"
   },
   "devDependencies": {
     "prettier": "^3.4.2",
