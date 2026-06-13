@@ -4,7 +4,7 @@ import BaseHead from "../../components/BaseHead.astro";
 import Footer from "../../components/Footer.astro";
 import HomeHeader from "../../components/HomeHeader.astro";
 import MaxWidthContainer from "../../components/MaxWidthContainer.astro";
-import PostItem from "../../components/PostItem.astro";
+import PostItem from "../../islands/PostItemIsland.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 import { getPosts, type Post } from "../../lib/posts";
 import { slugify } from "../../lib/util";
@@ -60,7 +60,7 @@ const { tag, posts } = Astro.props;
               <PostItem
                 title={post.data.title}
                 date={post.data.date}
-                slug={post.id}
+                href={`/post/${post.id}`}
               />
             ))
           }

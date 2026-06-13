@@ -39,6 +39,7 @@
   --color-accent-light: var(--palette-teal);
   --color-accent-strong-light: oklch(0.5 0.1 195.8);
   --color-highlight-light: var(--palette-yellow);
+  --color-danger-light: oklch(0.55 0.19 25);
   --color-focus-ring-light: var(--palette-purple);
 
   /* 2b. Source tokens — dark (navy-based) ------------------------------- */
@@ -56,6 +57,7 @@
   --color-accent-dark: oklch(0.76 0.1 195.8);
   --color-accent-strong-dark: oklch(0.82 0.1 195.8);
   --color-highlight-dark: oklch(0.92 0.12 110);
+  --color-danger-dark: oklch(0.68 0.16 25);
   --color-focus-ring-dark: oklch(0.74 0.14 292.5);
 
   /* 3. Public tokens (default to light; mapped via light-dark below) ---- */
@@ -72,6 +74,7 @@
   --color-accent: var(--color-accent-light);
   --color-accent-strong: var(--color-accent-strong-light);
   --color-highlight: var(--color-highlight-light);
+  --color-danger: var(--color-danger-light);
   --color-focus-ring: var(--color-focus-ring-light);
 }
 
@@ -131,6 +134,10 @@
     --color-highlight: light-dark(
       var(--color-highlight-light),
       var(--color-highlight-dark)
+    );
+    --color-danger: light-dark(
+      var(--color-danger-light),
+      var(--color-danger-dark)
     );
     --color-focus-ring: light-dark(
       var(--color-focus-ring-light),

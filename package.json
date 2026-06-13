@@ -19,7 +19,6 @@
     "@astrojs/react": "^5.0.7",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.3",
-    "@astrojs/svelte": "^8.1.2",
     "@base-ui/react": "^1.5.0",
     "@fontsource-variable/jetbrains-mono": "^5.2.8",
     "@rive-app/canvas": "^2.38.1",
@@ -31,7 +30,6 @@
     "react-dom": "^19.2.7",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
-    "svelte": "^5.56.3",
     "typescript": "^6.0.3",
     "zod": "^4.4.3"
   },
@@ -41,6 +39,7 @@
     "@types/react-dom": "^19.2.3",
     "prettier": "^3.8.4",
     "prettier-plugin-astro": "^0.14.1",
-    "storybook": "^10.4.4"
+    "storybook": "^10.4.4",
+    "vite": "^8.0.16"
   }
 }

@@ -1,0 +1,9 @@
+---
+import type { TagListProps } from "../design-system/react/patterns/TagList";
+import TagList from "../design-system/react/patterns/TagList";
+
+// Non-interactive: server-rendered only (no client directive = zero JS).
+const { items, variant = "chip" } = Astro.props as TagListProps;
+---
+
+<TagList items={items} variant={variant} />

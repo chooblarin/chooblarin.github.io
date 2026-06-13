@@ -1,0 +1,25 @@
+.root {
+  display: block;
+  text-decoration: none;
+}
+.emphasisDefault,
+.emphasisSubtle {
+  background: transparent;
+}
+.body {
+  padding: var(--space-xs) 0;
+}
+.title {
+  color: var(--color-text);
+  font-size: 1.25rem;
+  margin: var(--space-sm) 0 var(--space-xs);
+  transition: color 0.2s linear;
+}
+.root:hover .title {
+  color: var(--color-primary);
+}
+.date {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  margin: var(--space-xs) 0;
+}

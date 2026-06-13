@@ -22,10 +22,10 @@ This is an Astro-based personal blog with the following structure:
   - Content schema defined in `src/content/config.ts` with required fields: title, date, tags, and optional description, image, draft
   - Posts are sorted by date (newest first) on the homepage
 
-- **Components**: Mix of Astro components (`.astro`) and Svelte components (`.svelte`)
+- **Components**: Mix of Astro components (`.astro`) and React components (`.tsx`)
   - Key components: BaseHead, HomeHeader, Footer, PostItem, TableOfContents
   - Layouts in `src/layouts/` (Post.astro for blog post pages)
-  - RiveAnim.svelte uses @rive-app/canvas for animations
+  - RiveAnim.tsx uses @rive-app/canvas for animations
 
 - **Routing**: File-based routing in `src/pages/`
   - Dynamic routes for posts (`[slug].astro`), pagination (`[p].astro`), and tags (`[tag].astro`)
@@ -43,5 +43,5 @@ Uses `@/*` alias pointing to `src/*` (configured in tsconfig.json).
 
 - MDX support for enhanced markdown
 - Sitemap generation
-- Svelte integration for interactive components
+- React integration for interactive components
 - Prettier for code formatting with Astro plugin

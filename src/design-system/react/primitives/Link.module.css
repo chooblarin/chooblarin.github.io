@@ -1,0 +1,41 @@
+/* The global `:focus-visible` ring (BaseHead) already applies to <a>, so this
+   primitive only defines color + decoration. */
+.root {
+  border-radius: 0.35rem;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: currentcolor;
+  transition:
+    color 0.16s ease,
+    text-decoration-color 0.16s ease;
+}
+
+.intentBrand {
+  color: var(--color-primary);
+}
+
+.intentMuted {
+  color: var(--color-text-muted);
+}
+
+.intentDanger {
+  color: var(--color-danger);
+}
+
+.decorationAlways {
+  text-decoration-line: underline;
+}
+
+.decorationHover {
+  text-decoration-line: none;
+}
+
+.decorationHover:hover {
+  text-decoration-line: underline;
+}
+
+.decorationNone {
+  text-decoration: none;
+}

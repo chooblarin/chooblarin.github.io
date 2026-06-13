@@ -9,6 +9,7 @@ import Footer from "../components/Footer.astro";
 import Logo from "../components/Logo.astro";
 import MaxWidthContainer from "../components/MaxWidthContainer.astro";
 import TableOfContents from "../components/TableOfContents.astro";
+import TagListIsland from "../islands/TagListIsland.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import { slugify } from "../lib/util";
 
@@ -106,18 +107,6 @@ const jsonLd = {
       .tags {
         margin: var(--space-lg) 0;
       }
-      .tag {
-        display: inline-block;
-        margin: var(--space-xs) var(--space-xs) var(--space-xs) 0;
-      }
-      .tag a {
-        font-size: 0.75rem;
-        color: var(--color-text-muted);
-        background-color: var(--color-surface);
-        text-decoration: none;
-        border-radius: var(--radius-sm);
-        padding: var(--space-2xs) var(--space-sm);
-      }
       .links {
         display: flex;
         justify-content: space-between;
@@ -180,15 +169,14 @@ const jsonLd = {
           <article class="post-article">
             <h1 class="title">{title}</h1>
             <p class="date">{formattedDate}</p>
-            <ul class="tags">
-              {
-                tagItems.map((tag) => (
-                  <li class="tag">
-                    <a href={`/tags/${tag.slug}`}>{`#${tag.name}`}</a>
-                  </li>
-                ))
-              }
-            </ul>
+            <div class="tags">
+              <TagListIsland
+                items={tagItems.map((tag) => ({
+                  label: `#${tag.name}`,
+                  href: `/tags/${tag.slug}`,
+                }))}
+              />
+            </div>
             <div class="article-prose">
               <slot />
             </div>

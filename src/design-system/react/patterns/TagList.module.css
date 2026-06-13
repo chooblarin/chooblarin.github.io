@@ -1,0 +1,47 @@
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.46rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.item {
+  margin: 0;
+}
+.variantChip {
+  gap: 0.5rem;
+}
+.variantPlain {
+  gap: 0.72rem;
+}
+.link {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  text-decoration: none;
+  transition:
+    border-color 0.16s ease,
+    color 0.16s ease;
+}
+.linkChip {
+  min-height: 1.8rem;
+  padding: 0.24rem 0.66rem;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  font-size: 0.76rem;
+}
+.linkChip:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+.linkPlain {
+  border: 1px solid transparent;
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+.linkPlain:hover {
+  color: var(--color-primary);
+}
