@@ -8,11 +8,14 @@ const currentYear = new Date().getFullYear();
 <footer>
   <MaxWidthContainer>
     <div class="footer-content">
-      <ThemeToggle />
+      <span class="gutter" aria-hidden="true"></span>
       <p class="copyright">
         &copy; 2015-{currentYear}
         <a href="https://www.sotahatakeyama.com/" class="me">sotahatakeyama.</a>
       </p>
+      <div class="gutter actions">
+        <ThemeToggle />
+      </div>
     </div>
   </MaxWidthContainer>
 </footer>
@@ -24,12 +27,22 @@ const currentYear = new Date().getFullYear();
   }
   .footer-content {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: var(--space-md);
+    gap: var(--space-sm);
     padding: 0 var(--space-page-inline) var(--space-page-block-end);
   }
+  /* Equal-width side gutters keep the copyright centered while the toggle
+     sits on the right. */
+  .gutter {
+    flex: 0 0 var(--space-touch-target);
+    display: flex;
+  }
+  .actions {
+    justify-content: flex-end;
+  }
   .copyright {
+    flex: 1 1 auto;
+    text-align: center;
     font-size: 1rem;
     color: var(--color-text-muted);
     letter-spacing: 0.05rem;

@@ -137,6 +137,7 @@ const imageURL = new URL(image, Astro.site ?? Astro.url);
       --color-background: light-dark(rgb(255 255 255), rgb(24 24 27));
       --color-surface: light-dark(rgb(243 244 246), rgb(39 39 42));
       --color-border: light-dark(rgb(209 213 219), rgb(63 63 70));
+      --color-focus-ring: var(--color-primary);
     }
 
     /* An explicit user choice pins color-scheme; otherwise the OS decides. */
@@ -171,6 +172,21 @@ const imageURL = new URL(image, Astro.site ?? Astro.url);
       background-color: transparent;
       overflow-wrap: anywhere;
       text-decoration: underline;
+    }
+
+    /* Keyboard focus ring (keyboard only, not on mouse click). */
+    :where(
+        a,
+        button,
+        input,
+        textarea,
+        select,
+        summary,
+        [tabindex]
+      ):focus-visible {
+      outline: 2px solid var(--color-focus-ring);
+      outline-offset: 2px;
+      border-radius: 0.35rem;
     }
   }
 

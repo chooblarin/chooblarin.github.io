@@ -63,7 +63,7 @@ const jsonLd = {
       is:inline
       set:html={JSON.stringify(jsonLd)}
     />
-    <style is:inline>
+    <style>
       header {
         display: flex;
         justify-content: center;
@@ -78,7 +78,7 @@ const jsonLd = {
         border-bottom: 1px solid var(--color-border);
         padding: var(--space-xs);
       }
-      .container {
+      .post-columns {
         display: flex;
         flex-direction: row-reverse;
         justify-content: center;
@@ -173,7 +173,7 @@ const jsonLd = {
             <Logo />
           </div>
         </header>
-        <div class="container">
+        <div class="post-columns">
           <TableOfContents headings={headings} />
           <article class="post-article">
             <h1 class="title">{title}</h1>
