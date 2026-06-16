@@ -6,6 +6,7 @@ export type RiveAnimProps = {
   width?: number;
   height?: number;
   maxWidth?: number;
+  ariaLabel?: string;
 };
 
 export default function RiveAnim({
@@ -13,6 +14,7 @@ export default function RiveAnim({
   width = 500,
   height = 500,
   maxWidth = 640,
+  ariaLabel = "Rive animation",
 }: RiveAnimProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -82,7 +84,7 @@ export default function RiveAnim({
 
   return (
     <div ref={rootRef} style={rootStyle}>
-      <canvas ref={canvasRef} style={canvasStyle} />
+      <canvas ref={canvasRef} style={canvasStyle} aria-label={ariaLabel} />
     </div>
   );
 }

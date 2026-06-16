@@ -1,0 +1,8 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["oxc", "typescript", "unicorn", "react", "jsx-a11y"],
+  "ignorePatterns": ["src/env.d.ts"],
+  "options": {
+    "denyWarnings": true
+  }
+}

@@ -28,7 +28,7 @@ const isDescriptionCandidate = (line: string) => {
   if (line.length === 0) return false;
   if (/^#{1,6}\s/.test(line)) return false;
   if (/^import\s/.test(line) || /^export\s/.test(line)) return false;
-  if (/^!\[/.test(line)) return false;
+  if (line.startsWith("![")) return false;
   if (/^<\/?[A-Z][\w.:-]*/.test(line)) return false;
   if (/^\|.*\|$/.test(line)) return false;
   if (/^[-*_]{3,}$/.test(line)) return false;
