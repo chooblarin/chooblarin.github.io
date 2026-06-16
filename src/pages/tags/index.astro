@@ -4,26 +4,9 @@ import Footer from "../../components/Footer.astro";
 import HomeHeader from "../../components/HomeHeader.astro";
 import MaxWidthContainer from "../../components/MaxWidthContainer.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
-import { getPosts } from "../../lib/posts";
-import { slugify } from "../../lib/util";
+import { getTagList } from "../../lib/posts";
 
-const allPosts = await getPosts();
-
-const tagGroups = new Map<string, { tag: string; count: number }>();
-for (const post of allPosts) {
-  for (const tag of post.data.tags) {
-    const slug = slugify(tag);
-    const group = tagGroups.get(slug) ?? { tag, count: 0 };
-    group.count += 1;
-    tagGroups.set(slug, group);
-  }
-}
-
-const tagItems = Array.from(tagGroups, ([slug, { tag, count }]) => ({
-  slug,
-  tag,
-  count,
-})).sort((a, b) => a.tag.localeCompare(b.tag));
+const tagItems = await getTagList();
 ---
 
 <html lang="ja">

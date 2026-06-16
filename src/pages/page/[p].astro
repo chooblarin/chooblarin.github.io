@@ -7,28 +7,18 @@ import MaxWidthContainer from "../../components/MaxWidthContainer.astro";
 import PaginationNav from "../../islands/PaginationNavIsland.astro";
 import PostItem from "../../islands/PostItemIsland.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
-import { getPosts } from "../../lib/posts";
+import { getPostPages } from "../../lib/posts";
 
 export const getStaticPaths = (async () => {
-  const posts = await getPosts();
-  const countPerPage = 10;
-  const pageCount = Math.ceil(posts.length / countPerPage);
-  const chunked = Array.from({ length: pageCount }, (_, i) =>
-    posts.slice(i * countPerPage, i * countPerPage + countPerPage),
-  );
+  const pages = await getPostPages();
 
-  return chunked.map((chunk, index) => ({
-    params: { p: (index + 1).toString() },
-    props: {
-      chunk,
-      hasPrev: index - 1 >= 0,
-      hasNext: index + 1 < chunked.length,
-      page: index + 1,
-    },
+  return pages.map((page) => ({
+    params: { p: page.page.toString() },
+    props: page,
   }));
 }) satisfies GetStaticPaths;
 
-const { chunk, hasNext, hasPrev, page } = Astro.props;
+const { posts, hasNext, hasPrev, page } = Astro.props;
 ---
 
 <html lang="ja">
@@ -49,7 +39,7 @@ const { chunk, hasNext, hasPrev, page } = Astro.props;
       <main>
         <section>
           {
-            chunk.map((post) => (
+            posts.map((post) => (
               <PostItem
                 title={post.data.title}
                 date={post.data.date}

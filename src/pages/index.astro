@@ -5,9 +5,9 @@ import HomeHeader from "../components/HomeHeader.astro";
 import MaxWidthContainer from "../components/MaxWidthContainer.astro";
 import PostItem from "../islands/PostItemIsland.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts.ts";
-import { getPosts } from "../lib/posts";
+import { getLatestPosts } from "../lib/posts";
 
-const latestPosts = (await getPosts()).slice(0, 5);
+const latestPosts = await getLatestPosts(5);
 ---
 
 <html lang="ja">

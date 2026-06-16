@@ -2,7 +2,6 @@
 import "@fontsource-variable/jetbrains-mono";
 import type { MarkdownHeading } from "astro";
 import type { CollectionEntry } from "astro:content";
-import { format } from "date-fns";
 
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
@@ -12,6 +11,7 @@ import PostNavCardIsland from "../islands/PostNavCardIsland.astro";
 import TableOfContentsIsland from "../islands/TableOfContentsIsland.astro";
 import TagListIsland from "../islands/TagListIsland.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import { formatDisplayDate } from "../lib/date";
 import { slugify } from "../lib/util";
 
 type Props = {
@@ -23,7 +23,7 @@ type Props = {
 
 const { post, prev, next, headings } = Astro.props;
 const { title, date, tags, description, image } = post.data;
-const formattedDate = format(date, "MMMM dd, yyyy");
+const formattedDate = formatDisplayDate(date);
 
 const tagItems = tags.map((name) => ({
   name,
