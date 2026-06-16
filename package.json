@@ -21,6 +21,8 @@
     "@astrojs/sitemap": "^3.7.3",
     "@base-ui/react": "^1.5.0",
     "@fontsource-variable/jetbrains-mono": "^5.2.8",
+    "@fontsource/noto-sans-jp": "^5.2.9",
+    "@resvg/resvg-js": "^2.6.2",
     "@rive-app/canvas": "^2.38.1",
     "astro": "^6.4.6",
     "class-variance-authority": "^0.7.1",
@@ -29,6 +31,7 @@
     "react-dom": "^19.2.7",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
+    "satori": "^0.26.0",
     "typescript": "^6.0.3",
     "zod": "^4.4.3"
   },
