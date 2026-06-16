@@ -35,6 +35,10 @@ export type OgTitleLayout = {
   fontSize: number;
 };
 
+type OgTitleLayoutOptions = {
+  maxWidth?: number;
+};
+
 type LayoutCandidate = {
   lines: string[];
   score: number;
@@ -153,8 +157,9 @@ const layoutBalancedLines = (
     lineWidth: number;
   };
 
-  const dp = Array.from({ length: lineCount + 1 }, () =>
-    new Map<number, State>(),
+  const dp = Array.from(
+    { length: lineCount + 1 },
+    () => new Map<number, State>(),
   );
   const totalWidth = getRangeWidth(widths, 0, widths.length);
   const targetWidth = Math.min(maxWidth, totalWidth / lineCount);
@@ -268,11 +273,19 @@ const getFontSizeCandidates = () => {
   return candidates;
 };
 
-const layoutWithFontSize = (title: string, fontSize: number) => {
-  const maxWidth = TITLE_MAX_WIDTH / fontSize;
+const layoutWithFontSize = (
+  title: string,
+  fontSize: number,
+  titleMaxWidth: number,
+) => {
+  const maxWidth = titleMaxWidth / fontSize;
   const wordCandidate = tokenizeByWord(title);
   const tokenSets = wordCandidate
-    ? [wordCandidate, tokenizeByGrapheme(title), tokenizeByStrictGrapheme(title)]
+    ? [
+        wordCandidate,
+        tokenizeByGrapheme(title),
+        tokenizeByStrictGrapheme(title),
+      ]
     : [tokenizeByGrapheme(title), tokenizeByStrictGrapheme(title)];
 
   for (const tokens of tokenSets) {
@@ -283,21 +296,29 @@ const layoutWithFontSize = (title: string, fontSize: number) => {
   return undefined;
 };
 
-export const layoutOgTitle = (title: string): OgTitleLayout => {
+export const layoutOgTitle = (
+  title: string,
+  options: OgTitleLayoutOptions = {},
+): OgTitleLayout => {
+  const titleMaxWidth = options.maxWidth ?? TITLE_MAX_WIDTH;
   const sanitizedTitle = sanitizeOgText(title);
   if (sanitizedTitle.length === 0) {
     return { lines: [""], fontSize: TITLE_MAX_FONT_SIZE };
   }
 
   for (const fontSize of getFontSizeCandidates()) {
-    const candidate = layoutWithFontSize(sanitizedTitle, fontSize);
+    const candidate = layoutWithFontSize(
+      sanitizedTitle,
+      fontSize,
+      titleMaxWidth,
+    );
     if (candidate && candidate.lines.length <= TITLE_MAX_LINES) {
       return { lines: candidate.lines, fontSize };
     }
   }
 
   const fontSize = TITLE_MIN_FONT_SIZE;
-  const maxWidth = TITLE_MAX_WIDTH / fontSize;
+  const maxWidth = titleMaxWidth / fontSize;
   return {
     lines: [appendEllipsis(sanitizedTitle, maxWidth)],
     fontSize,

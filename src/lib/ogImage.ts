@@ -8,7 +8,10 @@ import { layoutOgTitle } from "./ogTitleLayout";
 
 const OG_IMAGE_WIDTH = 1200;
 const OG_IMAGE_HEIGHT = 630;
-const TITLE_MAX_WIDTH = 980;
+const OG_IMAGE_SCALE = 2;
+const TITLE_MAX_WIDTH = 850;
+const LOGO_IMAGE_SIZE = 80;
+const CONTENT_GAP = 36;
 const FONT_FAMILY_PREFIX = "Noto Sans JP";
 const AUTHOR_LINE = "By sotahatakeyama (@chooblarin)";
 
@@ -19,8 +22,10 @@ const notoSansJpFilesDir = path.join(
   path.dirname(notoSansJpPackagePath),
   "files",
 );
+const logoImagePath = path.join(process.cwd(), "public/favicon.svg");
 
 let fontPromise: Promise<Font[]> | undefined;
+let logoImagePromise: Promise<string> | undefined;
 
 const loadFonts = async () => {
   const fontFiles = (await readdir(notoSansJpFilesDir))
@@ -42,13 +47,24 @@ const getFonts = () => {
   return fontPromise;
 };
 
+const loadLogoImage = async () =>
+  `data:image/svg+xml;base64,${(await readFile(logoImagePath)).toString(
+    "base64",
+  )}`;
+
+const getLogoImage = () => {
+  logoImagePromise ??= loadLogoImage();
+  return logoImagePromise;
+};
+
 const getFontFamily = (fonts: Font[]) =>
   fonts.map((font) => `"${font.name}"`).join(", ");
 
 export const renderGeneratedOgImage = async (title: string) => {
   const fonts = await getFonts();
+  const logoImage = await getLogoImage();
   const fontFamily = getFontFamily(fonts);
-  const titleLayout = layoutOgTitle(title);
+  const titleLayout = layoutOgTitle(title, { maxWidth: TITLE_MAX_WIDTH });
 
   const svg = await satori(
     createElement(
@@ -60,83 +76,88 @@ export const renderGeneratedOgImage = async (title: string) => {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-between",
+          justifyContent: "center",
           backgroundColor: "#fafcff",
-          color: "#492e87",
+          color: "#0a1d56",
           padding: "72px 84px",
           fontFamily,
           fontWeight: 700,
         },
       },
-      createElement("div", {
-        style: {
-          width: "100%",
-          height: "8px",
-          display: "flex",
-          background:
-            "linear-gradient(90deg, #0a1d56 0%, #492e87 58%, #37b5b6 100%)",
-          borderRadius: "999px",
-        },
-      }),
       createElement(
         "div",
         {
           style: {
             display: "flex",
-            flexDirection: "column",
-            gap: "40px",
+            flexDirection: "row",
+            gap: `${CONTENT_GAP}px`,
+            alignItems: "flex-start",
+            width: "100%",
           },
         },
+        createElement("img", {
+          alt: "",
+          src: logoImage,
+          width: LOGO_IMAGE_SIZE,
+          height: LOGO_IMAGE_SIZE,
+          style: {
+            display: "flex",
+            width: `${LOGO_IMAGE_SIZE}px`,
+            height: `${LOGO_IMAGE_SIZE}px`,
+            objectFit: "contain",
+          },
+        }),
         createElement(
           "div",
           {
             style: {
               display: "flex",
               flexDirection: "column",
-              color: "#0a1d56",
-              fontSize: titleLayout.fontSize,
-              lineHeight: 1.08,
-              letterSpacing: "0",
+              gap: "28px",
               width: `${TITLE_MAX_WIDTH}px`,
             },
           },
-          titleLayout.lines.map((line, index) =>
-            createElement(
-              "div",
-              {
-                key: `${line}-${index}`,
-                style: {
-                  display: "flex",
-                  whiteSpace: "nowrap",
-                },
+          createElement(
+            "div",
+            {
+              style: {
+                display: "flex",
+                flexDirection: "column",
+                fontSize: titleLayout.fontSize,
+                lineHeight: 1.14,
+                letterSpacing: "0",
+                width: `${TITLE_MAX_WIDTH}px`,
               },
-              line,
+            },
+            titleLayout.lines.map((line, index) =>
+              createElement(
+                "div",
+                {
+                  key: `${line}-${index}`,
+                  style: {
+                    display: "flex",
+                    whiteSpace: "nowrap",
+                  },
+                },
+                line,
+              ),
             ),
           ),
-        ),
-        createElement(
-          "div",
-          {
-            style: {
-              display: "flex",
-              color: "#6e7380",
-              fontSize: 34,
-              lineHeight: 1.2,
-              letterSpacing: "0",
+          createElement(
+            "div",
+            {
+              style: {
+                display: "flex",
+                color: "#6e7380",
+                fontSize: 28,
+                lineHeight: 1.2,
+                letterSpacing: "0",
+              },
             },
-          },
-          AUTHOR_LINE,
+            AUTHOR_LINE,
+          ),
         ),
       ),
-      createElement("div", {
-        style: {
-          width: "28%",
-          height: "8px",
-          display: "flex",
-          backgroundColor: "#37b5b6",
-          borderRadius: "999px",
-        },
-      }),
     ),
     {
       width: OG_IMAGE_WIDTH,
@@ -146,7 +167,7 @@ export const renderGeneratedOgImage = async (title: string) => {
   );
 
   return new Resvg(svg, {
-    fitTo: { mode: "original" },
+    fitTo: { mode: "width", value: OG_IMAGE_WIDTH * OG_IMAGE_SCALE },
     textRendering: 1,
   })
     .render()
