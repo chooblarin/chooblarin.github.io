@@ -10,7 +10,7 @@ const meta: Meta<typeof PostNavCard> = {
     href: "/post/sample-entry",
     title: "記事詳細ページのコンポーネント責務を整理した",
     date: "2026-02-27",
-    label: "前の記事",
+    label: "古い記事へ",
   },
 };
 export default meta;
@@ -24,4 +24,4 @@ export const LongTitle: Story = {
       "TableOfContents の active 追従を Intersection Observer で実装し、スクロール時の視認性を改善した",
   },
 };
-export const NextLabel: Story = { args: { label: "次の記事" } };
+export const NewerPost: Story = { args: { label: "新しい記事へ" } };

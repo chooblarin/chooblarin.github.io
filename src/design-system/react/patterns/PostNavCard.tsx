@@ -14,7 +14,7 @@ export type PostNavCardProps = {
 
 export default function PostNavCard({
   href,
-  label = "前の記事",
+  label = "古い記事へ",
   title,
   date,
   className,

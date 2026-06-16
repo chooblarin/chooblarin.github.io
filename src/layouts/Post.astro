@@ -177,11 +177,11 @@ const jsonLd = {
             </div>
             {
               (prev || next) && (
-                <nav class="post-nav" aria-label="前後の記事">
+                <nav class="post-nav" aria-label="前後の記事へのナビゲーション">
                   {prev && (
                     <PostNavCardIsland
                       href={`/post/${prev.id}`}
-                      label="前の記事"
+                      label="古い記事へ"
                       title={prev.data.title}
                       date={prev.data.date}
                     />
@@ -190,7 +190,7 @@ const jsonLd = {
                     <PostNavCardIsland
                       className="post-nav-next"
                       href={`/post/${next.id}`}
-                      label="次の記事"
+                      label="新しい記事へ"
                       title={next.data.title}
                       date={next.data.date}
                     />
