@@ -9,6 +9,7 @@
     "build": "astro check && astro build",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
+    "test": "node --test --experimental-strip-types src/lib/postMetadata.test.ts",
     "preview": "astro preview",
     "astro": "astro",
     "storybook": "storybook dev -p 6006",
