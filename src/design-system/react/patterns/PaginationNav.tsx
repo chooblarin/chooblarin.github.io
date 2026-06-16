@@ -18,8 +18,8 @@ export type PaginationNavProps = {
 export default function PaginationNav({
   prevHref,
   nextHref,
-  prevLabel = "前へ",
-  nextLabel = "次へ",
+  prevLabel = "前のページへ",
+  nextLabel = "次のページへ",
   className,
 }: PaginationNavProps) {
   if (!prevHref && !nextHref) {

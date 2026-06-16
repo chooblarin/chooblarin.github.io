@@ -9,8 +9,8 @@ const meta: Meta<typeof PaginationNav> = {
   args: {
     prevHref: "/page/1",
     nextHref: "/page/3",
-    prevLabel: "前へ",
-    nextLabel: "次へ",
+    prevLabel: "前のページへ",
+    nextLabel: "次のページへ",
   },
 };
 export default meta;

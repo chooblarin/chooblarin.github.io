@@ -2,12 +2,18 @@
 import "../styles/color.css";
 import "../styles/spacing.css";
 import "../styles/typography.css";
-import { SITE_TITLE } from "../consts";
+import {
+  DEFAULT_OG_IMAGE_HEIGHT,
+  DEFAULT_OG_IMAGE_WIDTH,
+  SITE_TITLE,
+} from "../consts";
 
 type Props = {
   title: string;
   description: string;
   image?: string;
+  imageWidth?: number;
+  imageHeight?: number;
   type?: "website" | "article";
   publishedTime?: Date;
 };
@@ -18,11 +24,19 @@ const {
   title,
   description,
   image = "/og-default.png",
+  imageWidth,
+  imageHeight,
   type = "website",
   publishedTime,
 } = Astro.props;
 
 const imageURL = new URL(image, Astro.site ?? Astro.url);
+const ogImageDimensions =
+  imageWidth && imageHeight
+    ? { width: imageWidth, height: imageHeight }
+    : image === "/og-default.png"
+      ? { width: DEFAULT_OG_IMAGE_WIDTH, height: DEFAULT_OG_IMAGE_HEIGHT }
+      : undefined;
 ---
 
 <!-- Global Metadata -->
@@ -75,6 +89,20 @@ const imageURL = new URL(image, Astro.site ?? Astro.url);
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={imageURL} />
+{
+  ogImageDimensions && (
+    <>
+      <meta
+        property="og:image:width"
+        content={ogImageDimensions.width.toString()}
+      />
+      <meta
+        property="og:image:height"
+        content={ogImageDimensions.height.toString()}
+      />
+    </>
+  )
+}
 {
   type === "article" && publishedTime && (
     <meta

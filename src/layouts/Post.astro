@@ -10,9 +10,18 @@ import MaxWidthContainer from "../components/MaxWidthContainer.astro";
 import PostNavCardIsland from "../islands/PostNavCardIsland.astro";
 import TableOfContentsIsland from "../islands/TableOfContentsIsland.astro";
 import TagListIsland from "../islands/TagListIsland.astro";
-import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import {
+  GENERATED_OG_IMAGE_HEIGHT,
+  GENERATED_OG_IMAGE_WIDTH,
+  SITE_DESCRIPTION,
+  SITE_TITLE,
+} from "../consts";
 import { formatDisplayDate } from "../lib/date";
-import { getPostOgImage, getPostSummary } from "../lib/postMetadata";
+import {
+  getPostImage,
+  getPostOgImage,
+  getPostSummary,
+} from "../lib/postMetadata";
 import { slugify } from "../lib/util";
 
 type Props = {
@@ -27,6 +36,7 @@ const { title, date, tags } = post.data;
 const formattedDate = formatDisplayDate(date);
 const postSummary = getPostSummary(post, SITE_DESCRIPTION);
 const ogImage = getPostOgImage(post);
+const hasCustomOgImage = Boolean(getPostImage(post));
 
 const tagItems = tags.map((name) => ({
   name,
@@ -61,6 +71,8 @@ const jsonLd = {
       title={`${title} | ${SITE_TITLE}`}
       description={postSummary}
       image={ogImage}
+      imageWidth={hasCustomOgImage ? undefined : GENERATED_OG_IMAGE_WIDTH}
+      imageHeight={hasCustomOgImage ? undefined : GENERATED_OG_IMAGE_HEIGHT}
       type="article"
       publishedTime={date}
     />
