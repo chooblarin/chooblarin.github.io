@@ -33,7 +33,7 @@ const tagItems = await getTagList();
           {
             tagItems.map((item) => (
               <li>
-                <a href={`/tags/${item.slug}`}>
+                <a href={`/tags/${item.slug}/`}>
                   {item.tag} ({item.count})
                 </a>
               </li>

@@ -7,7 +7,7 @@ const meta: Meta<typeof PostNavCard> = {
   component: PostNavCard,
   tags: ["autodocs"],
   args: {
-    href: "/post/sample-entry",
+    href: "/post/sample-entry/",
     title: "記事詳細ページのコンポーネント責務を整理した",
     date: "2026-02-27",
     label: "古い記事へ",

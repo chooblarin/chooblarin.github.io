@@ -43,14 +43,14 @@ const { posts, hasNext, hasPrev, page } = Astro.props;
               <PostItem
                 title={post.data.title}
                 date={post.data.date}
-                href={`/post/${post.id}`}
+                href={`/post/${post.id}/`}
               />
             ))
           }
         </section>
         <PaginationNav
-          prevHref={hasPrev ? `/page/${page - 1}` : undefined}
-          nextHref={hasNext ? `/page/${page + 1}` : undefined}
+          prevHref={hasPrev ? `/page/${page - 1}/` : undefined}
+          nextHref={hasNext ? `/page/${page + 1}/` : undefined}
         />
       </main>
     </MaxWidthContainer>

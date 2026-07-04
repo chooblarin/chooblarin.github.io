@@ -7,7 +7,7 @@ const meta: Meta<typeof PostItem> = {
   component: PostItem,
   tags: ["autodocs"],
   args: {
-    href: "/post/p5js-webcam-and-shader",
+    href: "/post/p5js-webcam-and-shader/",
     title: "p5.jsとShaderの画像エフェクト",
     date: "2023-12-02",
   },

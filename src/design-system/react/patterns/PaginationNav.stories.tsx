@@ -7,8 +7,8 @@ const meta: Meta<typeof PaginationNav> = {
   component: PaginationNav,
   tags: ["autodocs"],
   args: {
-    prevHref: "/page/1",
-    nextHref: "/page/3",
+    prevHref: "/page/1/",
+    nextHref: "/page/3/",
     prevLabel: "前のページへ",
     nextLabel: "次のページへ",
   },

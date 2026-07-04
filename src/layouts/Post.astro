@@ -180,7 +180,7 @@ const jsonLd = {
               <TagListIsland
                 items={tagItems.map((tag) => ({
                   label: `#${tag.name}`,
-                  href: `/tags/${tag.slug}`,
+                  href: `/tags/${tag.slug}/`,
                 }))}
               />
             </div>
@@ -192,7 +192,7 @@ const jsonLd = {
                 <nav class="post-nav" aria-label="前後の記事へのナビゲーション">
                   {prev && (
                     <PostNavCardIsland
-                      href={`/post/${prev.id}`}
+                      href={`/post/${prev.id}/`}
                       label="古い記事へ"
                       title={prev.data.title}
                       date={prev.data.date}
@@ -201,7 +201,7 @@ const jsonLd = {
                   {next && (
                     <PostNavCardIsland
                       className="post-nav-next"
-                      href={`/post/${next.id}`}
+                      href={`/post/${next.id}/`}
                       label="新しい記事へ"
                       title={next.data.title}
                       date={next.data.date}

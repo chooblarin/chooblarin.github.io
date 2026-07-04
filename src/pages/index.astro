@@ -32,13 +32,13 @@ const latestPosts = await getLatestPosts(5);
               <PostItem
                 title={post.data.title}
                 date={post.data.date}
-                href={`/post/${post.id}`}
+                href={`/post/${post.id}/`}
               />
             ))
           }
         </section>
 
-        <a href="/page/1">すべての記事を見る</a>
+        <a href="/page/1/">すべての記事を見る</a>
       </main>
     </MaxWidthContainer>
     <Footer />
