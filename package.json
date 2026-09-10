@@ -24,7 +24,7 @@
     "@base-ui/react": "^1.5.0",
     "@fontsource-variable/jetbrains-mono": "^5.2.8",
     "@rive-app/canvas": "^2.38.1",
-    "astro": "^6.4.6",
+    "astro": "^7.2.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "react": "^19.2.7",
