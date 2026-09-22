@@ -8,13 +8,14 @@ import remarkMath from "remark-math";
 
 // https://astro.build/config
 export default defineConfig({
+  // Preserve HTML whitespace handling from Astro 6.
+  compressHTML: true,
   redirects: {
     "/page": "/page/1",
   },
   site: "https://chooblarin.com",
   markdown: {
-    // Astro 6: remark/rehype plugins live on a `unified()` processor.
-    // shikiConfig stays at the markdown level (not deprecated).
+    // Keep the unified pipeline for remark-math and rehype-katex.
     shikiConfig: {
       theme: "houston",
     },

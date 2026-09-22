@@ -42,18 +42,7 @@ export default function TableOfContents({
   const [activeId, setActiveId] = useState<string>(() => getHashId());
 
   useEffect(() => {
-    if (filteredHeadings.length === 0) {
-      setActiveId("");
-      return;
-    }
-
-    if (!activeTracking || typeof window === "undefined") {
-      const hashId = getHashId();
-      setActiveId(
-        hashId && filteredHeadings.some((h) => h.id === hashId)
-          ? hashId
-          : filteredHeadings[0].id,
-      );
+    if (!activeTracking || filteredHeadings.length === 0) {
       return;
     }
 
@@ -107,7 +96,6 @@ export default function TableOfContents({
     window.addEventListener("resize", update);
     window.addEventListener("scroll", update, { passive: true });
 
-    syncFromHash();
     update();
 
     return () => {
