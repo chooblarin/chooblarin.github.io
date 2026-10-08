@@ -14,6 +14,9 @@ export default defineConfig({
     "/page": "/page/1",
   },
   site: "https://chooblarin.com",
+  image: {
+    domains: ["assets.sotahatakeyama.com"],
+  },
   markdown: {
     // Keep the unified pipeline for remark-math and rehype-katex.
     shikiConfig: {

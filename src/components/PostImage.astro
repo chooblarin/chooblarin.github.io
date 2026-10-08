@@ -1,0 +1,44 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  src: string;
+  alt: string;
+  caption?: string;
+}
+
+const { src, alt, caption } = Astro.props;
+---
+
+<figure class="post-image">
+  <Image
+    src={src}
+    alt={alt}
+    inferSize
+    layout="constrained"
+    loading="lazy"
+    sizes="auto, 100vw"
+  />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  @layer components {
+    .post-image {
+      margin-inline: 0;
+    }
+
+    .post-image :global(img) {
+      display: block;
+      margin: 0 auto;
+      height: auto;
+    }
+
+    figcaption {
+      margin-block-start: var(--space-sm);
+      color: var(--color-text-muted);
+      font-size: 0.875rem;
+      text-align: center;
+    }
+  }
+</style>
