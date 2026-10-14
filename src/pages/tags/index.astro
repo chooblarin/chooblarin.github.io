@@ -30,15 +30,13 @@ const tagItems = await getTagList();
       <main>
         <h1>Tags</h1>
         <ul>
-          {
-            tagItems.map((item) => (
-              <li>
-                <a href={`/tags/${item.slug}/`}>
-                  {item.tag} ({item.count})
-                </a>
-              </li>
-            ))
-          }
+          {tagItems.map((item) => (
+            <li>
+              <a href={`/tags/${item.slug}/`}>
+                {item.tag} ({item.count})
+              </a>
+            </li>
+          ))}
         </ul>
       </main>
     </MaxWidthContainer>

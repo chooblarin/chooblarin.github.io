@@ -27,15 +27,13 @@ const latestPosts = await getLatestPosts(5);
     <MaxWidthContainer>
       <main>
         <section class="latest-posts">
-          {
-            latestPosts.map((post) => (
-              <PostItem
-                title={post.data.title}
-                date={post.data.date}
-                href={`/post/${post.id}/`}
-              />
-            ))
-          }
+          {latestPosts.map((post) => (
+            <PostItem
+              title={post.data.title}
+              date={post.data.date}
+              href={`/post/${post.id}/`}
+            />
+          ))}
         </section>
 
         <a href="/page/1/">すべての記事を見る</a>

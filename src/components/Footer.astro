@@ -44,32 +44,30 @@ const socialLinks = [
     <div class="footer-inner">
       <nav class="social" aria-label="ソーシャルリンク">
         <ul>
-          {
-            socialLinks.map((link) => (
-              <li>
-                <a
-                  href={link.href}
-                  class="social-link"
-                  rel="noreferrer noopener"
-                  target={link.external ? "_blank" : undefined}
-                >
-                  <span class="sr-only">{link.title}</span>
-                  <svg
-                    width="22"
-                    height="22"
-                    viewBox={link.viewBox}
-                    fill={link.fill ? "currentColor" : "none"}
-                    stroke={link.fill ? "none" : "currentColor"}
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                    set:html={link.body}
-                  />
-                </a>
-              </li>
-            ))
-          }
+          {socialLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="social-link"
+                rel="noreferrer noopener"
+                target={link.external ? "_blank" : undefined}
+              >
+                <span class="sr-only">{link.title}</span>
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox={link.viewBox}
+                  fill={link.fill ? "currentColor" : "none"}
+                  stroke={link.fill ? "none" : "currentColor"}
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  set:html={link.body}
+                />
+              </a>
+            </li>
+          ))}
         </ul>
       </nav>
 

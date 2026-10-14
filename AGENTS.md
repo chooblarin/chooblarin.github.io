@@ -12,6 +12,8 @@ Enable it with `corepack enable` if `pnpm` is not on your PATH.
 - **Build**: `pnpm build` (includes type checking with `astro check`)
 - **Preview build**: `pnpm preview`
 - **Type checking only**: `pnpm astro check`
+- **Format**: `pnpm format`
+- **Check formatting**: `pnpm format:check`
 
 ## Architecture
 
@@ -44,4 +46,4 @@ Uses `@/*` alias pointing to `src/*` (configured in tsconfig.json).
 - MDX support for enhanced markdown
 - Sitemap generation
 - React integration for interactive components
-- Prettier for code formatting with Astro plugin
+- Oxfmt for code formatting, with Astro support enabled (article content is excluded)

@@ -38,15 +38,13 @@ const { posts, hasNext, hasPrev, page } = Astro.props;
     <MaxWidthContainer>
       <main>
         <section>
-          {
-            posts.map((post) => (
-              <PostItem
-                title={post.data.title}
-                date={post.data.date}
-                href={`/post/${post.id}/`}
-              />
-            ))
-          }
+          {posts.map((post) => (
+            <PostItem
+              title={post.data.title}
+              date={post.data.date}
+              href={`/post/${post.id}/`}
+            />
+          ))}
         </section>
         <PaginationNav
           prevHref={hasPrev ? `/page/${page - 1}/` : undefined}

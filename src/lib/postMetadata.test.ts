@@ -104,6 +104,9 @@ $$
 
     assert.equal(getPostImage(postWithImage), "/images/post.png");
     assert.equal(getPostOgImage(postWithImage), "/images/post.png");
-    assert.equal(getPostOgImage(postWithoutImage), "/og/post-without-image.png");
+    assert.equal(
+      getPostOgImage(postWithoutImage),
+      "/og/post-without-image.png",
+    );
   });
 });
