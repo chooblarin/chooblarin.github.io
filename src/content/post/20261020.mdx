@@ -1,0 +1,44 @@
+---
+date: "2026-10-17T00:00:00+09:00"
+title: "iOSアプリ「カオヌル」をリリースした"
+description: "動画内の顔にぼかしや絵文字を付けるiOSアプリ「カオヌル」をリリースした。"
+draft: false
+slug: "202610-release-kaonull"
+tags: ["App", "iOS"]
+---
+
+import PostImage from "@/components/PostImage.astro";
+
+先日、動画内の顔にぼかしや絵文字を付けるiOSアプリ[「カオヌル」](https://apps.apple.com/jp/app/%E3%82%AB%E3%82%AA%E3%83%8C%E3%83%AB/id6820808274)をリリースしました。子育て中に思いついてからAIエージェントと半年くらいコツコツ開発してきました。
+動画の加工処理は全てオンデバイスで完結するのでサーバー費用は無しです。Xcode Cloudを使っているのでCIを回しすぎると料金が発生しますが、かなりまったりと開発してきたので今のところは大丈夫です。
+
+<video
+  autoPlay
+  muted
+  loop
+  playsInline
+  preload="metadata"
+  style={{
+    display: "block",
+    width: "100%",
+    maxWidth: "360px",
+    height: "auto",
+    margin: "1.5rem auto",
+  }}
+>
+  <source
+    src="https://assets.sotahatakeyama.com/sites/blog/post/2026/kaonull-ios-revealed/kaonull-ios-revealed.mp4"
+    type="video/mp4"
+  />
+</video>
+
+子どもの動画をたくさん撮るようになってから、インターネット上で他人の子どもの動画にも自然に目が止まるようになり、そこで子どものプライバシーを守れるお手軽アプリがあるといいんじゃないかと思ってこのアプリをつくりました。
+
+プライバシーのためのアプリなので、外部へのデータ送信を一切行わないということも最初に決めたポイントです。
+
+<PostImage
+  src="https://assets.sotahatakeyama.com/sites/blog/post/2026/kaonull-introduction/kaonull-introduction.jpg"
+  alt="カオヌルのアプリ紹介画像。（協力：子どもたち）"
+/>
+
+他にも2つほどアプリをつくっています。年内にリリースはできたらいいな…。
