@@ -4,16 +4,20 @@ This file provides guidance to Codex (Codex.ai/code) when working with code in t
 
 ## Development Commands
 
-This project uses **pnpm** (pinned via `packageManager` in `package.json`).
-Enable it with `corepack enable` if `pnpm` is not on your PATH.
+This project uses **Vite+** (pinned in the `pnpm-workspace.yaml` catalog) and **pnpm** (pinned via `packageManager` in `package.json`).
+Install or update the global `vp` CLI using https://viteplus.dev/guide/.
 
-- **Install**: `pnpm install`
-- **Development server**: `pnpm dev` or `pnpm start`
-- **Build**: `pnpm build` (includes type checking with `astro check`)
-- **Preview build**: `pnpm preview`
-- **Type checking only**: `pnpm astro check`
-- **Format**: `pnpm format`
-- **Check formatting**: `pnpm format:check`
+- **Install**: `vp install --frozen-lockfile`
+- **Development server**: `vp run dev`
+- **Build**: `vp run build` (includes type checking with `astro check`)
+- **Preview build**: `vp run preview`
+- **Type checking only**: `vp exec astro check`
+- **Lint and check formatting**: `vp check`
+- **Format**: `vp fmt`
+- **Test**: `vp run test` (uses the Node.js test runner)
+- **Storybook**: `vp run storybook` / `vp run build-storybook`
+
+Use `vp run` for the Astro and Storybook scripts. Keep `astro check` for type checking `.astro` files; Vite+ type-aware linting and type checking are disabled in `vite.config.ts`.
 
 ## Architecture
 
@@ -46,4 +50,4 @@ Uses `@/*` alias pointing to `src/*` (configured in tsconfig.json).
 - MDX support for enhanced markdown
 - Sitemap generation
 - React integration for interactive components
-- Oxfmt for code formatting, with Astro support enabled (article content is excluded)
+- Vite+ provides Oxlint and Oxfmt; their configuration is in `vite.config.ts`, with Astro formatting enabled (article content is excluded)

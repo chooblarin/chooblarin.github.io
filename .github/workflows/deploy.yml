@@ -1,6 +1,14 @@
 name: Deploy
 
 on:
+  pull_request:
+    paths:
+      - ".github/workflows/deploy.yml"
+      - ".node-version"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - "vite.config.ts"
   push:
     branches:
       - main
@@ -19,24 +27,26 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: voidzero-dev/setup-vp@v1.21.2
         with:
+          version-file: pnpm-workspace.yaml
           node-version-file: .node-version
-          cache: "pnpm"
+          cache: true
+          run-install: false
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
       - name: Install and Build
         run: |
-          pnpm install --frozen-lockfile
-          pnpm run build
+          vp install --frozen-lockfile
+          vp run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
   deploy:
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
