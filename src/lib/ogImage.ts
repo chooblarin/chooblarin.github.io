@@ -1,6 +1,6 @@
-import { Resvg } from "@resvg/resvg-js";
 import { createElement } from "react";
 import satori, { type Font } from "satori";
+import sharp from "sharp";
 import { createRequire } from "node:module";
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
@@ -166,10 +166,8 @@ export const renderGeneratedOgImage = async (title: string) => {
     },
   );
 
-  return new Resvg(svg, {
-    fitTo: { mode: "width", value: OG_IMAGE_WIDTH * OG_IMAGE_SCALE },
-    textRendering: 1,
-  })
-    .render()
-    .asPng();
+  // SVG's default density is 72 DPI; render at the existing 2x resolution.
+  return sharp(Buffer.from(svg), { density: 72 * OG_IMAGE_SCALE })
+    .png()
+    .toBuffer();
 };

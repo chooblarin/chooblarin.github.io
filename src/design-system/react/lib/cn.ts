@@ -1,3 +1,1 @@
-import { type ClassValue, clsx } from "clsx";
-
-export const cn = (...inputs: ClassValue[]) => clsx(inputs);
+export { cx as cn } from "class-variance-authority";

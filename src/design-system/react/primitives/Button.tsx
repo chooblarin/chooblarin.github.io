@@ -1,4 +1,3 @@
-import { Button as BaseButton } from "@base-ui/react/button";
 import type { ReactNode } from "react";
 
 import { cn } from "../lib/cn";
@@ -30,13 +29,13 @@ export default function Button({
   className,
 }: ButtonProps) {
   return (
-    <BaseButton
+    <button
       type={type}
       disabled={disabled}
       onClick={onClick}
       className={cn(buttonVariants({ intent, appearance, size }), className)}
     >
       {children}
-    </BaseButton>
+    </button>
   );
 }
