@@ -13,7 +13,7 @@ src/design-system/react/
   primitives/          最小単位 (Link, Button, ButtonLink)
   patterns/            primitives を組み合わせた部品 (TagList, PostItem,
                        PostNavCard, PaginationNav, TableOfContents)
-  lib/cn.ts            clsx ラッパー
+  lib/cn.ts            CVA の cx を cn として再公開
 src/islands/           Astro と React の境界。pattern を Astro から使う薄い層
 ```
 
@@ -95,7 +95,7 @@ teal / yellow は彩度が高く、使いすぎると散らかる。役割を固
 ## コンポーネント規約
 
 - **variants は cva**。CSS Modules のクラスを `cva()` のバリアントに割り当て、
-  `cn()` (clsx) で結合する。
+  `cn()` (CVA の `cx`) で結合する。
 - **island は原則 SSR のみ** (`client:*` なし = JS ゼロ)。スクロール追従が
   必要な `TableOfContents` だけ `client:idle` でハイドレートする。
 - **ページからの参照は island 経由**。React の pattern を直接 `.astro` から

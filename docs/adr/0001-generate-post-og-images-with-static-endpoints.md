@@ -16,8 +16,10 @@ Astro already builds this site as static output. Astro file endpoints can return
 - Resolve the Post Summary from an explicit Post Description when present and non-empty.
 - Generate a fallback summary from the post body when no Post Description exists.
 - Prefer an explicit Post Image when present.
-- Generate a 1200x630 PNG at `/og/{post.id}.png` when no Post Image exists.
-- Generate OG images with an Astro static endpoint using Satori and Resvg.
+- Use a 1200x630 layout for the generated PNG at `/og/{post.id}.png` when no Post Image exists.
+- Generate OG images with an Astro static endpoint using Satori and Sharp.
+  Satori handles layout and font embedding; Sharp rasterizes the SVG at 2x
+  resolution and also provides Astro's existing image processing.
 - Include the post title and `By sotahatakeyama (@chooblarin)` in the Generated OG Image.
 
 ## Consequences
