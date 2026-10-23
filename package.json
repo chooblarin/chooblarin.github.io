@@ -7,10 +7,10 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
-    "lint": "oxlint",
-    "lint:fix": "oxlint --fix",
-    "format": "oxfmt",
-    "format:check": "oxfmt --check",
+    "lint": "vp lint",
+    "lint:fix": "vp lint --fix",
+    "format": "vp fmt",
+    "format:check": "vp fmt --check",
     "test": "node --test --experimental-strip-types \"src/**/*.test.ts\"",
     "preview": "astro preview",
     "astro": "astro",
@@ -44,11 +44,10 @@
     "@storybook/react-vite": "^10.6.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "oxfmt": "0.73.0",
-    "oxlint": "^1.87.0",
     "satori": "^0.52.0",
     "storybook": "^10.6.2",
     "typescript": "^6.0.3",
-    "vite": "^8.3.4"
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
   }
 }
