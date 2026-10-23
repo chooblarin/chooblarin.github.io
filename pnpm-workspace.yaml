@@ -19,6 +19,11 @@ catalog:
   vite-plus: 1.4.0
 overrides:
   vite@*: "catalog:"
+  # Satori still pins the vulnerable release (GHSA-px8p-9vwx-vf98).
+  fflate@^0.7.0: 0.7.5
+  # Math plugins still require 0.16.x (GHSA-238p-pmpm-9mq7).
+  # Keep public/styles/katex assets in sync with this renderer version.
+  katex@^0.16.0: 0.18.2
 peerDependencyRules:
   allowAny:
     - vite
